@@ -22,17 +22,23 @@ class SearchUserActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.search_user)
         binding.viewmodel = viewModel
 
-        binding.etUsername.setOnClickListener {
-            binding.cpiFetching.visibility = View.VISIBLE
-            viewModel.username.value = binding.etUsername.text.toString()
-        }
-
+        /*
+        *    TODO: Replace visibility change here with proper data binding
+        * */
         viewModel.user.observe(this) {
-            binding.cpiFetching.visibility = View.INVISIBLE
-            if (it.status == Status.SUCCESS) {
-                Toast
-                    .makeText(this, it.data.toString(), Toast.LENGTH_LONG)
-                    .show()
+            if (it.status == Status.LOADING) {
+                binding.cpiFetching.visibility = View.VISIBLE
+            } else {
+                binding.cpiFetching.visibility = View.GONE
+                if (it.status == Status.SUCCESS) {
+                    Toast
+                        .makeText(this, it.data.toString(), Toast.LENGTH_LONG)
+                        .show()
+                } else if (it.status == Status.ERROR) {
+                    Toast
+                        .makeText(this, it.message, Toast.LENGTH_LONG)
+                        .show()
+                }
             }
         }
     }

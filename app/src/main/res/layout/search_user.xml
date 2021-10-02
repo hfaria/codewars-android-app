@@ -6,9 +6,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+        <import type="android.view.View" />
+        <import type="com.hfaria.portfolio.codewars.persistence.Status" />
+        <import type="com.hfaria.portfolio.codewars.persistence.Resource" />
+        <import type="com.hfaria.portfolio.codewars.persistence.network.api.User" />
+        <import type="androidx.lifecycle.LiveData"/>
+
         <variable
             name="viewmodel"
             type="com.hfaria.portfolio.codewars.ui.search_user.SearchUserViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,12 +32,11 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:autofillHints="Enter a user..."
-            android:text="g96"
+            android:text="@={viewmodel.username}"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <Button
             android:id="@+id/btn_search"
@@ -39,6 +45,7 @@
             android:layout_marginTop="8dp"
             android:background="@color/purple_200"
             android:text="Search"
+            android:onClick="@{() -> viewmodel.onSearchRequested()}"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/et_username" />

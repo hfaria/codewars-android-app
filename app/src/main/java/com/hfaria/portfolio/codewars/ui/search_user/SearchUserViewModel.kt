@@ -10,9 +10,13 @@ class SearchUserViewModel : ViewModel() {
     val repository : RepositoryImpl = RepositoryImpl()
 
     val username: MutableLiveData<String> = MutableLiveData()
+    private val searchRequested: MutableLiveData<Boolean> = MutableLiveData()
 
-    val user: LiveData<Resource<User>> = username.switchMap { uname ->
-        repository.getUser(uname)
+    fun onSearchRequested() {
+        searchRequested.postValue(true)
     }
 
+    val user: LiveData<Resource<User>> = searchRequested.switchMap {
+        repository.getUser(username.value!!)
+    }
 }

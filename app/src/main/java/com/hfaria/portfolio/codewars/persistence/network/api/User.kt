@@ -24,7 +24,7 @@ data class CodeChallenges(
     @SerializedName("totalAuthored")
     var totalAuthored: Int,
     @SerializedName("totalCompleted")
-    var totalComleted: Int
+    var totalCompleted: Int
 )
 
 data class User(
