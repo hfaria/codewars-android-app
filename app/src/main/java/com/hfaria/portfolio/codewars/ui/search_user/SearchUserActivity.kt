@@ -2,9 +2,6 @@ package com.hfaria.portfolio.codewars.ui.search_user
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
@@ -12,7 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.hfaria.portfolio.codewars.CodeWarsApp
 import com.hfaria.portfolio.codewars.R
 import com.hfaria.portfolio.codewars.databinding.SearchUserBinding
-import com.hfaria.portfolio.codewars.persistence.Status
 import javax.inject.Inject
 
 class SearchUserActivity : AppCompatActivity() {
@@ -33,26 +29,19 @@ class SearchUserActivity : AppCompatActivity() {
             .inject(this)
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.search_user)
+        binding.lifecycleOwner = this
         binding.viewmodel = viewModel
 
-        /*
-        *    TODO: Replace visibility change here with proper data binding
-        * */
         viewModel.user.observe(this) {
-            if (it.status == Status.LOADING) {
-                binding.cpiFetching.visibility = View.VISIBLE
-            } else {
-                binding.cpiFetching.visibility = View.GONE
-                if (it.status == Status.SUCCESS) {
-                    Toast
-                        .makeText(this, it.data.toString(), Toast.LENGTH_LONG)
-                        .show()
-                } else if (it.status == Status.ERROR) {
-                    Toast
-                        .makeText(this, it.message, Toast.LENGTH_LONG)
-                        .show()
-                }
-            }
+            Toast
+                .makeText(this, it.toString(), Toast.LENGTH_LONG)
+                .show()
+        }
+
+        viewModel.errorMessage.observe(this) {
+            Toast
+                .makeText(this, it, Toast.LENGTH_LONG)
+                .show()
         }
     }
 }
