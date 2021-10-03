@@ -9,18 +9,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Inject
 
-class RemoteDataSource {
+class RemoteDataSource @Inject constructor(
+    private val api: CodeWarsApi
+) {
 
-    val client = Retrofit.Builder()
-        .baseUrl("https://www.codewars.com/api/v1/")
-        .addConverterFactory(GsonConverterFactory.create())
-        .addCallAdapterFactory(DataWrapperCallAdapterFactory())
-        .build()
-
-    val api = client.create(CodeWarsApi::class.java)
-
-    suspend fun fetchUsers(username: String) : DataWrapper<User> {
+    suspend fun getUserByUsername(username: String) : DataWrapper<User> {
         var userData: DataWrapper<User>
 
         withContext(Dispatchers.IO) {

@@ -6,8 +6,14 @@ import com.hfaria.portfolio.codewars.di.DaggerAppComponent
 
 class CodeWarsApp: Application() {
 
-    val appDaggerComponent: AppComponent by lazy {
-        DaggerAppComponent.factory().create(applicationContext)
+    lateinit var appComponent: AppComponent
+
+    override fun onCreate() {
+        super.onCreate()
+        appComponent = DaggerAppComponent.builder()
+            .application(this)
+            .build()
+        appComponent.inject(this)
     }
 
 }

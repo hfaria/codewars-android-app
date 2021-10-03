@@ -4,9 +4,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class DataSource<in Input, out Output>(
-    private val remoteFetch: suspend (Input) -> Output?,
-    //private val localFetch: suspend (Input) -> Output?,
-    //private val localStore: suspend (Output) -> Unit,
+    private val remoteFetch: suspend (Input) -> Output,
+    private val localFetch: suspend (Input) -> Output,
+    private val localStore: suspend (Output) -> Unit,
     //private val localDelete: suspend () -> Unit,
 ) {
 
@@ -15,14 +15,14 @@ class DataSource<in Input, out Output>(
     //}
 
     // Public API
-    suspend fun query(args: Input, force: Boolean = false): Flow<Output?> = flow {
+    suspend fun query(args: Input, force: Boolean = false): Flow<Output> = flow {
         //if (!force) {
-        //    fetchFromLocal(args)?.run { emit(this) }
+        //    fetchFromLocal(args).run { emit(this) }
         //}
         //if (refreshControl.isExpired() || force) {
-        //    fetchFromRemote(args).run { emit(this) }
-        //}
-        fetchFromRemote(args).run { emit(this) }
+        if(true) {
+            fetchFromRemote(args).run { emit(this) }
+        }
     }
 
     //override suspend fun cleanup() {
@@ -34,16 +34,15 @@ class DataSource<in Input, out Output>(
     //    localDelete()
     //}.getOrNull()
 
-
-    //private suspend fun fetchFromLocal(args: Input) = kotlin.runCatching {
-    //    localFetch(args)
-    //}.getOrNull()
+    private suspend fun fetchFromLocal(args: Input) = kotlin.runCatching {
+        localFetch(args)
+    }.getOrThrow()
 
     private suspend fun fetchFromRemote(args: Input) = kotlin.runCatching {
         remoteFetch(args)
-    }.getOrThrow()?.also {
+    }.getOrThrow().also {
         kotlin.runCatching {
-            //localStore(it)
+            localStore(it)
             //refreshControl.refresh()
         }
     }

@@ -34,12 +34,10 @@ class SearchUserViewModel @Inject constructor(
                 .onStart { _isLoading.value = true }
                 .onCompletion { _isLoading.value = false }
                 .collect { response ->
-                    if (response != null) {
-                        if (response.status == Status.SUCCESS) {
-                            _user.value = response.data!!
-                        } else {
-                            _errorMessage.value = response.message!!
-                        }
+                    if (response.status == Status.SUCCESS) {
+                        _user.value = response.data!!
+                    } else {
+                        _errorMessage.value = response.message!!
                     }
                 }
         }

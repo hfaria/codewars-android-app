@@ -23,7 +23,7 @@ class SearchUserActivity : AppCompatActivity() {
     private lateinit var binding: SearchUserBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        (applicationContext as CodeWarsApp).appDaggerComponent
+        (applicationContext as CodeWarsApp).appComponent
             .searchUserComponent()
             .create()
             .inject(this)

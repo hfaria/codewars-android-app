@@ -16,31 +16,36 @@
 
 package com.hfaria.portfolio.codewars.di
 
+import android.app.Application
 import android.content.Context
 import com.example.android.architecture.blueprints.todoapp.taskdetail.di.SearchUserComponent
-import com.hfaria.portfolio.codewars.ui.search_user.SearchUserActivity
+import com.hfaria.portfolio.codewars.CodeWarsApp
 import dagger.BindsInstance
 import dagger.Component
-import dagger.Subcomponent
+import dagger.android.AndroidInjectionModule
 import javax.inject.Singleton
 
 @Singleton
 @Component(
     modules = [
-        ViewModelBuilderModule::class
+        AndroidInjectionModule::class,
+        AppModule::class,
     ]
 )
 interface AppComponent {
 
-    @Component.Factory
-    interface Factory {
-        fun create(@BindsInstance applicationContext: Context): AppComponent
+    @Component.Builder
+    interface Builder {
+        @BindsInstance
+        fun application(application: Application): Builder
+
+        fun build(): AppComponent
     }
+
+    fun inject(codeWarsApp: CodeWarsApp)
 
     //fun addEditTaskComponent(): AddEditTaskComponent.Factory
     //fun statisticsComponent(): StatisticsComponent.Factory
     //fun taskDetailComponent(): TaskDetailComponent.Factory
     fun searchUserComponent(): SearchUserComponent.Factory
-
-    //val tasksRepository: TasksRepository
 }

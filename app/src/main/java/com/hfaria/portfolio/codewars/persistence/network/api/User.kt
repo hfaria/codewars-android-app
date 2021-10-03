@@ -1,5 +1,7 @@
 package com.hfaria.portfolio.codewars.persistence.network.api
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 data class Rank(
@@ -16,8 +18,8 @@ data class Rank(
 data class UserRanks(
     @SerializedName("overall")
     var overall: Rank,
-    @SerializedName("languages")
-    var languages: ArrayList<Rank>,
+    //@SerializedName("languages")
+    //var languages: ArrayList<Rank>,
 )
 
 data class CodeChallenges(
@@ -27,21 +29,21 @@ data class CodeChallenges(
     var totalCompleted: Int
 )
 
+@Entity(tableName = "user")
 data class User(
-    @SerializedName("username")
+    @PrimaryKey
     var username: String,
-    @SerializedName("name")
     var name: String,
-    @SerializedName("clan")
-    var clan: String,
-    @SerializedName("honor")
-    var honor: Int,
-    @SerializedName("leaderboardPosition")
-    var leaderBoardPosition: String,
-    @SerializedName("skills")
-    var skills: ArrayList<String>,
-    @SerializedName("codeChallenges")
-    var codeChallengesCount: CodeChallenges,
+    //@SerializedName("clan")
+    //var clan: String,
+    //@SerializedName("honor")
+    //var honor: Int,
+    //@SerializedName("leaderboardPosition")
+    //var leaderBoardPosition: String,
+    //@SerializedName("skills")
+    //var skills: ArrayList<String>,
+    //@SerializedName("codeChallenges")
+    //var codeChallengesCount: CodeChallenges,
     //@SerializedName("ranks")
     //var ranks: UserRanks
 )
