@@ -1,27 +1,18 @@
 package com.hfaria.portfolio.codewars.ui.search_user
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
 import com.hfaria.portfolio.codewars.CodeWarsApp
 import com.hfaria.portfolio.codewars.R
 import com.hfaria.portfolio.codewars.databinding.SearchUserBinding
 import com.hfaria.portfolio.codewars.persistence.network.api.User
-import javax.inject.Inject
+import com.hfaria.portfolio.codewars.ui.BaseActivity
 
-class SearchUserActivity : AppCompatActivity() {
+class SearchUserActivity : BaseActivity<SearchUserViewModel>() {
 
-    @Inject
-    lateinit var vidwModelFactory: ViewModelProvider.Factory
-
-    private val viewModel: SearchUserViewModel by viewModels {
-        vidwModelFactory
-    }
-
-    private lateinit var binding: SearchUserBinding
+    val adapter = SearchUserAdapter { user -> handleSelectedUser(user) }
+    lateinit var binding: SearchUserBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         (applicationContext as CodeWarsApp).appComponent
@@ -29,26 +20,30 @@ class SearchUserActivity : AppCompatActivity() {
             .create()
             .inject(this)
         super.onCreate(savedInstanceState)
+        setupBinding()
+        setupObservables()
+        viewModel.fetchRecentUsers()
+    }
+
+    fun setupBinding() {
         binding = DataBindingUtil.setContentView(this, R.layout.search_user)
         binding.lifecycleOwner = this
         binding.viewmodel = viewModel
+        binding.rvRecentUser.adapter = adapter
+    }
 
-        val recentUsersAdapter = SearchUserAdapter { user -> handleSelectedUser(user) }
-        binding.rvRecentUser.adapter = recentUsersAdapter
-
+    fun setupObservables() {
         viewModel.recentUsers.observe(this, {
             it?.let {
-                recentUsersAdapter.submitList(it.toList())
+                adapter.submitList(it.toList())
             }
-         })
+        })
 
         viewModel.errorMessage.observe(this) {
             Toast
                 .makeText(this, it, Toast.LENGTH_LONG)
                 .show()
         }
-
-        viewModel.fetchRecentUsers()
     }
 
     private fun handleSelectedUser(user: User) {
