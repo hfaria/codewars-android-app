@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -47,7 +46,7 @@ class SearchUserAdapter(
     /* Creates and inflates view and return UserViewHolder. */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.recent_user_list, parent, false)
+            .inflate(R.layout.recent_user_item, parent, false)
         return UserViewHolder(view, onClick)
     }
 

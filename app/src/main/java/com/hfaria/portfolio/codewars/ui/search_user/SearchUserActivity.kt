@@ -1,5 +1,6 @@
 package com.hfaria.portfolio.codewars.ui.search_user
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -8,6 +9,7 @@ import com.hfaria.portfolio.codewars.R
 import com.hfaria.portfolio.codewars.databinding.SearchUserBinding
 import com.hfaria.portfolio.codewars.persistence.network.api.User
 import com.hfaria.portfolio.codewars.ui.BaseActivity
+import com.hfaria.portfolio.codewars.ui.user_challenges.UserChallengesActivity
 
 class SearchUserActivity : BaseActivity<SearchUserViewModel>() {
 
@@ -47,8 +49,8 @@ class SearchUserActivity : BaseActivity<SearchUserViewModel>() {
     }
 
     private fun handleSelectedUser(user: User) {
-        Toast
-            .makeText(this, user.toString(), Toast.LENGTH_LONG)
-            .show()
+        val it = Intent(this, UserChallengesActivity::class.java)
+        it.putExtra("username", user.username)
+        startActivity(it)
     }
 }

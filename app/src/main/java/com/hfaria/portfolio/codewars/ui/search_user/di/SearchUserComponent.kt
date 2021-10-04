@@ -1,4 +1,4 @@
-package com.example.android.architecture.blueprints.todoapp.taskdetail.di
+package com.hfaria.portfolio.codewars.ui.search_user.di
 
 import com.hfaria.portfolio.codewars.ui.search_user.SearchUserActivity
 import dagger.Subcomponent
