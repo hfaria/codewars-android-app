@@ -16,9 +16,9 @@ class SearchUserViewModel @Inject constructor(
 
     val username: MutableLiveData<String> = MutableLiveData()
 
-    val user: LiveData<User>
-        get() = _user
-    private val _user = MutableLiveData<User>()
+    val recentUsers: LiveData<Array<User>>
+        get() = _recentUsers
+    private val _recentUsers = MutableLiveData<Array<User>>()
 
     val isLoading: LiveData<Boolean>
         get() = _isLoading
@@ -35,7 +35,7 @@ class SearchUserViewModel @Inject constructor(
                 .onCompletion { _isLoading.value = false }
                 .collect { response ->
                     if (response.status == Status.SUCCESS) {
-                        _user.value = response.data!!
+                        fetchRecentUsers()
                     } else {
                         _errorMessage.value = response.message!!
                     }
@@ -43,4 +43,11 @@ class SearchUserViewModel @Inject constructor(
         }
     }
 
+    fun fetchRecentUsers() {
+        viewModelScope.launch {
+            repository.getRecentUsers().collect { response ->
+                _recentUsers.value = response
+            }
+        }
+    }
 }

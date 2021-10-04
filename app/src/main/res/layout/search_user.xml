@@ -21,41 +21,58 @@
         android:background="@color/purple_500"
         tools:context=".ui.search_user.SearchUserActivity">
 
-        <EditText
-            android:id="@+id/et_username"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:autofillHints="Enter a user..."
-            android:text="@={viewmodel.username}"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
-
         <Button
             android:id="@+id/btn_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
             android:background="@color/purple_200"
-            android:text="Search"
             android:onClick="@{() -> viewmodel.onSearchRequested()}"
-            app:layout_constraintLeft_toLeftOf="parent"
+            android:text="Search"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/et_username" />
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/et_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            android:autofillHints="Enter a user..."
+            android:inputType="text"
+            android:text="@={viewmodel.username}"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/btn_search"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/cpi_fetching"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:indeterminate="true"
             android:visibility="@{viewmodel.isLoading ? View.VISIBLE : View.GONE}"
+            app:layout_constraintTop_toBottomOf="@id/et_username"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/et_username" />
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_recent_user"
+            app:layoutManager="LinearLayoutManager"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_username"
+            tools:listitem="@layout/recent_user_list" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

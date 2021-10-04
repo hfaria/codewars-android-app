@@ -1,0 +1,59 @@
+package com.hfaria.portfolio.codewars.ui.search_user
+
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
+import com.hfaria.portfolio.codewars.R
+import com.hfaria.portfolio.codewars.persistence.network.api.User
+
+object UserDiffCallback: DiffUtil.ItemCallback<User>() {
+    override fun areItemsTheSame(oldItem: User, newItem: User): Boolean {
+        return oldItem == newItem
+    }
+
+    override fun areContentsTheSame(oldItem: User, newItem: User): Boolean {
+        return oldItem.username == newItem.username
+    }
+}
+
+class SearchUserAdapter(
+    private val onClick: (User) -> Unit
+) : ListAdapter<User, SearchUserAdapter.UserViewHolder>(UserDiffCallback) {
+
+    class UserViewHolder(itemView: View, val onClick: (User) -> Unit)
+        : RecyclerView.ViewHolder(itemView) {
+        private val tvUserName: TextView = itemView.findViewById(R.id.tv_username)
+        private var currentUser: User? = null
+
+        init {
+            itemView.setOnClickListener {
+                currentUser?.let {
+                    onClick(it)
+                }
+            }
+        }
+
+        fun bind(user: User) {
+            currentUser =  user
+            tvUserName.text = user.username
+        }
+    }
+
+    /* Creates and inflates view and return UserViewHolder. */
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.recent_user_list, parent, false)
+        return UserViewHolder(view, onClick)
+    }
+
+    /* Gets current user and uses it to bind view. */
+    override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
+        val user = getItem(position)
+        holder.bind(user)
+    }
+}

@@ -33,6 +33,7 @@ data class CodeChallenges(
 data class User(
     @PrimaryKey
     var username: String,
+
     var name: String,
     //@SerializedName("clan")
     //var clan: String,
