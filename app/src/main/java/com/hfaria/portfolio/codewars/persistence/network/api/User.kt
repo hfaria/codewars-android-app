@@ -35,6 +35,8 @@ data class User(
     var username: String,
 
     var name: String,
+
+    var insertionTime: Int
     //@SerializedName("clan")
     //var clan: String,
     //@SerializedName("honor")

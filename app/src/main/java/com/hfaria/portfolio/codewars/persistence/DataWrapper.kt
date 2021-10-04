@@ -5,6 +5,13 @@ enum class Status {
     ERROR,
 }
 
+/*
+    Data class used to encapsulate any response
+    to a data request.
+
+    Could be used by any kind of data source
+    to represent the result of a given data request.
+ */
 data class DataWrapper<out T>(val status: Status,
                            val data: T?,
                            val message: String?) {
@@ -17,4 +24,7 @@ data class DataWrapper<out T>(val status: Status,
             return DataWrapper(Status.ERROR, data, msg)
         }
     }
+
+    fun hasData(): Boolean
+        = (status == Status.SUCCESS && data!= null)
 }

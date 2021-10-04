@@ -15,7 +15,8 @@ class CodeWarsRepository @Inject constructor(
     private val dataSource = DataSource(
         remoteDataSource::getUserByUsername,
         localDataSource::getUserByUsername,
-        localDataSource::saveUser
+        localDataSource::saveUser,
+        localDataSource::hasUserCacheExpired
     )
 
     suspend fun getUser(username: String): Flow<DataWrapper<User>>

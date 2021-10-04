@@ -4,46 +4,44 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class DataSource<in Input, out Output>(
-    private val remoteFetch: suspend (Input) -> Output,
-    private val localFetch: suspend (Input) -> Output,
-    private val localStore: suspend (Output) -> Unit,
-    //private val localDelete: suspend () -> Unit,
+    private val remoteFetch: suspend (Input) -> DataWrapper<Output>,
+    private val localFetch: suspend (Input) -> DataWrapper<Output>,
+    private val localStore: suspend (DataWrapper<Output>) -> Unit,
+    private val hasExpired: (DataWrapper<Output>) -> Boolean,
 ) {
 
-    //init {
-    //    refreshControl.addListener(this)
-    //}
+    /*
+        Generic algorithm to provide cache policy and offline functionality
+     */
+    suspend fun query(args: Input, force: Boolean = false): Flow<DataWrapper<Output>> = flow {
+        val localCache = localFetch(args)
 
-    // Public API
-    suspend fun query(args: Input, force: Boolean = false): Flow<Output> = flow {
-        //if (!force) {
-        //    fetchFromLocal(args).run { emit(this) }
-        //}
-        //if (refreshControl.isExpired() || force) {
-        if(true) {
-            fetchFromRemote(args).run { emit(this) }
+        /* Unless explicit forced update,
+            emit cached result, if any */
+        if (!force && localCache.hasData()) {
+            emit(localCache)
         }
-    }
 
-    //override suspend fun cleanup() {
-    //    deleteLocal()
-    //}
+        /* If cache expired or forced update,
+            look for fresh data */
+        if (hasExpired(localCache) || force) {
+            val remoteWrapper = remoteFetch(args)
 
-    // Private API
-    //private suspend fun deleteLocal() = kotlin.runCatching {
-    //    localDelete()
-    //}.getOrNull()
-
-    private suspend fun fetchFromLocal(args: Input) = kotlin.runCatching {
-        localFetch(args)
-    }.getOrThrow()
-
-    private suspend fun fetchFromRemote(args: Input) = kotlin.runCatching {
-        remoteFetch(args)
-    }.getOrThrow().also {
-        kotlin.runCatching {
-            localStore(it)
-            //refreshControl.refresh()
+            if (!remoteWrapper.hasData()) {
+                /* Fresh data request failed for some reason.
+                   If we have cached data, emit it.
+                   Else, just report failure */
+                if(localCache.hasData()) {
+                    emit(localCache)
+                } else {
+                    emit(remoteWrapper)
+                }
+            } else {
+                /* Fresh data was successfully obtained.
+                   Update cache */
+                emit(remoteWrapper)
+                localStore(remoteWrapper)
+            }
         }
     }
 }
