@@ -1,14 +1,14 @@
-package com.hfaria.portfolio.codewars.persistence.db
+package com.hfaria.portfolio.codewars.persistence.local
 
-import android.util.Log
 import com.hfaria.portfolio.codewars.persistence.DataWrapper
-import com.hfaria.portfolio.codewars.persistence.Status
-import com.hfaria.portfolio.codewars.persistence.network.api.User
+import com.hfaria.portfolio.codewars.persistence.local.dao.UserDao
+import com.hfaria.portfolio.codewars.persistence.remote.api.User
+import com.hfaria.portfolio.codewars.persistence.remote.api.UserEntity
+import com.hfaria.portfolio.codewars.util.TimeUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class LocalDataSource @Inject constructor(
@@ -20,39 +20,32 @@ class LocalDataSource @Inject constructor(
             .onFailure { t -> t.printStackTrace()}
             .getOrThrow()
 
-    private fun timeInSeconds() : Int {
-        val timeInMillis = System.currentTimeMillis()
-        return TimeUnit.MILLISECONDS.toSeconds(timeInMillis).toInt()
-    }
-
     suspend fun saveUser(userWrapper: DataWrapper<User>) = runQuery {
         withContext(Dispatchers.IO) {
             val user = userWrapper.data!!
-
-            if (user.name == null || user.name.isEmpty()) {
-                user.name = "Unknown"
-            }
-
-            user.insertionTime = timeInSeconds()
-            userDao.insert(user)
+            val entity = UserEntity.fromDomain(user)
+            userDao.insert(entity)
         }
     }
 
     suspend fun getUserByUsername(username: String): DataWrapper<User> = runQuery {
-        val user = userDao.getByUsername(username)
-        if (user != null) {
+        val entity = userDao.getByUsername(username)
+        if (entity != null) {
+            val user = UserEntity.toDomain(entity)
             DataWrapper.success(user)
         } else {
             DataWrapper.error("User not found", null)
         }
     }
 
-    suspend fun getRecentUsers(): Flow<Array<User>> {
+    suspend fun getRecentUsers(): Flow<List<User>> {
         return flow {
-            val users: Array<User>
+            val users: List<User>
 
             withContext(Dispatchers.IO) {
-                users = userDao.getAll()
+                users = userDao.getAll().map {
+                    UserEntity.toDomain(it)
+                }
             }
 
             emit(users)
@@ -62,8 +55,8 @@ class LocalDataSource @Inject constructor(
     fun hasUserCacheExpired(userWrapper: DataWrapper<User>): Boolean {
         return if (userWrapper.hasData()) {
             val user = userWrapper.data!!
-            val timeNow = timeInSeconds()
-            val elapsed = timeNow - user.insertionTime
+            val timeNow = TimeUtil.nowInSeconds()
+            val elapsed = timeNow - user.searchTime
             elapsed > 10
         } else {
             true

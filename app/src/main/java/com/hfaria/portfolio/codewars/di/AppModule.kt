@@ -2,12 +2,12 @@ package com.hfaria.portfolio.codewars.di
 
 import android.app.Application
 import androidx.room.Room
-import com.hfaria.portfolio.codewars.persistence.db.AppDatabase
-import com.hfaria.portfolio.codewars.persistence.db.DATABASE_NAME
-import com.hfaria.portfolio.codewars.persistence.db.UserDao
-import com.hfaria.portfolio.codewars.persistence.network.api.CODEWARS_ENDPOINT
-import com.hfaria.portfolio.codewars.persistence.network.api.CodeWarsApi
-import com.hfaria.portfolio.codewars.persistence.network.reactive.DataWrapperCallAdapterFactory
+import com.hfaria.portfolio.codewars.persistence.local.dao.UserDao
+import com.hfaria.portfolio.codewars.persistence.local.db.AppDatabase
+import com.hfaria.portfolio.codewars.persistence.local.db.DATABASE_NAME
+import com.hfaria.portfolio.codewars.persistence.remote.api.CODEWARS_ENDPOINT
+import com.hfaria.portfolio.codewars.persistence.remote.api.CodeWarsApi
+import com.hfaria.portfolio.codewars.persistence.remote.adapter.DataWrapperCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit

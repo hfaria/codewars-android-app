@@ -2,8 +2,8 @@ package com.hfaria.portfolio.codewars.persistence
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.hfaria.portfolio.codewars.persistence.network.RemoteDataSource
-import com.hfaria.portfolio.codewars.persistence.network.api.CompletedChallenge
+import com.hfaria.portfolio.codewars.persistence.remote.RemoteDataSource
+import com.hfaria.portfolio.codewars.persistence.remote.api.CompletedChallenge
 import retrofit2.HttpException
 import java.io.IOException
 

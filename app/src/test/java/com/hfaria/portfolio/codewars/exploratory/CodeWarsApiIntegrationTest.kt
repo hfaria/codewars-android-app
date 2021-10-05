@@ -1,6 +1,6 @@
 package com.hfaria.portfolio.codewars.exploratory
 
-import com.hfaria.portfolio.codewars.persistence.network.api.CodeWarsApi
+import com.hfaria.portfolio.codewars.persistence.remote.api.CodeWarsApi
 import org.junit.Test
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory

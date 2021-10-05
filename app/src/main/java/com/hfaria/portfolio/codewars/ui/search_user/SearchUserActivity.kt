@@ -7,7 +7,7 @@ import androidx.databinding.DataBindingUtil
 import com.hfaria.portfolio.codewars.CodeWarsApp
 import com.hfaria.portfolio.codewars.R
 import com.hfaria.portfolio.codewars.databinding.SearchUserBinding
-import com.hfaria.portfolio.codewars.persistence.network.api.User
+import com.hfaria.portfolio.codewars.persistence.remote.api.User
 import com.hfaria.portfolio.codewars.ui.BaseActivity
 import com.hfaria.portfolio.codewars.ui.user_challenges.UserChallengesActivity
 

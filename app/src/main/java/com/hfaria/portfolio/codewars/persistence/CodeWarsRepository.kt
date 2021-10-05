@@ -3,11 +3,11 @@ package com.hfaria.portfolio.codewars.persistence
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.hfaria.portfolio.codewars.persistence.db.LocalDataSource
-import com.hfaria.portfolio.codewars.persistence.network.RemoteDataSource
-import com.hfaria.portfolio.codewars.persistence.network.api.AuthoredChallenges
-import com.hfaria.portfolio.codewars.persistence.network.api.CompletedChallenge
-import com.hfaria.portfolio.codewars.persistence.network.api.User
+import com.hfaria.portfolio.codewars.persistence.local.LocalDataSource
+import com.hfaria.portfolio.codewars.persistence.remote.RemoteDataSource
+import com.hfaria.portfolio.codewars.persistence.remote.api.AuthoredChallenges
+import com.hfaria.portfolio.codewars.persistence.remote.api.CompletedChallenge
+import com.hfaria.portfolio.codewars.persistence.remote.api.User
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -24,7 +24,7 @@ class CodeWarsRepository @Inject constructor(
         localDataSource::hasUserCacheExpired
     )
 
-    suspend fun getRecentUsers(): Flow<Array<User>>
+    suspend fun getRecentUsers(): Flow<List<User>>
             = localDataSource.getRecentUsers()
 
     suspend fun getUser(username: String): Flow<DataWrapper<User>>

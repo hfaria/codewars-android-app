@@ -1,4 +1,4 @@
-package com.hfaria.portfolio.codewars.persistence.network.api
+package com.hfaria.portfolio.codewars.persistence.remote.api
 
 data class AuthoredChallenge(
     var id: String,

@@ -8,7 +8,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.hfaria.portfolio.codewars.R
-import com.hfaria.portfolio.codewars.persistence.network.api.CompletedChallenge
+import com.hfaria.portfolio.codewars.persistence.remote.api.CompletedChallenge
 
 class CompletedChallengesAdapter()
     : PagingDataAdapter<CompletedChallenge, CompletedChallengesAdapter.ViewHolder>(ChallengeDiffCallback) {

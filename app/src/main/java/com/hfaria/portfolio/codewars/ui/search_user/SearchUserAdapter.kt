@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.hfaria.portfolio.codewars.R
-import com.hfaria.portfolio.codewars.persistence.network.api.User
+import com.hfaria.portfolio.codewars.persistence.remote.api.User
 
 class SearchUserAdapter(
     private val onClick: (User) -> Unit

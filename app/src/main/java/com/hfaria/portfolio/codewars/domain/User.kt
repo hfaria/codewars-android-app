@@ -1,4 +1,4 @@
-package com.hfaria.portfolio.codewars.persistence.network.api
+package com.hfaria.portfolio.codewars.persistence.remote.api
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -29,14 +29,12 @@ data class CodeChallenges(
     var totalCompleted: Int
 )
 
-@Entity(tableName = "user")
 data class User(
-    @PrimaryKey
     var username: String,
-
     var name: String,
+    // When was this user searched
+    var searchTime: Int,
 
-    var insertionTime: Int
     //@SerializedName("clan")
     //var clan: String,
     //@SerializedName("honor")

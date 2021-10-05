@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.hfaria.portfolio.codewars.persistence.network.reactive
+package com.hfaria.portfolio.codewars.persistence.remote.adapter
 
 import android.util.Log
 import retrofit2.Response

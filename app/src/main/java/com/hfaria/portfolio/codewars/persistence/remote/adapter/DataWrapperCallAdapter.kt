@@ -1,4 +1,4 @@
-package com.hfaria.portfolio.codewars.persistence.network.reactive
+package com.hfaria.portfolio.codewars.persistence.remote.adapter
 
 
 import com.hfaria.portfolio.codewars.persistence.DataWrapper

@@ -1,4 +1,4 @@
-package com.hfaria.portfolio.codewars.persistence.db
+package com.hfaria.portfolio.codewars.persistence.local.dao
 
 import androidx.room.Delete
 import androidx.room.Insert

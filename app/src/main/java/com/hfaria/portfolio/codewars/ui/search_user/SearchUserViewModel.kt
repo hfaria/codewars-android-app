@@ -3,7 +3,7 @@ package com.hfaria.portfolio.codewars.ui.search_user
 import androidx.lifecycle.*
 import com.hfaria.portfolio.codewars.persistence.CodeWarsRepository
 import com.hfaria.portfolio.codewars.persistence.Status
-import com.hfaria.portfolio.codewars.persistence.network.api.User
+import com.hfaria.portfolio.codewars.persistence.remote.api.User
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
@@ -46,7 +46,7 @@ class SearchUserViewModel @Inject constructor(
     fun fetchRecentUsers() {
         viewModelScope.launch {
             repository.getRecentUsers().collect { response ->
-                _recentUsers.value = response
+                _recentUsers.value = response.toTypedArray()
             }
         }
     }

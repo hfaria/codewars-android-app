@@ -1,12 +1,11 @@
 package com.hfaria.portfolio.codewars.ui.user_challenges
 
-import android.util.Log
 import androidx.lifecycle.*
 import androidx.paging.PagingData
 import com.hfaria.portfolio.codewars.persistence.CodeWarsRepository
 import com.hfaria.portfolio.codewars.persistence.Status
-import com.hfaria.portfolio.codewars.persistence.network.api.AuthoredChallenge
-import com.hfaria.portfolio.codewars.persistence.network.api.CompletedChallenge
+import com.hfaria.portfolio.codewars.persistence.remote.api.AuthoredChallenge
+import com.hfaria.portfolio.codewars.persistence.remote.api.CompletedChallenge
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart

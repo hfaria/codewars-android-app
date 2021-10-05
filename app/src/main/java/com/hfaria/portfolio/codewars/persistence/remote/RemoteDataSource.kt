@@ -1,16 +1,12 @@
-package com.hfaria.portfolio.codewars.persistence.network
+package com.hfaria.portfolio.codewars.persistence.remote
 
 import com.hfaria.portfolio.codewars.persistence.DataWrapper
-import com.hfaria.portfolio.codewars.persistence.network.api.AuthoredChallenges
-import com.hfaria.portfolio.codewars.persistence.network.api.CodeWarsApi
-import com.hfaria.portfolio.codewars.persistence.network.api.CompletedChallengesPage
-import com.hfaria.portfolio.codewars.persistence.network.api.User
-import com.hfaria.portfolio.codewars.persistence.network.reactive.ApiResponse
-import com.hfaria.portfolio.codewars.persistence.network.reactive.DataWrapperCallAdapterFactory
+import com.hfaria.portfolio.codewars.persistence.remote.api.AuthoredChallenges
+import com.hfaria.portfolio.codewars.persistence.remote.api.CodeWarsApi
+import com.hfaria.portfolio.codewars.persistence.remote.api.CompletedChallengesPage
+import com.hfaria.portfolio.codewars.persistence.remote.api.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
 
 class RemoteDataSource @Inject constructor(

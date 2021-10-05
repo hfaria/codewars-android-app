@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.hfaria.portfolio.codewars.R
-import com.hfaria.portfolio.codewars.persistence.network.api.AuthoredChallenge
+import com.hfaria.portfolio.codewars.persistence.remote.api.AuthoredChallenge
 
 class AuthoredChallengesAdapter()
     : ListAdapter<AuthoredChallenge, AuthoredChallengesAdapter.ViewHolder>(ChallengeDiffCallback) {
