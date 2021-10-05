@@ -13,12 +13,12 @@ data class UserEntity(
 ) {
     companion object {
         fun fromDomain(user: User): UserEntity {
-            if (user.name == null || user.name.isEmpty()) {
+            if (user.name == null || user.name!!.isEmpty()) {
                 user.name = "Unknown"
             }
 
             val timeNow = TimeUtil.nowInSeconds()
-            val userEntity = UserEntity(user.username, user.name, timeNow)
+            val userEntity = UserEntity(user.username, user.name!!, timeNow)
             return userEntity
         }
 

@@ -31,7 +31,7 @@ data class CodeChallenges(
 
 data class User(
     var username: String,
-    var name: String,
+    var name: String?,
     // When was this user searched
     var searchTime: Int,
 

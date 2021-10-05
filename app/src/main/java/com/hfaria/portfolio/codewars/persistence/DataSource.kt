@@ -6,8 +6,8 @@ import kotlinx.coroutines.flow.flow
 class DataSource<in Input, out Output>(
     private val remoteFetch: suspend (Input) -> DataWrapper<Output>,
     private val localFetch: suspend (Input) -> DataWrapper<Output>,
-    private val localStore: suspend (DataWrapper<Output>) -> Unit,
-    private val hasExpired: (DataWrapper<Output>) -> Boolean,
+    private val localStore: suspend (Output) -> Unit,
+    private val hasExpired: (Output) -> Boolean,
 ) {
 
     /*
@@ -22,9 +22,15 @@ class DataSource<in Input, out Output>(
             emit(localCache)
         }
 
+        val cacheExpired = if (localCache.hasData()) {
+            hasExpired(localCache.data!!)
+        } else {
+            true
+        }
+
         /* If cache expired or forced update,
             look for fresh data */
-        if (hasExpired(localCache) || force) {
+        if (cacheExpired || force) {
             val remoteWrapper = remoteFetch(args)
 
             if (!remoteWrapper.hasData()) {
@@ -40,7 +46,7 @@ class DataSource<in Input, out Output>(
                 /* Fresh data was successfully obtained.
                    Update cache */
                 emit(remoteWrapper)
-                localStore(remoteWrapper)
+                localStore(remoteWrapper.data!!)
             }
         }
     }

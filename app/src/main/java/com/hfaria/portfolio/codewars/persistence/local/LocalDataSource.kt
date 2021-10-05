@@ -20,9 +20,8 @@ class LocalDataSource @Inject constructor(
             .onFailure { t -> t.printStackTrace()}
             .getOrThrow()
 
-    suspend fun saveUser(userWrapper: DataWrapper<User>) = runQuery {
+    suspend fun saveUser(user: User) = runQuery {
         withContext(Dispatchers.IO) {
-            val user = userWrapper.data!!
             val entity = UserEntity.fromDomain(user)
             userDao.insert(entity)
         }
@@ -52,14 +51,9 @@ class LocalDataSource @Inject constructor(
         }
     }
 
-    fun hasUserCacheExpired(userWrapper: DataWrapper<User>): Boolean {
-        return if (userWrapper.hasData()) {
-            val user = userWrapper.data!!
-            val timeNow = TimeUtil.nowInSeconds()
-            val elapsed = timeNow - user.searchTime
-            elapsed > 10
-        } else {
-            true
-        }
+    fun hasUserCacheExpired(user: User): Boolean {
+        val timeNow = TimeUtil.nowInSeconds()
+        val elapsed = timeNow - user.searchTime
+        return elapsed > 10
     }
 }
