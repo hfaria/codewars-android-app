@@ -4,45 +4,45 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.hfaria.portfolio.codewars.R
-import com.hfaria.portfolio.codewars.persistence.network.api.CompletedChallenge
+import com.hfaria.portfolio.codewars.persistence.network.api.AuthoredChallenge
 
-class CompletedChallengesAdapter()
-    : PagingDataAdapter<CompletedChallenge, CompletedChallengesAdapter.ViewHolder>(ChallengeDiffCallback) {
+class AuthoredChallengesAdapter()
+    : ListAdapter<AuthoredChallenge, AuthoredChallengesAdapter.ViewHolder>(ChallengeDiffCallback) {
 
-    object ChallengeDiffCallback: DiffUtil.ItemCallback<CompletedChallenge>() {
-        override fun areItemsTheSame(oldItem: CompletedChallenge, newItem: CompletedChallenge): Boolean {
+    object ChallengeDiffCallback: DiffUtil.ItemCallback<AuthoredChallenge>() {
+        override fun areItemsTheSame(oldItem: AuthoredChallenge, newItem: AuthoredChallenge): Boolean {
             return oldItem == newItem
         }
 
-        override fun areContentsTheSame(oldItem: CompletedChallenge, newItem: CompletedChallenge): Boolean {
+        override fun areContentsTheSame(oldItem: AuthoredChallenge, newItem: AuthoredChallenge): Boolean {
             return oldItem.id == newItem.id
         }
     }
 
-    class ViewHolder(itemView: View, val onClick: (CompletedChallenge) -> Unit = {}) :
+    class ViewHolder(itemView: View, val onClick: (AuthoredChallenge) -> Unit = {}) :
         RecyclerView.ViewHolder(itemView) {
         private val tvChallengeName: TextView = itemView.findViewById(R.id.tv_challenge_name)
-        private var curChallenge: CompletedChallenge? = null
+        private var curChallenge: AuthoredChallenge? = null
 
         //init {
         //    itemView.setOnClickListener {
-        //        currentCompletedChallenge?.let {
+        //        currentAuthoredChallenge?.let {
         //            onClick(it)
         //        }
         //    }
         //}
 
-        fun bind(challenge: CompletedChallenge?) {
+        fun bind(challenge: AuthoredChallenge?) {
             curChallenge = challenge
             tvChallengeName.text = challenge?.name
         }
     }
 
-    /* Creates and inflates view and return CompletedChallengeViewHolder. */
+    /* Creates and inflates view and return AuthoredChallengeViewHolder. */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.completed_challenges_item, parent, false)

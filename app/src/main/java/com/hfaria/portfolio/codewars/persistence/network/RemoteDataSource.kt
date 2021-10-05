@@ -1,6 +1,7 @@
 package com.hfaria.portfolio.codewars.persistence.network
 
 import com.hfaria.portfolio.codewars.persistence.DataWrapper
+import com.hfaria.portfolio.codewars.persistence.network.api.AuthoredChallenges
 import com.hfaria.portfolio.codewars.persistence.network.api.CodeWarsApi
 import com.hfaria.portfolio.codewars.persistence.network.api.CompletedChallengesPage
 import com.hfaria.portfolio.codewars.persistence.network.api.User
@@ -35,4 +36,15 @@ class RemoteDataSource @Inject constructor(
 
         return data
     }
+
+    suspend fun getAuthoredChallenges(username: String) : DataWrapper<AuthoredChallenges> {
+        var data: DataWrapper<AuthoredChallenges>
+
+        withContext(Dispatchers.IO) {
+            data = api.getAuthoredChallenges(username)
+        }
+
+        return data
+    }
+
 }

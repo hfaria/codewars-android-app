@@ -10,19 +10,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hfaria.portfolio.codewars.R
 import com.hfaria.portfolio.codewars.persistence.network.api.User
 
-object UserDiffCallback: DiffUtil.ItemCallback<User>() {
-    override fun areItemsTheSame(oldItem: User, newItem: User): Boolean {
-        return oldItem == newItem
-    }
-
-    override fun areContentsTheSame(oldItem: User, newItem: User): Boolean {
-        return oldItem.username == newItem.username
-    }
-}
-
 class SearchUserAdapter(
     private val onClick: (User) -> Unit
 ) : ListAdapter<User, SearchUserAdapter.UserViewHolder>(UserDiffCallback) {
+
+    object UserDiffCallback: DiffUtil.ItemCallback<User>() {
+        override fun areItemsTheSame(oldItem: User, newItem: User): Boolean {
+            return oldItem == newItem
+        }
+
+        override fun areContentsTheSame(oldItem: User, newItem: User): Boolean {
+            return oldItem.username == newItem.username
+        }
+    }
 
     class UserViewHolder(itemView: View, val onClick: (User) -> Unit)
         : RecyclerView.ViewHolder(itemView) {

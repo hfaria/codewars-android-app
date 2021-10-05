@@ -1,6 +1,7 @@
 package com.hfaria.portfolio.codewars.ui.user_challenges
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -13,24 +14,24 @@ import com.hfaria.portfolio.codewars.ui.BaseActivity
 import com.hfaria.portfolio.codewars.ui.user_challenges.authored.AuthoredChallengesFragment
 import com.hfaria.portfolio.codewars.ui.user_challenges.completed.CompletedChallengesFragment
 
+class UserChallengesActivity : BaseActivity<UserChallengesViewModel>() {
 
-class UserChallengesAdapter(activity: AppCompatActivity) :
-    FragmentStateAdapter(activity) {
+    class UserChallengesAdapter(activity: AppCompatActivity) :
+        FragmentStateAdapter(activity) {
 
-    override fun getItemCount(): Int {
-        return 2
-    }
+        override fun getItemCount(): Int {
+            return 2
+        }
 
-    override fun createFragment(position: Int): Fragment {
-        return if (position == 0)  {
-            CompletedChallengesFragment()
-        } else {
-            AuthoredChallengesFragment()
+        override fun createFragment(position: Int): Fragment {
+            return if (position == 0) {
+                CompletedChallengesFragment()
+            } else {
+                AuthoredChallengesFragment()
+            }
         }
     }
-}
 
-class UserChallengesActivity : BaseActivity<UserChallengesViewModel>() {
 
     val tabTitles = arrayOf("Completed", "Authored")
     lateinit var binding: UserChallengesBinding
@@ -42,9 +43,16 @@ class UserChallengesActivity : BaseActivity<UserChallengesViewModel>() {
             .inject(this)
         super.onCreate(savedInstanceState)
         setupBinding()
+
         TabLayoutMediator(binding.tlUserChallenges, binding.vpUserChallenges) { tab, position ->
             tab.text = tabTitles[position]
         }.attach()
+
+        viewModel.errorMessage.observe(this) {
+            Toast
+                .makeText(this, it, Toast.LENGTH_LONG)
+                .show()
+        }
     }
 
     fun setupBinding() {

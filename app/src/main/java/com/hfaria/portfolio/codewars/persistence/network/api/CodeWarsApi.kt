@@ -18,4 +18,9 @@ interface CodeWarsApi {
     @GET("users/{uname}/code-challenges/completed?")
     fun getCompletedChallenges(@Path("uname") username: String, @Query("page") page: Int)
     : DataWrapper<CompletedChallengesPage>
+
+    @Headers("Content-Type: application/json")
+    @GET("users/{uname}/code-challenges/authored")
+    fun getAuthoredChallenges(@Path("uname") username: String)
+            : DataWrapper<AuthoredChallenges>
 }

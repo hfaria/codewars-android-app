@@ -48,17 +48,6 @@
             app:layout_constraintRight_toLeftOf="@id/btn_search"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.progressindicator.CircularProgressIndicator
-            android:id="@+id/cpi_fetching"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:indeterminate="true"
-            android:visibility="@{viewmodel.isLoading ? View.VISIBLE : View.GONE}"
-            app:layout_constraintTop_toBottomOf="@id/et_username"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_recent_user"
             app:layoutManager="LinearLayoutManager"
@@ -73,6 +62,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/et_username"
             tools:listitem="@layout/recent_user_item" />
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/cpi_fetching"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:indeterminate="true"
+            android:visibility="@{viewmodel.isLoading ? View.VISIBLE : View.GONE}"
+            app:layout_constraintTop_toBottomOf="@id/et_username"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

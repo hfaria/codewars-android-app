@@ -5,9 +5,11 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.hfaria.portfolio.codewars.persistence.db.LocalDataSource
 import com.hfaria.portfolio.codewars.persistence.network.RemoteDataSource
+import com.hfaria.portfolio.codewars.persistence.network.api.AuthoredChallenges
 import com.hfaria.portfolio.codewars.persistence.network.api.CompletedChallenge
 import com.hfaria.portfolio.codewars.persistence.network.api.User
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class CodeWarsRepository @Inject constructor(
@@ -22,11 +24,16 @@ class CodeWarsRepository @Inject constructor(
         localDataSource::hasUserCacheExpired
     )
 
+    suspend fun getRecentUsers(): Flow<Array<User>>
+            = localDataSource.getRecentUsers()
+
     suspend fun getUser(username: String): Flow<DataWrapper<User>>
         = userDataSource.query(username)
 
-    suspend fun getRecentUsers(): Flow<Array<User>>
-        = localDataSource.getRecentUsers()
+    suspend fun getAuthoredChallenges(username: String): Flow<DataWrapper<AuthoredChallenges>> = flow {
+        val challenges = remoteDataSource.getAuthoredChallenges(username)
+        emit(challenges)
+    }
 
     suspend fun getCompletedChallenges(username: String): Flow<PagingData<CompletedChallenge>> {
         return Pager(
