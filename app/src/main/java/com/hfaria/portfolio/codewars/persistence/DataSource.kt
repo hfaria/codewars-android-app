@@ -7,7 +7,7 @@ class DataSource<in Input, out Output>(
     private val remoteFetch: suspend (Input) -> DataWrapper<Output>,
     private val localFetch: suspend (Input) -> DataWrapper<Output>,
     private val localStore: suspend (Output) -> Unit,
-    private val hasExpired: (Output) -> Boolean,
+    private val hasExpired: suspend (Output) -> Boolean,
 ) {
 
     /*

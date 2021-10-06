@@ -6,10 +6,11 @@ data class AuthoredChallenge(
     var description: String,
     var rank: Int?,
     var rankName: String?,
-    var tags: ArrayList<String>,
-    var languages: ArrayList<String>
+    var tags: List<String>,
+    var languages: List<String>
 )
 
 data class AuthoredChallenges(
-    var data: ArrayList<AuthoredChallenge>
+    var author: String,
+    var data: List<AuthoredChallenge>
 )

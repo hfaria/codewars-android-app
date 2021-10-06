@@ -34,13 +34,14 @@ class RemoteDataSource @Inject constructor(
     }
 
     suspend fun getAuthoredChallenges(username: String) : DataWrapper<AuthoredChallenges> {
-        var data: DataWrapper<AuthoredChallenges>
+        var wrapper : DataWrapper<AuthoredChallenges>
 
         withContext(Dispatchers.IO) {
-            data = api.getAuthoredChallenges(username)
+            wrapper = api.getAuthoredChallenges(username)
+            wrapper.data?.author = username
         }
 
-        return data
+        return wrapper
     }
 
 }

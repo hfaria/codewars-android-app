@@ -32,7 +32,6 @@ class UserChallengesActivity : BaseActivity<UserChallengesViewModel>() {
         }
     }
 
-
     val tabTitles = arrayOf("Completed", "Authored")
     lateinit var binding: UserChallengesBinding
 

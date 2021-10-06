@@ -9,7 +9,8 @@ data class UserEntity(
     @PrimaryKey
     var username: String,
     var name: String,
-    var searchTime: Int
+    var updatedAt: Int,
+    var updatedAuthoredChallengesAt: Int
 ) {
     companion object {
         fun fromDomain(user: User): UserEntity {
@@ -18,12 +19,12 @@ data class UserEntity(
             }
 
             val timeNow = TimeUtil.nowInSeconds()
-            val userEntity = UserEntity(user.username, user.name!!, timeNow)
+            val userEntity = UserEntity(user.username, user.name!!, timeNow, 0)
             return userEntity
         }
 
         fun toDomain(entity: UserEntity): User {
-            return User(entity.username, entity.name, entity.searchTime)
+            return User(entity.username, entity.name, entity.updatedAt)
         }
     }
 }

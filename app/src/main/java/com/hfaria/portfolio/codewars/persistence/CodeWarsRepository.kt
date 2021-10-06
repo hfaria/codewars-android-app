@@ -24,16 +24,21 @@ class CodeWarsRepository @Inject constructor(
         localDataSource::hasUserCacheExpired
     )
 
+    private val authoredChallengesSource = DataSource(
+        remoteDataSource::getAuthoredChallenges,
+        localDataSource::getAuthoredChallenges,
+        localDataSource::saveAuthoredChallenges,
+        localDataSource::hasAuthoredChallengesExpired
+    )
+
     suspend fun getRecentUsers(): Flow<List<User>>
             = localDataSource.getRecentUsers()
 
     suspend fun getUser(username: String): Flow<DataWrapper<User>>
         = userDataSource.query(username)
 
-    suspend fun getAuthoredChallenges(username: String): Flow<DataWrapper<AuthoredChallenges>> = flow {
-        val challenges = remoteDataSource.getAuthoredChallenges(username)
-        emit(challenges)
-    }
+    suspend fun getAuthoredChallenges(username: String): Flow<DataWrapper<AuthoredChallenges>>
+        = authoredChallengesSource.query(username)
 
     suspend fun getCompletedChallenges(username: String): Flow<PagingData<CompletedChallenge>> {
         return Pager(

@@ -1,7 +1,10 @@
 package com.hfaria.portfolio.codewars.persistence.local
 
 import com.hfaria.portfolio.codewars.persistence.DataWrapper
+import com.hfaria.portfolio.codewars.persistence.local.dao.AuthoredChallengeDao
 import com.hfaria.portfolio.codewars.persistence.local.dao.UserDao
+import com.hfaria.portfolio.codewars.persistence.local.entity.AuthoredChallengeEntity
+import com.hfaria.portfolio.codewars.persistence.remote.api.AuthoredChallenges
 import com.hfaria.portfolio.codewars.persistence.remote.api.User
 import com.hfaria.portfolio.codewars.persistence.remote.api.UserEntity
 import com.hfaria.portfolio.codewars.util.TimeUtil
@@ -12,7 +15,8 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class LocalDataSource @Inject constructor(
-    private val userDao: UserDao
+    private val userDao: UserDao,
+    private val authoredChallengeDao: AuthoredChallengeDao
 ) {
 
     protected suspend fun <T> runQuery(query: suspend () -> T) =
@@ -51,9 +55,49 @@ class LocalDataSource @Inject constructor(
         }
     }
 
-    fun hasUserCacheExpired(user: User): Boolean {
+    suspend fun hasUserCacheExpired(user: User): Boolean {
         val timeNow = TimeUtil.nowInSeconds()
-        val elapsed = timeNow - user.searchTime
+        val elapsed = timeNow - user.updatedAt
         return elapsed > 10
+    }
+
+    suspend fun getAuthoredChallenges(username: String): DataWrapper<AuthoredChallenges> = runQuery {
+        val userWithChallenges = userDao.getAuthoredChallenges(username)
+        if (userWithChallenges != null) {
+            val challengeList = userWithChallenges.authoredChallenges.map { entity ->
+                AuthoredChallengeEntity.toDomain(entity)
+            }
+            val challengesObj = AuthoredChallenges(username, challengeList)
+            DataWrapper.success(challengesObj)
+        } else {
+            DataWrapper.error("Authored Challenges not found", null)
+        }
+    }
+
+    suspend fun saveAuthoredChallenges(authoredChallenges: AuthoredChallenges) = runQuery {
+        withContext(Dispatchers.IO) {
+            val author = authoredChallenges.author
+            val entities = authoredChallenges.data.map { chal ->
+                AuthoredChallengeEntity.fromDomain(author, chal)
+            }
+            authoredChallengeDao.deleteAllFromAuthor(author)
+            authoredChallengeDao.insertAll(entities)
+
+            /* Save AuthoredChallenges insertion time in User entity */
+            val userEntity = userDao.getByUsername(author)
+            userEntity!!.updatedAuthoredChallengesAt = TimeUtil.nowInSeconds()
+            userDao.update(userEntity)
+        }
+    }
+
+    suspend fun hasAuthoredChallengesExpired(authoredChallenges: AuthoredChallenges): Boolean = runQuery {
+        val user = userDao.getByUsername(authoredChallenges.author)
+        if (user != null) {
+            val timeNow = TimeUtil.nowInSeconds()
+            val elapsed = timeNow - user.updatedAuthoredChallengesAt
+            elapsed > 10
+        } else {
+            true
+        }
     }
 }
