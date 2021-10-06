@@ -52,6 +52,7 @@ class LocalDataSource @Inject constructor(
             val users: List<User>
 
             withContext(Dispatchers.IO) {
+                userDao.deleteAllButLast(5)
                 users = userDao.getAll().map {
                     UserEntity.toDomain(it)
                 }

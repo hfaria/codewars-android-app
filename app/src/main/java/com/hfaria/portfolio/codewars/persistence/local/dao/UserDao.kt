@@ -17,6 +17,9 @@ interface UserDao: BaseDao<UserEntity> {
     @Query("DELETE from user")
     suspend fun deleteAll()
 
+    @Query("DELETE from user WHERE username NOT IN (SELECT username FROM user ORDER BY updatedAt DESC LIMIT :limit)")
+    suspend fun deleteAllButLast(limit: Int)
+
     @Transaction
     @Query("SELECT * FROM user WHERE username = :username")
     suspend fun getAuthoredChallenges(username: String): UserWithAuthoredChallenges?

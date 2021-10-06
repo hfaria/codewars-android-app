@@ -34,11 +34,10 @@ class SearchUserViewModel @Inject constructor(
                 .onStart { _isLoading.value = true }
                 .onCompletion { _isLoading.value = false }
                 .collect { response ->
-                    if (response.status == Status.SUCCESS) {
-                        fetchRecentUsers()
-                    } else {
+                    if (response.status != Status.SUCCESS) {
                         _errorMessage.value = response.message!!
                     }
+                    fetchRecentUsers()
                 }
         }
     }
