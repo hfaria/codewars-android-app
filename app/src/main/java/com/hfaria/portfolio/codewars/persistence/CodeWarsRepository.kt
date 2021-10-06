@@ -32,6 +32,13 @@ class CodeWarsRepository @Inject constructor(
         localDataSource::hasAuthoredChallengesExpired
     )
 
+    private val challengeProfileSource = DataSource(
+        remoteDataSource::getChallengeProfile,
+        localDataSource::getChallengeProfileById,
+        localDataSource::saveChallengeProfile,
+        localDataSource::hasChallengeProfileCacheExpired
+    )
+
     suspend fun getRecentUsers(): Flow<List<User>>
             = localDataSource.getRecentUsers()
 
@@ -41,10 +48,8 @@ class CodeWarsRepository @Inject constructor(
     suspend fun getAuthoredChallenges(username: String): Flow<DataWrapper<AuthoredChallenges>>
         = authoredChallengesSource.query(username)
 
-    suspend fun getChallengeProfile(challengeId: String): Flow<DataWrapper<ChallengeProfile>> = flow {
-        val profile = remoteDataSource.getChallengeProfile(challengeId)
-        emit(profile)
-    }
+    suspend fun getChallengeProfile(challengeId: String): Flow<DataWrapper<ChallengeProfile>>
+        = challengeProfileSource.query(challengeId)
 
     suspend fun getCompletedChallenges(username: String): Flow<PagingData<CompletedChallenge>> {
         return Pager(

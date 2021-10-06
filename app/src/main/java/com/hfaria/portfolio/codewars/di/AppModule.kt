@@ -3,6 +3,7 @@ package com.hfaria.portfolio.codewars.di
 import android.app.Application
 import androidx.room.Room
 import com.hfaria.portfolio.codewars.persistence.local.dao.AuthoredChallengeDao
+import com.hfaria.portfolio.codewars.persistence.local.dao.ChallengeProfileDao
 import com.hfaria.portfolio.codewars.persistence.local.dao.UserDao
 import com.hfaria.portfolio.codewars.persistence.local.db.AppDatabase
 import com.hfaria.portfolio.codewars.persistence.local.db.DATABASE_NAME
@@ -47,5 +48,11 @@ class AppModule {
     @Provides
     fun provideAuthoredChallengeDao(db: AppDatabase): AuthoredChallengeDao {
         return db.authoredChallengeDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideChallengeProfileDao(db: AppDatabase): ChallengeProfileDao {
+        return db.challengeProfileDao()
     }
 }

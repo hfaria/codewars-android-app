@@ -1,10 +1,13 @@
 package com.hfaria.portfolio.codewars.persistence.local
 
+import com.hfaria.portfolio.codewars.domain.ChallengeProfile
 import com.hfaria.portfolio.codewars.persistence.DataWrapper
 import com.hfaria.portfolio.codewars.persistence.local.dao.AuthoredChallengeDao
+import com.hfaria.portfolio.codewars.persistence.local.dao.ChallengeProfileDao
 import com.hfaria.portfolio.codewars.persistence.local.dao.UserDao
 import com.hfaria.portfolio.codewars.persistence.local.entity.AuthoredChallengeEntity
 import com.hfaria.portfolio.codewars.persistence.remote.api.AuthoredChallenges
+import com.hfaria.portfolio.codewars.persistence.remote.api.ChallengeProfileEntity
 import com.hfaria.portfolio.codewars.persistence.remote.api.User
 import com.hfaria.portfolio.codewars.persistence.remote.api.UserEntity
 import com.hfaria.portfolio.codewars.util.TimeUtil
@@ -16,7 +19,8 @@ import javax.inject.Inject
 
 class LocalDataSource @Inject constructor(
     private val userDao: UserDao,
-    private val authoredChallengeDao: AuthoredChallengeDao
+    private val authoredChallengeDao: AuthoredChallengeDao,
+    private val challengeProfileDao: ChallengeProfileDao
 ) {
 
     protected suspend fun <T> runQuery(query: suspend () -> T) =
@@ -100,4 +104,28 @@ class LocalDataSource @Inject constructor(
             true
         }
     }
+
+    suspend fun saveChallengeProfile(challenge: ChallengeProfile) = runQuery {
+        withContext(Dispatchers.IO) {
+            val entity = ChallengeProfileEntity.fromDomain(challenge)
+            challengeProfileDao.insert(entity)
+        }
+    }
+
+    suspend fun getChallengeProfileById(id : String): DataWrapper<ChallengeProfile> = runQuery {
+        val entity = challengeProfileDao.getById(id)
+        if (entity != null) {
+            val challenge = ChallengeProfileEntity.toDomain(entity)
+            DataWrapper.success(challenge)
+        } else {
+            DataWrapper.error("ChallengeProfile not found", null)
+        }
+    }
+
+    suspend fun hasChallengeProfileCacheExpired(challenge: ChallengeProfile): Boolean {
+        val timeNow = TimeUtil.nowInSeconds()
+        val elapsed = timeNow - challenge.updatedAt
+        return elapsed > 10
+    }
+
 }
