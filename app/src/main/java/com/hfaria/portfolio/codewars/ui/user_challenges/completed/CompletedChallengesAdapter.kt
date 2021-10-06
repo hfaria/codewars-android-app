@@ -8,26 +8,26 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.hfaria.portfolio.codewars.R
-import com.hfaria.portfolio.codewars.persistence.remote.api.CompletedChallenge
+import com.hfaria.portfolio.codewars.persistence.local.entity.CompletedChallengeEntity
 
 class CompletedChallengesAdapter(
-    private val onClick: (CompletedChallenge) -> Unit
-) : PagingDataAdapter<CompletedChallenge, CompletedChallengesAdapter.ViewHolder>(ChallengeDiffCallback) {
+    private val onClick: (CompletedChallengeEntity) -> Unit
+) : PagingDataAdapter<CompletedChallengeEntity, CompletedChallengesAdapter.ViewHolder>(ChallengeDiffCallback) {
 
-    object ChallengeDiffCallback: DiffUtil.ItemCallback<CompletedChallenge>() {
-        override fun areItemsTheSame(oldItem: CompletedChallenge, newItem: CompletedChallenge): Boolean {
+    object ChallengeDiffCallback: DiffUtil.ItemCallback<CompletedChallengeEntity>() {
+        override fun areItemsTheSame(oldItem: CompletedChallengeEntity, newItem: CompletedChallengeEntity): Boolean {
             return oldItem == newItem
         }
 
-        override fun areContentsTheSame(oldItem: CompletedChallenge, newItem: CompletedChallenge): Boolean {
+        override fun areContentsTheSame(oldItem: CompletedChallengeEntity, newItem: CompletedChallengeEntity): Boolean {
             return oldItem.id == newItem.id
         }
     }
 
-    class ViewHolder(itemView: View, val onClick: (CompletedChallenge) -> Unit) :
+    class ViewHolder(itemView: View, val onClick: (CompletedChallengeEntity) -> Unit) :
         RecyclerView.ViewHolder(itemView) {
         private val tvChallengeName: TextView = itemView.findViewById(R.id.tv_challenge_name)
-        private var curChallenge: CompletedChallenge? = null
+        private var curChallenge: CompletedChallengeEntity? = null
 
         init {
             itemView.setOnClickListener {
@@ -37,7 +37,7 @@ class CompletedChallengesAdapter(
             }
         }
 
-        fun bind(challenge: CompletedChallenge?) {
+        fun bind(challenge: CompletedChallengeEntity?) {
             curChallenge = challenge
             tvChallengeName.text = challenge?.name
         }

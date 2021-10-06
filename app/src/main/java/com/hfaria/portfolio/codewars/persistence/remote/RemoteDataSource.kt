@@ -11,7 +11,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class RemoteDataSource @Inject constructor(
-    private val api: CodeWarsApi
+    val api: CodeWarsApi
 ) {
 
     suspend fun getUserByUsername(username: String) : DataWrapper<User> {

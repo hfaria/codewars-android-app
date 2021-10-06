@@ -1,11 +1,9 @@
 package com.hfaria.portfolio.codewars.persistence.local.dao
 
 import androidx.room.Dao
-import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import com.hfaria.portfolio.codewars.persistence.local.entity.UserWithAuthoredChallenges
-import com.hfaria.portfolio.codewars.persistence.local.entity.AuthoredChallengeEntity
 import com.hfaria.portfolio.codewars.persistence.remote.api.UserEntity
 
 @Dao

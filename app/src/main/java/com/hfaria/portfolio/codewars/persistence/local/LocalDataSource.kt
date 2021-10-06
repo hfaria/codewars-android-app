@@ -2,9 +2,8 @@ package com.hfaria.portfolio.codewars.persistence.local
 
 import com.hfaria.portfolio.codewars.domain.ChallengeProfile
 import com.hfaria.portfolio.codewars.persistence.DataWrapper
-import com.hfaria.portfolio.codewars.persistence.local.dao.AuthoredChallengeDao
-import com.hfaria.portfolio.codewars.persistence.local.dao.ChallengeProfileDao
-import com.hfaria.portfolio.codewars.persistence.local.dao.UserDao
+import com.hfaria.portfolio.codewars.persistence.local.dao.*
+import com.hfaria.portfolio.codewars.persistence.local.db.AppDatabase
 import com.hfaria.portfolio.codewars.persistence.local.entity.AuthoredChallengeEntity
 import com.hfaria.portfolio.codewars.persistence.remote.api.AuthoredChallenges
 import com.hfaria.portfolio.codewars.persistence.remote.api.ChallengeProfileEntity
@@ -20,7 +19,10 @@ import javax.inject.Inject
 class LocalDataSource @Inject constructor(
     private val userDao: UserDao,
     private val authoredChallengeDao: AuthoredChallengeDao,
-    private val challengeProfileDao: ChallengeProfileDao
+    private val challengeProfileDao: ChallengeProfileDao,
+    val completedChallengeDao: CompletedChallengeDao,
+    val remoteKeysDao: RemoteKeysDao,
+    val database: AppDatabase
 ) {
 
     protected suspend fun <T> runQuery(query: suspend () -> T) =

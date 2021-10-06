@@ -1,15 +1,9 @@
 package com.hfaria.portfolio.codewars.persistence.remote.api
 
-data class CompletedChallenge(
-    var id: String,
-    var name: String,
-    var slug: String,
-    var completedAt: String,
-    var completedLanguages: ArrayList<String>
-)
+import com.hfaria.portfolio.codewars.persistence.local.entity.CompletedChallengeEntity
 
 data class CompletedChallengesPage(
     var totalPages: Int,
     var totalItems: Int,
-    var data: ArrayList<CompletedChallenge>
+    var data: List<CompletedChallengeEntity>
 )

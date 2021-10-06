@@ -3,16 +3,16 @@ package com.hfaria.portfolio.codewars.persistence
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.hfaria.portfolio.codewars.persistence.remote.RemoteDataSource
-import com.hfaria.portfolio.codewars.persistence.remote.api.CompletedChallenge
+import com.hfaria.portfolio.codewars.persistence.local.entity.CompletedChallengeEntity
 import retrofit2.HttpException
 import java.io.IOException
 
 class PaginatedDataSource (
     private val username: String,
     private val remoteDataSource: RemoteDataSource,
-) : PagingSource<Int, CompletedChallenge>() {
+) : PagingSource<Int, CompletedChallengeEntity>() {
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, CompletedChallenge> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, CompletedChallengeEntity> {
         val position = params.key ?: 0
         return try {
             val response = remoteDataSource.getCompletedChallenges(username, position)
@@ -29,7 +29,7 @@ class PaginatedDataSource (
         }
     }
 
-    override fun getRefreshKey(state: PagingState<Int, CompletedChallenge>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, CompletedChallengeEntity>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             state.anchorPosition
         }

@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import com.hfaria.portfolio.codewars.CodeWarsApp
 import com.hfaria.portfolio.codewars.databinding.CompletedChallengesBinding
-import com.hfaria.portfolio.codewars.persistence.remote.api.CompletedChallenge
+import com.hfaria.portfolio.codewars.persistence.local.entity.CompletedChallengeEntity
 import com.hfaria.portfolio.codewars.ui.BaseFragment
 import com.hfaria.portfolio.codewars.ui.challenge_profile.ChallengeProfileActivity
 import com.hfaria.portfolio.codewars.ui.user_challenges.UserChallengesViewModel
@@ -58,7 +58,7 @@ class CompletedChallengesFragment : BaseFragment<UserChallengesViewModel>() {
         }
     }
 
-    private fun handleSelectedChallenge(challenge: CompletedChallenge) {
+    private fun handleSelectedChallenge(challenge: CompletedChallengeEntity) {
         val it = Intent(activity, ChallengeProfileActivity::class.java)
         it.putExtra("challengeId", challenge.id)
         startActivity(it)

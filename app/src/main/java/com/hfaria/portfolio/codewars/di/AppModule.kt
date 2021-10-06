@@ -2,9 +2,7 @@ package com.hfaria.portfolio.codewars.di
 
 import android.app.Application
 import androidx.room.Room
-import com.hfaria.portfolio.codewars.persistence.local.dao.AuthoredChallengeDao
-import com.hfaria.portfolio.codewars.persistence.local.dao.ChallengeProfileDao
-import com.hfaria.portfolio.codewars.persistence.local.dao.UserDao
+import com.hfaria.portfolio.codewars.persistence.local.dao.*
 import com.hfaria.portfolio.codewars.persistence.local.db.AppDatabase
 import com.hfaria.portfolio.codewars.persistence.local.db.DATABASE_NAME
 import com.hfaria.portfolio.codewars.persistence.remote.api.CODEWARS_ENDPOINT
@@ -54,5 +52,17 @@ class AppModule {
     @Provides
     fun provideChallengeProfileDao(db: AppDatabase): ChallengeProfileDao {
         return db.challengeProfileDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideCompletedChallengeDao(db: AppDatabase): CompletedChallengeDao {
+        return db.completedChallengeDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideRemoteKeyDao(db: AppDatabase): RemoteKeysDao {
+        return db.remoteKeyDao()
     }
 }

@@ -1,18 +1,20 @@
 package com.hfaria.portfolio.codewars.ui.user_challenges
 
 import androidx.lifecycle.*
+import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingData
 import com.hfaria.portfolio.codewars.persistence.CodeWarsRepository
 import com.hfaria.portfolio.codewars.persistence.Status
 import com.hfaria.portfolio.codewars.persistence.remote.api.AuthoredChallenge
-import com.hfaria.portfolio.codewars.persistence.remote.api.CompletedChallenge
+import com.hfaria.portfolio.codewars.persistence.local.entity.CompletedChallengeEntity
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class UserChallengesViewModel @Inject constructor(
+class UserChallengesViewModel
+@Inject constructor(
     private val repository: CodeWarsRepository
 ) : ViewModel() {
 
@@ -24,9 +26,9 @@ class UserChallengesViewModel @Inject constructor(
         get() = _errorMessage
     private val _errorMessage = MutableLiveData<String>()
 
-    val completedChallenges: LiveData<PagingData<CompletedChallenge>>
+    val completedChallenges: LiveData<PagingData<CompletedChallengeEntity>>
         get() = _completedChallenges
-    private val _completedChallenges = MutableLiveData<PagingData<CompletedChallenge>>()
+    private val _completedChallenges = MutableLiveData<PagingData<CompletedChallengeEntity>>()
 
     val authoredChallenges: LiveData<List<AuthoredChallenge>>
         get() = _authoredChallenges
