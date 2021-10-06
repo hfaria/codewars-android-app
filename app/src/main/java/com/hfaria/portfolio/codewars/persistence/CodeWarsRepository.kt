@@ -3,6 +3,7 @@ package com.hfaria.portfolio.codewars.persistence
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import com.hfaria.portfolio.codewars.domain.ChallengeProfile
 import com.hfaria.portfolio.codewars.persistence.local.LocalDataSource
 import com.hfaria.portfolio.codewars.persistence.remote.RemoteDataSource
 import com.hfaria.portfolio.codewars.persistence.remote.api.AuthoredChallenges
@@ -39,6 +40,11 @@ class CodeWarsRepository @Inject constructor(
 
     suspend fun getAuthoredChallenges(username: String): Flow<DataWrapper<AuthoredChallenges>>
         = authoredChallengesSource.query(username)
+
+    suspend fun getChallengeProfile(challengeId: String): Flow<DataWrapper<ChallengeProfile>> = flow {
+        val profile = remoteDataSource.getChallengeProfile(challengeId)
+        emit(profile)
+    }
 
     suspend fun getCompletedChallenges(username: String): Flow<PagingData<CompletedChallenge>> {
         return Pager(

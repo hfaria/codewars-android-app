@@ -1,5 +1,6 @@
 package com.hfaria.portfolio.codewars.persistence.remote.api
 
+import com.hfaria.portfolio.codewars.domain.ChallengeProfile
 import com.hfaria.portfolio.codewars.persistence.DataWrapper
 import retrofit2.http.GET
 import retrofit2.http.Headers
@@ -23,4 +24,9 @@ interface CodeWarsApi {
     @GET("users/{uname}/code-challenges/authored")
     fun getAuthoredChallenges(@Path("uname") username: String)
             : DataWrapper<AuthoredChallenges>
+
+    @Headers("Content-Type: application/json")
+    @GET("code-challenges/{challenge}")
+    fun getChallengeProfile(@Path("challenge") challengeId: String)
+            : DataWrapper<ChallengeProfile>
 }

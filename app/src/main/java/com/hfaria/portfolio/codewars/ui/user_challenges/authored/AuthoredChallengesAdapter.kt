@@ -1,4 +1,4 @@
-package com.hfaria.portfolio.codewars.ui.challenge_challenges
+package com.hfaria.portfolio.codewars.ui.user_challenges.authored
 
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hfaria.portfolio.codewars.R
 import com.hfaria.portfolio.codewars.persistence.remote.api.AuthoredChallenge
 
-class AuthoredChallengesAdapter()
-    : ListAdapter<AuthoredChallenge, AuthoredChallengesAdapter.ViewHolder>(ChallengeDiffCallback) {
+class AuthoredChallengesAdapter(
+    private val onClick: (AuthoredChallenge) -> Unit
+) : ListAdapter<AuthoredChallenge, AuthoredChallengesAdapter.ViewHolder>(ChallengeDiffCallback) {
 
     object ChallengeDiffCallback: DiffUtil.ItemCallback<AuthoredChallenge>() {
         override fun areItemsTheSame(oldItem: AuthoredChallenge, newItem: AuthoredChallenge): Boolean {
@@ -23,18 +24,18 @@ class AuthoredChallengesAdapter()
         }
     }
 
-    class ViewHolder(itemView: View, val onClick: (AuthoredChallenge) -> Unit = {}) :
+    class ViewHolder(itemView: View, val onClick: (AuthoredChallenge) -> Unit) :
         RecyclerView.ViewHolder(itemView) {
         private val tvChallengeName: TextView = itemView.findViewById(R.id.tv_challenge_name)
         private var curChallenge: AuthoredChallenge? = null
 
-        //init {
-        //    itemView.setOnClickListener {
-        //        currentAuthoredChallenge?.let {
-        //            onClick(it)
-        //        }
-        //    }
-        //}
+        init {
+            itemView.setOnClickListener {
+                curChallenge?.let {
+                    onClick(it)
+                }
+            }
+        }
 
         fun bind(challenge: AuthoredChallenge?) {
             curChallenge = challenge
@@ -46,7 +47,7 @@ class AuthoredChallengesAdapter()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.completed_challenges_item, parent, false)
-        return ViewHolder(view)
+        return ViewHolder(view, onClick)
     }
 
     /* Gets current user and uses it to bind view. */

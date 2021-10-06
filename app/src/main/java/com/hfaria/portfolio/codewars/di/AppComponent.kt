@@ -2,6 +2,7 @@ package com.hfaria.portfolio.codewars.di
 
 import android.app.Application
 import com.hfaria.portfolio.codewars.CodeWarsApp
+import com.hfaria.portfolio.codewars.ui.challenge_profile.di.ChallengeProfileComponent
 import com.hfaria.portfolio.codewars.ui.search_user.di.SearchUserComponent
 import com.hfaria.portfolio.codewars.ui.user_challenges.di.UserChallengesComponent
 import dagger.BindsInstance
@@ -30,4 +31,5 @@ interface AppComponent {
 
     fun userChallengesComponent(): UserChallengesComponent.Factory
     fun searchUserComponent(): SearchUserComponent.Factory
+    fun challengeProfileComponent(): ChallengeProfileComponent.Factory
 }

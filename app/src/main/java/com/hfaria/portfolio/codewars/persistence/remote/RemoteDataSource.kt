@@ -1,5 +1,6 @@
 package com.hfaria.portfolio.codewars.persistence.remote
 
+import com.hfaria.portfolio.codewars.domain.ChallengeProfile
 import com.hfaria.portfolio.codewars.persistence.DataWrapper
 import com.hfaria.portfolio.codewars.persistence.remote.api.AuthoredChallenges
 import com.hfaria.portfolio.codewars.persistence.remote.api.CodeWarsApi
@@ -44,4 +45,13 @@ class RemoteDataSource @Inject constructor(
         return wrapper
     }
 
+    suspend fun getChallengeProfile(challengeId: String) : DataWrapper<ChallengeProfile> {
+        var wrapper : DataWrapper<ChallengeProfile>
+
+        withContext(Dispatchers.IO) {
+            wrapper = api.getChallengeProfile(challengeId)
+        }
+
+        return wrapper
+    }
 }
