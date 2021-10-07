@@ -14,7 +14,7 @@ data class UserEntity(
     var updatedAuthoredChallengesAt: Int,
     @Embedded
     var overallRank: Rank,
-    var languageRanks: List<Rank>
+    var languageRanks: List<LanguageRank>
 ) {
     companion object {
         fun fromDomain(user: User): UserEntity {

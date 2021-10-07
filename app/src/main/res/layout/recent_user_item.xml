@@ -17,20 +17,61 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_height="wrap_content"
-            android:layout_width="match_parent">
+            android:layout_width="match_parent"
+            android:padding="8dp">
 
             <TextView
                 tools:text="hfaria"
                 android:id="@+id/tv_username"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="8dp"
                 android:layout_marginBottom="8dp"
                 android:text="@{user.username}"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                tools:text="Henrique Faria"
+                android:id="@+id/tv_name"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@{user.name}"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_username" />
+
+            <TextView
+                tools:text="4 kyu (800)"
+                android:id="@+id/tv_rank_title"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@{user.ranks.overall.getDescription()}"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_username"
+                app:layout_constraintBottom_toBottomOf="@id/tv_username" />
+
+            <View
+                android:id="@+id/divider"
+                android:background="@color/gray_200"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_name" />
+
+            <TextView
+                tools:text="Perl (800)"
+                android:id="@+id/tv_bestLanguage"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@{`Best Language: ` + user.ranks.getBestLanguageDescription()}"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
