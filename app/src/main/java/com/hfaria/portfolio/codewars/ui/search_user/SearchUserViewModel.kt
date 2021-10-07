@@ -18,6 +18,10 @@ class SearchUserViewModel @Inject constructor(
 
     val orderByRankChecked: MutableLiveData<Boolean> = MutableLiveData()
 
+    val searchedUser: LiveData<User>
+        get() = _searchedUser
+    private val _searchedUser = MutableLiveData<User>()
+
     val recentUsers: LiveData<List<User>>
         get() = _recentUsers
     private val _recentUsers = MutableLiveData<List<User>>()
@@ -38,8 +42,10 @@ class SearchUserViewModel @Inject constructor(
                 .collect { response ->
                     if (response.status != Status.SUCCESS) {
                         _errorMessage.value = response.message!!
+                    } else {
+                        fetchRecentUsers()
+                        _searchedUser.value = response.data!!
                     }
-                    fetchRecentUsers()
                 }
         }
     }

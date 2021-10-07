@@ -44,9 +44,10 @@ class DataSource<in Input, out Output>(
                 }
             } else {
                 /* Fresh data was successfully obtained.
-                   Update cache */
-                emit(remoteWrapper)
+                   Update cache
+                   and emit fresh data */
                 localStore(remoteWrapper.data!!)
+                emit(remoteWrapper)
             }
         }
     }

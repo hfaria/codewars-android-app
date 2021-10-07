@@ -10,6 +10,7 @@ import com.hfaria.portfolio.codewars.databinding.SearchUserBinding
 import com.hfaria.portfolio.codewars.persistence.remote.api.User
 import com.hfaria.portfolio.codewars.ui.BaseActivity
 import com.hfaria.portfolio.codewars.ui.user_challenges.UserChallengesActivity
+import com.hfaria.portfolio.codewars.util.ToastUtil
 
 class SearchUserActivity : BaseActivity<SearchUserViewModel>() {
 
@@ -41,10 +42,12 @@ class SearchUserActivity : BaseActivity<SearchUserViewModel>() {
             }
         })
 
+        viewModel.searchedUser.observe(this) {
+            handleSelectedUser(it)
+        }
+
         viewModel.errorMessage.observe(this) {
-            Toast
-                .makeText(this, it, Toast.LENGTH_LONG)
-                .show()
+            ToastUtil.long(this, it)
         }
     }
 
