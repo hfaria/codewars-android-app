@@ -3,6 +3,7 @@ package com.hfaria.portfolio.codewars.persistence
 enum class Status {
     SUCCESS,
     ERROR,
+    EXCEPTION,
 }
 
 /*
@@ -20,8 +21,12 @@ data class DataWrapper<out T>(val status: Status,
             return DataWrapper(Status.SUCCESS, data, null)
         }
 
-        fun <T> error(msg: String, data: T?): DataWrapper<T> {
+        fun <T> error(msg: String, data: T? = null): DataWrapper<T> {
             return DataWrapper(Status.ERROR, data, msg)
+        }
+
+        fun <T> exception(t: Throwable, data: T? = null): DataWrapper<T> {
+            return DataWrapper(Status.EXCEPTION, data, t.message)
         }
     }
 

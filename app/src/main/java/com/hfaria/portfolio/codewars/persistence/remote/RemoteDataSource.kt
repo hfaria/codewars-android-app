@@ -14,44 +14,28 @@ class RemoteDataSource @Inject constructor(
     val api: CodeWarsApi
 ) {
 
-    suspend fun getUserByUsername(username: String) : DataWrapper<User> {
-        var userData: DataWrapper<User>
-
-        withContext(Dispatchers.IO) {
-            userData = api.getUsers(username)
+    protected suspend fun <T> runOnIOThread(call: suspend () -> DataWrapper<T>)
+        : DataWrapper<T> {
+        return withContext(Dispatchers.IO) {
+            call.runCatching { invoke() }
+                .onFailure { t ->  DataWrapper.exception(t, null)}
+                .getOrThrow()
         }
-
-        return userData
     }
 
-    suspend fun getCompletedChallenges(username: String, page: Int) : DataWrapper<CompletedChallengesPage> {
-        var data: DataWrapper<CompletedChallengesPage>
+    suspend fun getUserByUsername(username: String): DataWrapper<User>
+        = runOnIOThread { api.getUsers(username) }
 
-        withContext(Dispatchers.IO) {
-            data = api.getCompletedChallenges(username, page)
-        }
+    suspend fun getCompletedChallenges(username: String, page: Int): DataWrapper<CompletedChallengesPage>
+        = runOnIOThread { api.getCompletedChallenges(username, page) }
 
-        return data
-    }
-
-    suspend fun getAuthoredChallenges(username: String) : DataWrapper<AuthoredChallenges> {
-        var wrapper : DataWrapper<AuthoredChallenges>
-
-        withContext(Dispatchers.IO) {
-            wrapper = api.getAuthoredChallenges(username)
+    suspend fun getAuthoredChallenges(username: String): DataWrapper<AuthoredChallenges>
+        = runOnIOThread {
+            val wrapper = api.getAuthoredChallenges(username)
             wrapper.data?.author = username
+            wrapper
         }
 
-        return wrapper
-    }
-
-    suspend fun getChallengeProfile(challengeId: String) : DataWrapper<ChallengeProfile> {
-        var wrapper : DataWrapper<ChallengeProfile>
-
-        withContext(Dispatchers.IO) {
-            wrapper = api.getChallengeProfile(challengeId)
-        }
-
-        return wrapper
-    }
+    suspend fun getChallengeProfile(challengeId: String): DataWrapper<ChallengeProfile>
+        = runOnIOThread{ api.getChallengeProfile(challengeId) }
 }
