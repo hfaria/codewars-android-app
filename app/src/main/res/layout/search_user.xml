@@ -18,7 +18,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/purple_500"
+        android:background="@color/gray_900"
         tools:context=".ui.search_user.SearchUserActivity">
 
         <Button
@@ -40,6 +40,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginRight="16dp"
             android:layout_marginLeft="16dp"
+            android:hint="@string/search_an_username"
             android:autofillHints="Enter a user..."
             android:inputType="text"
             android:text="@={viewmodel.username}"
@@ -48,19 +49,30 @@
             app:layout_constraintRight_toLeftOf="@id/btn_search"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/tv_label_recent_users"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/recently_searched"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_username"
+            />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_recent_user"
-            app:layoutManager="LinearLayoutManager"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginBottom="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            app:layoutManager="LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/et_username"
+            app:layout_constraintTop_toBottomOf="@id/tv_label_recent_users"
             tools:listitem="@layout/recent_user_item" />
 
         <com.google.android.material.progressindicator.CircularProgressIndicator

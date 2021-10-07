@@ -1,13 +1,11 @@
 package com.hfaria.portfolio.codewars.ui.search_user
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.hfaria.portfolio.codewars.R
+import com.hfaria.portfolio.codewars.databinding.RecentUserItemBinding
 import com.hfaria.portfolio.codewars.persistence.remote.api.User
 
 class SearchUserAdapter(
@@ -24,9 +22,9 @@ class SearchUserAdapter(
         }
     }
 
-    class UserViewHolder(itemView: View, val onClick: (User) -> Unit)
-        : RecyclerView.ViewHolder(itemView) {
-        private val tvUserName: TextView = itemView.findViewById(R.id.tv_username)
+    class UserViewHolder(val binding: RecentUserItemBinding, val onClick: (User) -> Unit)
+    : RecyclerView.ViewHolder(binding.root) {
+
         private var currentUser: User? = null
 
         init {
@@ -39,15 +37,15 @@ class SearchUserAdapter(
 
         fun bind(user: User) {
             currentUser =  user
-            tvUserName.text = user.username
+            binding.user = user
         }
     }
 
     /* Creates and inflates view and return UserViewHolder. */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.recent_user_item, parent, false)
-        return UserViewHolder(view, onClick)
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = RecentUserItemBinding.inflate(inflater, parent, false)
+        return UserViewHolder(binding, onClick)
     }
 
     /* Gets current user and uses it to bind view. */
