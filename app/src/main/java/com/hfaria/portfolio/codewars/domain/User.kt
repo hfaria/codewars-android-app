@@ -1,49 +1,53 @@
 package com.hfaria.portfolio.codewars.persistence.remote.api
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import com.google.gson.JsonDeserializationContext
+import com.google.gson.JsonDeserializer
+import com.google.gson.JsonElement
+import com.google.gson.annotations.JsonAdapter
 import com.google.gson.annotations.SerializedName
+import java.lang.reflect.Type
+
+class LanguageRanksDeserializer: JsonDeserializer<List<Rank>> {
+    override fun deserialize(
+        json: JsonElement?,
+        typeOfT: Type?,
+        context: JsonDeserializationContext?
+    ): List<Rank> {
+        val list: MutableList<Rank> = mutableListOf()
+        val jObj = json?.asJsonObject
+        var rank: Rank
+
+        if (jObj != null) {
+            val entrySet = jObj.entrySet()
+            entrySet.iterator().forEach {
+                if (it.value.isJsonObject) {
+                    rank = context!!.deserialize(it.value, Rank::class.java)
+                    list.add(rank)
+                }
+            }
+        }
+
+        return list
+    }
+}
 
 data class Rank(
-    @SerializedName("rank")
     var rank: Int,
-    @SerializedName("score")
     var score: Int,
     @SerializedName("name")
-    var name: String,
-    @SerializedName("color")
+    var title: String,
     var color: String,
 )
 
 data class UserRanks(
-    @SerializedName("overall")
     var overall: Rank,
-    //@SerializedName("languages")
-    //var languages: ArrayList<Rank>,
-)
-
-data class CodeChallenges(
-    @SerializedName("totalAuthored")
-    var totalAuthored: Int,
-    @SerializedName("totalCompleted")
-    var totalCompleted: Int
+    @JsonAdapter(LanguageRanksDeserializer::class)
+    var languages: List<Rank>,
 )
 
 data class User(
     var username: String,
     var name: String?,
     var updatedAt: Int,
-
-    //@SerializedName("clan")
-    //var clan: String,
-    //@SerializedName("honor")
-    //var honor: Int,
-    //@SerializedName("leaderboardPosition")
-    //var leaderBoardPosition: String,
-    //@SerializedName("skills")
-    //var skills: ArrayList<String>,
-    //@SerializedName("codeChallenges")
-    //var codeChallengesCount: CodeChallenges,
-    //@SerializedName("ranks")
-    //var ranks: UserRanks
+    var ranks: UserRanks
 )
