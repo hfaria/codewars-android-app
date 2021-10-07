@@ -37,7 +37,7 @@ class SearchUserActivity : BaseActivity<SearchUserViewModel>() {
     fun setupObservables() {
         viewModel.recentUsers.observe(this, {
             it?.let {
-                adapter.submitList(it.toList())
+                adapter.submitList(it)
             }
         })
 

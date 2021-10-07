@@ -2,4 +2,5 @@
 <resources>
     <string name="search_an_username">Search an username...</string>
     <string name="recently_searched">Recently searched:</string>
+    <string name="order_by_rank">Order by Rank</string>
 </resources>

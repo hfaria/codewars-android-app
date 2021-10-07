@@ -16,9 +16,11 @@ class SearchUserViewModel @Inject constructor(
 
     val username: MutableLiveData<String> = MutableLiveData()
 
-    val recentUsers: LiveData<Array<User>>
+    val orderByRankChecked: MutableLiveData<Boolean> = MutableLiveData()
+
+    val recentUsers: LiveData<List<User>>
         get() = _recentUsers
-    private val _recentUsers = MutableLiveData<Array<User>>()
+    private val _recentUsers = MutableLiveData<List<User>>()
 
     val isLoading: LiveData<Boolean>
         get() = _isLoading
@@ -45,8 +47,19 @@ class SearchUserViewModel @Inject constructor(
     fun fetchRecentUsers() {
         viewModelScope.launch {
             repository.getRecentUsers().collect { response ->
-                _recentUsers.value = response.toTypedArray()
+                _recentUsers.value = response.sortedByDescending { it.updatedAt }
             }
+        }
+    }
+
+    fun handleOrderByRankRequest() {
+        val recentUsers = _recentUsers.value!!
+        val checked = orderByRankChecked.value ?: false
+
+        if (checked) {
+            _recentUsers.value = recentUsers.sortedByDescending { it.ranks.overall.score }
+        } else {
+            _recentUsers.value = recentUsers.sortedByDescending { it.updatedAt }
         }
     }
 }
