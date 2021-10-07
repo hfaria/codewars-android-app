@@ -35,6 +35,11 @@ class SearchUserViewModel @Inject constructor(
     private val _errorMessage = MutableLiveData<String>()
 
     fun onSearchRequested() {
+        if (username.value.isNullOrEmpty()) {
+            return
+        }
+
+        var publishedUser = false
         viewModelScope.launch {
             repository.getUser(username.value!!)
                 .onStart { _isLoading.value = true }
@@ -44,7 +49,11 @@ class SearchUserViewModel @Inject constructor(
                         _errorMessage.value = response.message!!
                     } else {
                         fetchRecentUsers()
-                        _searchedUser.value = response.data!!
+
+                        if (!publishedUser) {
+                            _searchedUser.value = response.data!!
+                            publishedUser = true
+                        }
                     }
                 }
         }

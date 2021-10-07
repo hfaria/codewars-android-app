@@ -3,4 +3,5 @@
     <string name="search_an_username">Search an username</string>
     <string name="recently_searched">Recent searches:</string>
     <string name="order_by_rank">Order by Rank</string>
+    <string name="search">Search</string>
 </resources>
