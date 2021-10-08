@@ -51,6 +51,7 @@ class CodeWarsRepository @Inject constructor(
     suspend fun getChallengeProfile(challengeId: String): Flow<DataWrapper<ChallengeProfile>>
         = challengeProfileSource.query(challengeId)
 
+    // TODO cleanup this
     @OptIn(ExperimentalPagingApi::class)
     suspend fun getCompletedChallenges(username: String): Flow<PagingData<CompletedChallengeEntity>> {
         val db = localDataSource.database

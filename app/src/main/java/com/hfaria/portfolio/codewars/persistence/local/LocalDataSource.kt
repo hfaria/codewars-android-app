@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+// TODO cleanup this class. It's quite messy
 class LocalDataSource @Inject constructor(
     private val userDao: UserDao,
     private val authoredChallengeDao: AuthoredChallengeDao,
