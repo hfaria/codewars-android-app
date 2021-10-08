@@ -47,6 +47,11 @@ class UserChallengesActivity : BaseActivity<UserChallengesViewModel>() {
             tab.text = tabTitles[position]
         }.attach()
 
+        val username = intent?.getStringExtra("username")
+        if (username != null && supportActionBar != null) {
+            supportActionBar!!.title = "$username Challenges"
+        }
+
         viewModel.errorMessage.observe(this) {
             Toast
                 .makeText(this, it, Toast.LENGTH_LONG)

@@ -6,13 +6,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import com.hfaria.portfolio.codewars.CodeWarsApp
 import com.hfaria.portfolio.codewars.databinding.CompletedChallengesBinding
 import com.hfaria.portfolio.codewars.persistence.local.entity.CompletedChallengeEntity
 import com.hfaria.portfolio.codewars.ui.BaseFragment
 import com.hfaria.portfolio.codewars.ui.challenge_profile.ChallengeProfileActivity
 import com.hfaria.portfolio.codewars.ui.user_challenges.UserChallengesViewModel
+import com.hfaria.portfolio.codewars.util.ToastUtil
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class CompletedChallengesFragment : BaseFragment<UserChallengesViewModel>() {
@@ -54,6 +58,18 @@ class CompletedChallengesFragment : BaseFragment<UserChallengesViewModel>() {
         viewModel.completedChallenges.observe(viewLifecycleOwner) {
             lifecycleScope.launch {
                 adapter.submitData(it)
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            adapter.loadStateFlow.collectLatest { state ->
+                if (state.refresh is LoadState.Loading) {
+                    binding.cpiFetching.visibility = View.VISIBLE
+                } else if (state.append.endOfPaginationReached) {
+                    ToastUtil.short(requireActivity(), "Done loading completed challenges")
+                } else {
+                    binding.cpiFetching.visibility = View.GONE
+                }
             }
         }
     }
