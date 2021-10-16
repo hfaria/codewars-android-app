@@ -36,7 +36,10 @@ class ChallengeProfileFragment : BaseFragment<ChallengeProfileViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupObservables()
-        fetchProfile()
+
+        if (savedInstanceState == null) {
+            fetchProfile()
+        }
     }
 
     private fun fetchProfile() {

@@ -1,9 +1,6 @@
 package com.hfaria.portfolio.codewars.persistence
 
-import androidx.paging.ExperimentalPagingApi
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
+import androidx.paging.*
 import com.hfaria.portfolio.codewars.domain.ChallengeProfile
 import com.hfaria.portfolio.codewars.persistence.local.LocalDataSource
 import com.hfaria.portfolio.codewars.persistence.remote.RemoteDataSource

@@ -48,13 +48,15 @@ class CompletedChallengesFragment : BaseFragment<UserChallengesViewModel>() {
         super.onViewCreated(view, savedInstanceState)
         setupAdapter()
 
-        val username = activity?.intent?.getStringExtra("username")
-        if (username != null) {
-            viewModel.fetchCompletedChallenges(username)
+        if (savedInstanceState == null) {
+            val username = activity?.intent?.getStringExtra("username")
+            username?.let {
+                viewModel.fetchCompletedChallenges(it)
+            }
         }
     }
 
-    fun setupAdapter() {
+    private fun setupAdapter() {
         viewModel.completedChallenges.observe(viewLifecycleOwner) {
             lifecycleScope.launch {
                 adapter.submitData(it)

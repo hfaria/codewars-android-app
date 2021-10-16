@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 
 class AuthoredChallengesFragment : BaseFragment<UserChallengesViewModel>() {
 
-    val adapter = AuthoredChallengesAdapter { challenge -> handleSelectedChallenge(challenge) }
+    private val adapter = AuthoredChallengesAdapter { challenge -> handleSelectedChallenge(challenge) }
 
     override fun onAttach(activity: Activity) {
         val appContext = activity.applicationContext
@@ -43,13 +43,15 @@ class AuthoredChallengesFragment : BaseFragment<UserChallengesViewModel>() {
         super.onViewCreated(view, savedInstanceState)
         setupAdapter()
 
-        val username = activity?.intent?.getStringExtra("username")
-        if (username != null) {
-            viewModel.fetchAuthoredChallenges(username)
+        if (savedInstanceState == null) {
+            val username = activity?.intent?.getStringExtra("username")
+            username?.let {
+                viewModel.fetchAuthoredChallenges(it)
+            }
         }
     }
 
-    fun setupAdapter() {
+    private fun setupAdapter() {
         viewModel.authoredChallenges.observe(viewLifecycleOwner) {
             lifecycleScope.launch {
                 adapter.submitList(it)

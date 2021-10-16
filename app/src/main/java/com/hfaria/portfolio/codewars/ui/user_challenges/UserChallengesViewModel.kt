@@ -1,8 +1,8 @@
 package com.hfaria.portfolio.codewars.ui.user_challenges
 
 import androidx.lifecycle.*
-import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.hfaria.portfolio.codewars.persistence.CodeWarsRepository
 import com.hfaria.portfolio.codewars.persistence.Status
 import com.hfaria.portfolio.codewars.persistence.remote.api.AuthoredChallenge
@@ -37,6 +37,7 @@ class UserChallengesViewModel
     fun fetchCompletedChallenges(username: String) {
         viewModelScope.launch {
             repository.getCompletedChallenges(username)
+                .cachedIn(viewModelScope)
                 .collect { response ->
                 _completedChallenges.value = response
             }

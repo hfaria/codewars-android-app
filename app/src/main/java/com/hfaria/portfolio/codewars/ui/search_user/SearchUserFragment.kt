@@ -41,7 +41,10 @@ class SearchUserFragment : BaseFragment<SearchUserViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupObservables()
-        viewModel.fetchRecentUsers()
+
+        if (savedInstanceState == null) {
+            viewModel.fetchRecentUsers()
+        }
     }
 
     private fun setupObservables() {
