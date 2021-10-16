@@ -1,6 +1,6 @@
 package com.hfaria.portfolio.codewars.ui.search_user.di
 
-import com.hfaria.portfolio.codewars.ui.search_user.SearchUserActivity
+import com.hfaria.portfolio.codewars.ui.search_user.SearchUserFragment
 import dagger.Subcomponent
 
 @Subcomponent(modules = [SearchUserModule::class])
@@ -11,5 +11,5 @@ interface SearchUserComponent {
         fun create(): SearchUserComponent
     }
 
-    fun inject(activity: SearchUserActivity)
+    fun inject(activity: SearchUserFragment)
 }

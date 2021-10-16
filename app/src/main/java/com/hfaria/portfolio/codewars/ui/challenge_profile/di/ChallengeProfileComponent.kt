@@ -1,6 +1,6 @@
 package com.hfaria.portfolio.codewars.ui.challenge_profile.di
 
-import com.hfaria.portfolio.codewars.ui.challenge_profile.ChallengeProfileActivity
+import com.hfaria.portfolio.codewars.ui.challenge_profile.ChallengeProfileFragment
 import dagger.Subcomponent
 
 @Subcomponent(modules = [ChallengeProfileModule::class])
@@ -11,5 +11,5 @@ interface ChallengeProfileComponent {
         fun create(): ChallengeProfileComponent
     }
 
-    fun inject(activity: ChallengeProfileActivity)
+    fun inject(activity: ChallengeProfileFragment)
 }

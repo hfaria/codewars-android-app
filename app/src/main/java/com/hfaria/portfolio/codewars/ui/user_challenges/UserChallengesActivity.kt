@@ -1,68 +1,21 @@
 package com.hfaria.portfolio.codewars.ui.user_challenges
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
-import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.google.android.material.tabs.TabLayoutMediator
-import com.hfaria.portfolio.codewars.CodeWarsApp
+import androidx.fragment.app.add
+import androidx.fragment.app.commit
 import com.hfaria.portfolio.codewars.R
-import com.hfaria.portfolio.codewars.databinding.UserChallengesBinding
-import com.hfaria.portfolio.codewars.ui.BaseActivity
-import com.hfaria.portfolio.codewars.ui.user_challenges.authored.AuthoredChallengesFragment
-import com.hfaria.portfolio.codewars.ui.user_challenges.completed.CompletedChallengesFragment
 
-class UserChallengesActivity : BaseActivity<UserChallengesViewModel>() {
+class UserChallengesActivity : AppCompatActivity(R.layout.user_challenges_activity) {
 
-    class UserChallengesAdapter(activity: AppCompatActivity) :
-        FragmentStateAdapter(activity) {
-
-        override fun getItemCount(): Int {
-            return 2
-        }
-
-        override fun createFragment(position: Int): Fragment {
-            return if (position == 0) {
-                CompletedChallengesFragment()
-            } else {
-                AuthoredChallengesFragment()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (savedInstanceState == null) {
+            supportFragmentManager.commit {
+                setReorderingAllowed(true)
+                add<UserChallengesFragment>(R.id.fragment_container_view)
             }
         }
     }
 
-    val tabTitles = arrayOf("Completed", "Authored")
-    lateinit var binding: UserChallengesBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        (applicationContext as CodeWarsApp).appComponent
-            .userChallengesComponent()
-            .create()
-            .inject(this)
-        super.onCreate(savedInstanceState)
-        setupBinding()
-
-        TabLayoutMediator(binding.tlUserChallenges, binding.vpUserChallenges) { tab, position ->
-            tab.text = tabTitles[position]
-        }.attach()
-
-        val username = intent?.getStringExtra("username")
-        if (username != null && supportActionBar != null) {
-            supportActionBar!!.title = "$username Challenges"
-        }
-
-        viewModel.errorMessage.observe(this) {
-            Toast
-                .makeText(this, it, Toast.LENGTH_LONG)
-                .show()
-        }
-    }
-
-    fun setupBinding() {
-        binding = DataBindingUtil.setContentView(this, R.layout.user_challenges)
-        binding.lifecycleOwner = this
-        val adapter = UserChallengesAdapter(this)
-        binding.vpUserChallenges.adapter = adapter
-    }
 }
