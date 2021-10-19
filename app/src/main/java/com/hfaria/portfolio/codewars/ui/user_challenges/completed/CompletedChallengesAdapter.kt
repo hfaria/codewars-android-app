@@ -16,11 +16,11 @@ class CompletedChallengesAdapter(
 
     object ChallengeDiffCallback: DiffUtil.ItemCallback<CompletedChallengeEntity>() {
         override fun areItemsTheSame(oldItem: CompletedChallengeEntity, newItem: CompletedChallengeEntity): Boolean {
-            return oldItem == newItem
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(oldItem: CompletedChallengeEntity, newItem: CompletedChallengeEntity): Boolean {
-            return oldItem.id == newItem.id
+            return oldItem == newItem
         }
     }
 

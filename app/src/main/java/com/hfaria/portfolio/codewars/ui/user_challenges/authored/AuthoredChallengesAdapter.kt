@@ -16,11 +16,11 @@ class AuthoredChallengesAdapter(
 
     object ChallengeDiffCallback: DiffUtil.ItemCallback<AuthoredChallenge>() {
         override fun areItemsTheSame(oldItem: AuthoredChallenge, newItem: AuthoredChallenge): Boolean {
-            return oldItem == newItem
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(oldItem: AuthoredChallenge, newItem: AuthoredChallenge): Boolean {
-            return oldItem.id == newItem.id
+            return oldItem == newItem
         }
     }
 
