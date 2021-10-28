@@ -71,5 +71,6 @@ data class User(
     var username: String,
     var name: String?,
     var updatedAt: Int,
-    var ranks: UserRanks
+    var ranks: UserRanks,
+    var updatedAuthoredChallengesAt: Int,
 )

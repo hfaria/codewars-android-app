@@ -14,28 +14,24 @@ class RemoteDataSource @Inject constructor(
     val api: CodeWarsApi
 ) {
 
-    protected suspend fun <T> runOnIOThread(call: suspend () -> DataWrapper<T>)
-        : DataWrapper<T> {
-        return withContext(Dispatchers.IO) {
-            call.runCatching { invoke() }
-                .onFailure { t ->  DataWrapper.exception(t, null)}
-                .getOrThrow()
-        }
-    }
+    private fun <T> run(call: () -> DataWrapper<T>) =
+        call.runCatching { invoke() }
+            .onFailure { t ->  DataWrapper.exception(t, null)}
+            .getOrThrow()
 
-    suspend fun getUserByUsername(username: String): DataWrapper<User>
-        = runOnIOThread { api.getUsers(username) }
+    fun getUserByUsername(username: String): DataWrapper<User>
+        = run { api.getUsers(username) }
 
-    suspend fun getCompletedChallenges(username: String, page: Int): DataWrapper<CompletedChallengesPage>
-        = runOnIOThread { api.getCompletedChallenges(username, page) }
-
-    suspend fun getAuthoredChallenges(username: String): DataWrapper<AuthoredChallenges>
-        = runOnIOThread {
+    fun getAuthoredChallenges(username: String): DataWrapper<AuthoredChallenges>
+        = run {
             val wrapper = api.getAuthoredChallenges(username)
             wrapper.data?.author = username
             wrapper
         }
 
-    suspend fun getChallengeProfile(challengeId: String): DataWrapper<ChallengeProfile>
-        = runOnIOThread{ api.getChallengeProfile(challengeId) }
+    fun getChallengeProfile(challengeId: String): DataWrapper<ChallengeProfile>
+        = run { api.getChallengeProfile(challengeId) }
+
+    fun getCompletedChallenges(username: String, page: Int): DataWrapper<CompletedChallengesPage>
+            = run { api.getCompletedChallenges(username, page) }
 }

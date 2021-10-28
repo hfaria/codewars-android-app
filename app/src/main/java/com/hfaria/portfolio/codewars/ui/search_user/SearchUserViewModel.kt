@@ -61,8 +61,12 @@ class SearchUserViewModel @Inject constructor(
 
     fun fetchRecentUsers() {
         viewModelScope.launch {
-            repository.getRecentUsers().collect { response ->
-                _recentUsers.value = response.sortedByDescending { it.updatedAt }
+            val response = repository.getRecentUsers()
+
+            if (response.status == Status.SUCCESS) {
+                _recentUsers.value = response.data!!.sortedByDescending { it.updatedAt }
+            } else {
+                _errorMessage.value = response.message!!
             }
         }
     }

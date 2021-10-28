@@ -8,5 +8,5 @@ import com.hfaria.portfolio.codewars.persistence.remote.api.ChallengeProfileEnti
 interface ChallengeProfileDao: BaseDao<ChallengeProfileEntity> {
 
     @Query("SELECT * from challenge_profile WHERE :id = id")
-    suspend fun getById(id: String): ChallengeProfileEntity?
+    fun getById(id: String): ChallengeProfileEntity?
 }

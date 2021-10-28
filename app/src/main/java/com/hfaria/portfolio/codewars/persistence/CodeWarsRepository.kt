@@ -36,21 +36,18 @@ class CodeWarsRepository @Inject constructor(
         localDataSource::hasChallengeProfileCacheExpired
     )
 
-    suspend fun getRecentUsers(): Flow<List<User>>
-            = localDataSource.getRecentUsers()
-
-    suspend fun getUser(username: String): Flow<DataWrapper<User>>
+    fun getUser(username: String): Flow<DataWrapper<User>>
         = userDataSource.query(username)
 
-    suspend fun getAuthoredChallenges(username: String): Flow<DataWrapper<AuthoredChallenges>>
+    fun getAuthoredChallenges(username: String): Flow<DataWrapper<AuthoredChallenges>>
         = authoredChallengesSource.query(username)
 
-    suspend fun getChallengeProfile(challengeId: String): Flow<DataWrapper<ChallengeProfile>>
+    fun getChallengeProfile(challengeId: String): Flow<DataWrapper<ChallengeProfile>>
         = challengeProfileSource.query(challengeId)
 
     // TODO cleanup this
     @OptIn(ExperimentalPagingApi::class)
-    suspend fun getCompletedChallenges(username: String): Flow<PagingData<CompletedChallengeEntity>> {
+    fun getCompletedChallenges(username: String): Flow<PagingData<CompletedChallengeEntity>> {
         val db = localDataSource.database
         val keysDao = localDataSource.remoteKeysDao
         val challengesDao = localDataSource.completedChallengeDao
@@ -65,4 +62,7 @@ class CodeWarsRepository @Inject constructor(
             remoteMediator = CompletedChallengesMediator(username, db, keysDao, challengesDao, api)
         ).flow
     }
+
+    suspend fun getRecentUsers(): DataWrapper<List<User>>
+            = localDataSource.getRecentUsers()
 }

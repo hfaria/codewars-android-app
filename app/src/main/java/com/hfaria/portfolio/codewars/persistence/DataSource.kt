@@ -1,19 +1,21 @@
 package com.hfaria.portfolio.codewars.persistence
 
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
-class DataSource<in Input, out Output>(
-    private val remoteFetch: suspend (Input) -> DataWrapper<Output>,
-    private val localFetch: suspend (Input) -> DataWrapper<Output>,
-    private val localStore: suspend (Output) -> Unit,
-    private val hasExpired: suspend (Output) -> Boolean,
+class DataSource<Input, Output>(
+    private val remoteFetch: (Input) -> DataWrapper<Output>,
+    private val localFetch: (Input) -> DataWrapper<Output>,
+    private val localStore: (Output) -> Unit,
+    private val hasExpired: (Output) -> Boolean,
 ) {
 
     /*
         Generic algorithm to provide cache policy and offline functionality
      */
-    suspend fun query(args: Input, force: Boolean = false): Flow<DataWrapper<Output>> = flow {
+    fun query(args: Input, force: Boolean = false): Flow<DataWrapper<Output>> = flow {
         val localCache = localFetch(args)
 
         /* Unless explicit forced update,
@@ -50,5 +52,5 @@ class DataSource<in Input, out Output>(
                 emit(remoteWrapper)
             }
         }
-    }
+    }.flowOn(Dispatchers.IO)
 }

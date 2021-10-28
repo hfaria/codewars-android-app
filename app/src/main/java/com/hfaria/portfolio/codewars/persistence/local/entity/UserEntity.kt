@@ -34,7 +34,7 @@ data class UserEntity(
 
         fun toDomain(entity: UserEntity): User {
             val userRanks = UserRanks(entity.overallRank, entity.languageRanks)
-            return User(entity.username, entity.name, entity.updatedAt, userRanks)
+            return User(entity.username, entity.name, entity.updatedAt, userRanks, entity.updatedAuthoredChallengesAt)
         }
     }
 }
