@@ -1,4 +1,4 @@
-package com.hfaria.portfolio.codewars.exploratory
+package com.hfaria.portfolio.codewars.integration
 
 import com.hfaria.portfolio.codewars.persistence.remote.api.CodeWarsApi
 import org.junit.Test
@@ -17,7 +17,7 @@ class CodeWarsApiIntegrationTest {
     @Test
     fun test_get_user() {
         val call = api.getUsers("g964")
-        val response = call.execute()
-        println(response.body().toString())
+        //val response = call.execute()
+        //println(response.body().toString())
     }
 }

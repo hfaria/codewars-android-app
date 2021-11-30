@@ -4,16 +4,21 @@ import android.app.Application
 import com.hfaria.portfolio.codewars.di.AppComponent
 import com.hfaria.portfolio.codewars.di.DaggerAppComponent
 
-class CodeWarsApp: Application() {
+open class CodeWarsApp: Application() {
 
     lateinit var appComponent: AppComponent
 
     override fun onCreate() {
         super.onCreate()
-        appComponent = DaggerAppComponent.builder()
+        appComponent = createDaggerComponent()
+    }
+
+    protected open fun createDaggerComponent(): AppComponent {
+        val component = DaggerAppComponent.builder()
             .application(this)
             .build()
-        appComponent.inject(this)
+        component.inject(this)
+        return component
     }
 
 }
