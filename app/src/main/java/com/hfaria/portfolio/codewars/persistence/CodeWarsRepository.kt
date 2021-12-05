@@ -8,6 +8,7 @@ import com.hfaria.portfolio.codewars.persistence.remote.api.AuthoredChallenges
 import com.hfaria.portfolio.codewars.persistence.local.entity.CompletedChallengeEntity
 import com.hfaria.portfolio.codewars.persistence.remote.api.User
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class CodeWarsRepository @Inject constructor(
@@ -36,8 +37,9 @@ class CodeWarsRepository @Inject constructor(
         localDataSource::hasChallengeProfileCacheExpired
     )
 
-    fun getUser(username: String): Flow<DataWrapper<User>>
-        = userDataSource.query(username)
+    fun getUser(username: String): Flow<DataWrapper<User>> = flow {
+        remoteDataSource.getUserByUsername(username)
+    }
 
     fun getAuthoredChallenges(username: String): Flow<DataWrapper<AuthoredChallenges>>
         = authoredChallengesSource.query(username)
