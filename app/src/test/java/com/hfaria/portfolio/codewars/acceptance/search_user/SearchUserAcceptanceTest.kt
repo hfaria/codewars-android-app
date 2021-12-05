@@ -7,13 +7,37 @@ import com.hfaria.portfolio.codewars.test_setup.TestCodeWarsApp
 import com.hfaria.portfolio.codewars.test_setup.getSync
 import com.hfaria.portfolio.codewars.ui.search_user.NewSearchUserViewModel
 import junit.framework.Assert.assertEquals
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.setMain
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 class SearchUserAcceptanceTest {
+
+    val testDispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher()
+
+    @ExperimentalCoroutinesApi
+    @Before
+    fun setupDispatcher() {
+        Dispatchers.setMain(testDispatcher)
+    }
+
+    @ExperimentalCoroutinesApi
+    @After
+    fun tearDownDispatcher() {
+        Dispatchers.resetMain()
+        testDispatcher.cleanupTestCoroutines()
+    }
 
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
@@ -32,11 +56,11 @@ class SearchUserAcceptanceTest {
     }
 
     @Test
-    fun test_search_user_should_route_to_user_profile_screen() = runBlocking {
+    fun test_search_user_should_route_to_user_profile_screen() = runBlockingTest {
         val username = "g964"
         viewModel.username.postValue(username)
         viewModel.handleUserSearch()
-        val bundle = viewModel.userProfileRoute.getSync()
-        assertEquals(bundle.getString("username"), username)
+        val user = viewModel.userProfileRoute.getSync()
+        assertEquals(user.username, username)
     }
 }

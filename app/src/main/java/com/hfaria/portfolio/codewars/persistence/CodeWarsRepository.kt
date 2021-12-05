@@ -37,9 +37,8 @@ class CodeWarsRepository @Inject constructor(
         localDataSource::hasChallengeProfileCacheExpired
     )
 
-    fun getUser(username: String): Flow<DataWrapper<User>> = flow {
+    fun getUser(username: String): DataWrapper<User> =
         remoteDataSource.getUserByUsername(username)
-    }
 
     fun getAuthoredChallenges(username: String): Flow<DataWrapper<AuthoredChallenges>>
         = authoredChallengesSource.query(username)
@@ -48,21 +47,21 @@ class CodeWarsRepository @Inject constructor(
         = challengeProfileSource.query(challengeId)
 
     // TODO cleanup this
-    @OptIn(ExperimentalPagingApi::class)
     fun getCompletedChallenges(username: String): Flow<PagingData<CompletedChallengeEntity>> {
-        val db = localDataSource.database
-        val keysDao = localDataSource.remoteKeysDao
-        val challengesDao = localDataSource.completedChallengeDao
-        val api = remoteDataSource.api
-        val sourceFactory = { challengesDao.getByUsername(username) }
-        return Pager(
-            config = PagingConfig(
-                pageSize = 200,
-                enablePlaceholders = true
-            ),
-            pagingSourceFactory = sourceFactory,
-            remoteMediator = CompletedChallengesMediator(username, db, keysDao, challengesDao, api)
-        ).flow
+       // val db = localDataSource.database
+       // val keysDao = localDataSource.remoteKeysDao
+       // val challengesDao = localDataSource.completedChallengeDao
+       // val api = remoteDataSource.api
+       // val sourceFactory = { challengesDao.getByUsername(username) }
+       // return Pager(
+       //     config = PagingConfig(
+       //         pageSize = 200,
+       //         enablePlaceholders = true
+       //     ),
+       //     pagingSourceFactory = sourceFactory,
+       //     remoteMediator = CompletedChallengesMediator(username, db, keysDao, challengesDao, api)
+       // ).flow
+        return flow {}
     }
 
     suspend fun getRecentUsers(): DataWrapper<List<User>>

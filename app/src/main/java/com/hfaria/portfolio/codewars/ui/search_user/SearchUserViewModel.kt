@@ -42,20 +42,20 @@ class SearchUserViewModel @Inject constructor(
         var publishedUser = false
         viewModelScope.launch {
             repository.getUser(username.value!!)
-                .onStart { _isLoading.value = true }
-                .onCompletion { _isLoading.value = false }
-                .collect { response ->
-                    if (response.status != Status.SUCCESS) {
-                        _errorMessage.value = response.message!!
-                    } else {
-                        fetchRecentUsers()
+                //.onStart { _isLoading.value = true }
+                //.onCompletion { _isLoading.value = false }
+                //.collect { response ->
+                //    if (response.status != Status.SUCCESS) {
+                //        _errorMessage.value = response.message!!
+                //    } else {
+                //        fetchRecentUsers()
 
-                        if (!publishedUser) {
-                            _searchedUser.value = response.data!!
-                            publishedUser = true
-                        }
-                    }
-                }
+                //        if (!publishedUser) {
+                //            _searchedUser.value = response.data!!
+                //            publishedUser = true
+                //        }
+                //    }
+                //}
         }
     }
 
