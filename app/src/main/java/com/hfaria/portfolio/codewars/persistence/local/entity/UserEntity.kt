@@ -26,8 +26,8 @@ data class UserEntity(
             val userEntity = UserEntity(
                 user.username, user.name!!,
                 timeNow, 0,
-                user.ranks.overall,
-                user.ranks.languages
+                user.ranks!!.overall,
+                user.ranks!!.languages
             )
             return userEntity
         }

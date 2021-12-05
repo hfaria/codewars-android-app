@@ -46,16 +46,16 @@ class UserChallengesViewModel
 
     fun fetchAuthoredChallenges(username: String) {
         viewModelScope.launch {
-            repository.getAuthoredChallenges(username)
-                .onStart { _isLoading.value = true }
-                .onCompletion { _isLoading.value = false }
-                .collect { response ->
-                if (response.status == Status.SUCCESS) {
-                    _authoredChallenges.value = response.data!!.data
-                } else {
-                    _errorMessage.value = response.message!!
-                }
-            }
+            //repository.getAuthoredChallenges(username)
+            //    .onStart { _isLoading.value = true }
+            //    .onCompletion { _isLoading.value = false }
+            //    .collect { response ->
+            //    if (response.status == Status.SUCCESS) {
+            //        _authoredChallenges.value = response.data!!.data
+            //    } else {
+            //        _errorMessage.value = response.message!!
+            //    }
+            //}
         }
     }
 }

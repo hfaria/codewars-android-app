@@ -28,16 +28,16 @@ class ChallengeProfileViewModel @Inject constructor(
 
     fun fetchProfile(profileId: String) {
         viewModelScope.launch {
-            repository.getChallengeProfile(profileId)
-                .onStart { _isLoading.value = true }
-                .onCompletion { _isLoading.value = false }
-                .collect { response ->
-                    if (response.status == Status.SUCCESS) {
-                        _profile.value = response.data!!
-                    } else {
-                        _errorMessage.value = response.message!!
-                    }
-                }
+            //repository.getChallengeProfile(profileId)
+            //    .onStart { _isLoading.value = true }
+            //    .onCompletion { _isLoading.value = false }
+            //    .collect { response ->
+            //        if (response.status == Status.SUCCESS) {
+            //            _profile.value = response.data!!
+            //        } else {
+            //            _errorMessage.value = response.message!!
+            //        }
+            //    }
         }
     }
 }

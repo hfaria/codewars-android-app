@@ -61,13 +61,13 @@ class SearchUserViewModel @Inject constructor(
 
     fun fetchRecentUsers() {
         viewModelScope.launch {
-            val response = repository.getRecentUsers()
+            //val response = repository.getRecentUsers()
 
-            if (response.status == Status.SUCCESS) {
-                _recentUsers.value = response.data!!.sortedByDescending { it.updatedAt }
-            } else {
-                _errorMessage.value = response.message!!
-            }
+            //if (response.status == Status.SUCCESS) {
+            //    _recentUsers.value = response.data!!.sortedByDescending { it.updatedAt }
+            //} else {
+            //    _errorMessage.value = response.message!!
+            //}
         }
     }
 
@@ -75,10 +75,10 @@ class SearchUserViewModel @Inject constructor(
         val recentUsers = _recentUsers.value!!
         val checked = orderByRankChecked.value ?: false
 
-        if (checked) {
-            _recentUsers.value = recentUsers.sortedByDescending { it.ranks.overall.score }
-        } else {
-            _recentUsers.value = recentUsers.sortedByDescending { it.updatedAt }
-        }
+        //if (checked) {
+        //    _recentUsers.value = recentUsers.sortedByDescending { it.ranks!!.overall.score }
+        //} else {
+        //    _recentUsers.value = recentUsers.sortedByDescending { it.updatedAt }
+        //}
     }
 }

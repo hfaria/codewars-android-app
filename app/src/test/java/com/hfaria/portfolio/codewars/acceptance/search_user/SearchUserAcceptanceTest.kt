@@ -1,16 +1,11 @@
 package com.hfaria.portfolio.codewars.acceptance.search_user
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.hfaria.portfolio.codewars.test_setup.DaggerTestAppComponent
-import com.hfaria.portfolio.codewars.test_setup.TestAppComponent
-import com.hfaria.portfolio.codewars.test_setup.TestCodeWarsApp
-import com.hfaria.portfolio.codewars.test_setup.getSync
+import com.hfaria.portfolio.codewars.test_setup.*
 import com.hfaria.portfolio.codewars.ui.search_user.NewSearchUserViewModel
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.newSingleThreadContext
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runBlockingTest
@@ -42,9 +37,6 @@ class SearchUserAcceptanceTest {
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
 
-    @Inject
-    lateinit var viewModel: NewSearchUserViewModel
-
     @Before
     fun setup() {
         val application = TestCodeWarsApp()
@@ -54,6 +46,12 @@ class SearchUserAcceptanceTest {
             .build()
         component.inject(this)
     }
+
+    @Inject
+    lateinit var viewModel: NewSearchUserViewModel
+
+    @Inject
+    lateinit var stubApi: StubCodeWarsApi
 
     @Test
     fun test_search_user_should_route_to_user_profile_screen() = runBlockingTest {
