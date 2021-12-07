@@ -21,14 +21,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name=".ui.user_challenges.UserChallengesActivity">
-        </activity>
-
-        <activity
-            android:name=".ui.challenge_profile.ChallengeProfileActivity">
-        </activity>
     </application>
 
 </manifest>
