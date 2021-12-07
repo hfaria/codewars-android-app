@@ -11,7 +11,7 @@ class RemoteDataSource @Inject constructor(
 
     private fun <T> run(call: () -> DataWrapper<T>) =
         call.runCatching { invoke() }
-            .onFailure { t ->  DataWrapper.exception(t, null)}
+            .onFailure { t -> DataWrapper.exception(t, null) }
             .getOrThrow()
 
     fun getUserByUsername(username: String): DataWrapper<User>
