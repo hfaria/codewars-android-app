@@ -4,4 +4,6 @@
     <string name="recently_searched">Recent searches:</string>
     <string name="order_by_rank">Order by Rank</string>
     <string name="search">Search</string>
+
+    <string name="error_empty_username">Enter an username</string>
 </resources>

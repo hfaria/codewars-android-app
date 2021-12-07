@@ -13,8 +13,8 @@ import java.util.concurrent.TimeoutException
 /* Copyright 2019 Google LLC.
    SPDX-License-Identifier: Apache-2.0 */
 fun <T> LiveData<T>.getSync(
-    time: Long = 1,
-    timeUnit: TimeUnit = TimeUnit.SECONDS
+    time: Long = 300,
+    timeUnit: TimeUnit = TimeUnit.MILLISECONDS
 ): T {
     var data: T? = null
     val latch = CountDownLatch(1)

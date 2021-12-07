@@ -8,7 +8,11 @@ import com.hfaria.portfolio.codewars.persistence.remote.api.CompletedChallengesP
 import com.hfaria.portfolio.codewars.domain.User
 
 class StubCodeWarsApi: CodeWarsApi {
+
+    var getUserCalled = false
+
     override fun getUsers(username: String): DataWrapper<User> {
+        getUserCalled = true
         val user = User(username, null, 0, null, 0)
         return DataWrapper.success(user)
     }
