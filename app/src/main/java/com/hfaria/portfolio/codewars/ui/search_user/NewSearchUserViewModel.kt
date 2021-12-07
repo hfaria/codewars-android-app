@@ -1,9 +1,9 @@
 package com.hfaria.portfolio.codewars.ui.search_user
 
 import androidx.lifecycle.*
-import com.hfaria.portfolio.codewars.R
 import com.hfaria.portfolio.codewars.domain.User
 import com.hfaria.portfolio.codewars.persistence.CodeWarsRepository
+import com.hfaria.portfolio.codewars.persistence.DataWrapper
 import com.hfaria.portfolio.codewars.persistence.Status
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,11 +16,16 @@ class SearchUserRoutes {
 
 class SearchUserScreenState {
 
+    companion object {
+        const val ERROR_EMPTY_USERNAME = "Please, enter an username"
+        const val ERROR_BACKEND = "GENERIC_BACKEND_ERROR"
+    }
+
     val username = MutableLiveData<String>()
 
-    val errorMessage: LiveData<Int>
+    val errorMessage: LiveData<String>
         get() = _errorMessage
-    val _errorMessage = MutableLiveData<Int>()
+    val _errorMessage = MutableLiveData<String>()
 }
 
 class NewSearchUserViewModel @Inject constructor(
@@ -34,7 +39,7 @@ class NewSearchUserViewModel @Inject constructor(
         val username = state.username.value
 
         if (username.isNullOrEmpty()) {
-            state._errorMessage.value = R.string.error_empty_username
+            state._errorMessage.value = SearchUserScreenState.ERROR_EMPTY_USERNAME
             return
         }
 
@@ -44,12 +49,15 @@ class NewSearchUserViewModel @Inject constructor(
     private fun searchUser(username: String) {
         viewModelScope.launch {
             val response = repository.getUser(username)
-            if (response.status == Status.SUCCESS) {
-                routes._userProfileRoute.value = response.data!!
-            } else {
+            handleResponse(response)
+        }
+    }
 
-
-            }
+    private fun handleResponse(response: DataWrapper<User>) {
+        if (response.status == Status.SUCCESS) {
+            routes._userProfileRoute.value = response.data!!
+        } else {
+            state._errorMessage.value = response.message
         }
     }
 }

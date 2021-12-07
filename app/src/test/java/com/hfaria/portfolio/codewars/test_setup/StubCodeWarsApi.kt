@@ -9,12 +9,10 @@ import com.hfaria.portfolio.codewars.domain.User
 
 class StubCodeWarsApi: CodeWarsApi {
 
-    var getUserCalled = false
+    lateinit var getUserReponse: DataWrapper<User>
 
     override fun getUsers(username: String): DataWrapper<User> {
-        getUserCalled = true
-        val user = User(username, null, 0, null, 0)
-        return DataWrapper.success(user)
+        return getUserReponse
     }
 
     override fun getCompletedChallenges(
