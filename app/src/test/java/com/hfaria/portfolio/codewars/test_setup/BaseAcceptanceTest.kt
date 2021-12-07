@@ -10,7 +10,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 
-open class BaseAcceptanceTest {
+abstract class BaseAcceptanceTest {
 
     // LiveData adapter code
     @get:Rule
@@ -32,4 +32,16 @@ open class BaseAcceptanceTest {
         testDispatcher.cleanupTestCoroutines()
     }
 
+    // Dependency Injection
+    @Before
+    fun setupDI() {
+        val application = TestCodeWarsApp()
+        val component: TestAppComponent = DaggerTestAppComponent
+            .builder()
+            .application(application)
+            .build()
+        injectTest(component)
+    }
+
+    abstract fun injectTest(component: TestAppComponent)
 }
