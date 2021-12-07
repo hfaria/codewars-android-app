@@ -5,9 +5,7 @@ import com.hfaria.portfolio.codewars.persistence.DataWrapper
 import com.hfaria.portfolio.codewars.persistence.remote.api.AuthoredChallenges
 import com.hfaria.portfolio.codewars.persistence.remote.api.CodeWarsApi
 import com.hfaria.portfolio.codewars.persistence.remote.api.CompletedChallengesPage
-import com.hfaria.portfolio.codewars.persistence.remote.api.User
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import com.hfaria.portfolio.codewars.domain.User
 import javax.inject.Inject
 
 class RemoteDataSource @Inject constructor(

@@ -8,7 +8,7 @@ import com.hfaria.portfolio.codewars.persistence.local.db.AppDatabase
 import com.hfaria.portfolio.codewars.persistence.local.entity.AuthoredChallengeEntity
 import com.hfaria.portfolio.codewars.persistence.remote.api.AuthoredChallenges
 import com.hfaria.portfolio.codewars.persistence.remote.api.ChallengeProfileEntity
-import com.hfaria.portfolio.codewars.persistence.remote.api.User
+import com.hfaria.portfolio.codewars.domain.User
 import com.hfaria.portfolio.codewars.persistence.remote.api.UserEntity
 import com.hfaria.portfolio.codewars.util.TimeUtil
 import kotlinx.coroutines.Dispatchers

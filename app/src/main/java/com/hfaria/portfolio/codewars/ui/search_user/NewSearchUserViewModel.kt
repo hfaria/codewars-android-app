@@ -3,7 +3,7 @@ package com.hfaria.portfolio.codewars.ui.search_user
 import androidx.lifecycle.*
 import com.hfaria.portfolio.codewars.persistence.CodeWarsRepository
 import com.hfaria.portfolio.codewars.persistence.Status
-import com.hfaria.portfolio.codewars.persistence.remote.api.User
+import com.hfaria.portfolio.codewars.domain.User
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

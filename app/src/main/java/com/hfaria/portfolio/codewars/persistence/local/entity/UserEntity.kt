@@ -3,6 +3,10 @@ package com.hfaria.portfolio.codewars.persistence.remote.api
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.hfaria.portfolio.codewars.domain.LanguageRank
+import com.hfaria.portfolio.codewars.domain.Rank
+import com.hfaria.portfolio.codewars.domain.User
+import com.hfaria.portfolio.codewars.domain.UserRanks
 import com.hfaria.portfolio.codewars.util.TimeUtil
 
 @Entity(tableName = "user")

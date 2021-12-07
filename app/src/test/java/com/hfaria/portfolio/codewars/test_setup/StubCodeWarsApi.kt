@@ -5,7 +5,7 @@ import com.hfaria.portfolio.codewars.persistence.DataWrapper
 import com.hfaria.portfolio.codewars.persistence.remote.api.AuthoredChallenges
 import com.hfaria.portfolio.codewars.persistence.remote.api.CodeWarsApi
 import com.hfaria.portfolio.codewars.persistence.remote.api.CompletedChallengesPage
-import com.hfaria.portfolio.codewars.persistence.remote.api.User
+import com.hfaria.portfolio.codewars.domain.User
 
 class StubCodeWarsApi: CodeWarsApi {
     override fun getUsers(username: String): DataWrapper<User> {

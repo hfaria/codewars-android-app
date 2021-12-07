@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.hfaria.portfolio.codewars.databinding.RecentUserItemBinding
-import com.hfaria.portfolio.codewars.persistence.remote.api.User
+import com.hfaria.portfolio.codewars.domain.User
 
 class SearchUserAdapter(
     private val onClick: (User) -> Unit

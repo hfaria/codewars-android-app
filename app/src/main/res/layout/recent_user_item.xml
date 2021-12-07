@@ -7,7 +7,7 @@
     <data>
         <variable
             name="user"
-            type="com.hfaria.portfolio.codewars.persistence.remote.api.User" />
+            type="com.hfaria.portfolio.codewars.domain.User" />
     </data>
 
     <androidx.cardview.widget.CardView

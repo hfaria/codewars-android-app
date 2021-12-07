@@ -3,7 +3,7 @@ package com.hfaria.portfolio.codewars.persistence.local.db
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.hfaria.portfolio.codewars.persistence.remote.api.LanguageRank
+import com.hfaria.portfolio.codewars.domain.LanguageRank
 
 class DbTypeConverters {
 

@@ -1,4 +1,4 @@
-package com.hfaria.portfolio.codewars.persistence.remote.api
+package com.hfaria.portfolio.codewars.domain
 
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer

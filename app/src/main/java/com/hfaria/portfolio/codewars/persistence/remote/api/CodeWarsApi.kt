@@ -1,6 +1,7 @@
 package com.hfaria.portfolio.codewars.persistence.remote.api
 
 import com.hfaria.portfolio.codewars.domain.ChallengeProfile
+import com.hfaria.portfolio.codewars.domain.User
 import com.hfaria.portfolio.codewars.persistence.DataWrapper
 import retrofit2.http.GET
 import retrofit2.http.Path
