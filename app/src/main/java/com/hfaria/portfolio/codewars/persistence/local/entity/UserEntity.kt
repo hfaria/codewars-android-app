@@ -15,7 +15,6 @@ data class UserEntity(
     var username: String,
     var name: String,
     var updatedAt: Int,
-    var updatedAuthoredChallengesAt: Int,
     @Embedded
     var overallRank: Rank,
     var languageRanks: List<LanguageRank>
@@ -29,7 +28,7 @@ data class UserEntity(
             val timeNow = TimeUtil.nowInSeconds()
             val userEntity = UserEntity(
                 user.username, user.name!!,
-                timeNow, 0,
+                timeNow,
                 user.ranks!!.overall,
                 user.ranks!!.languages
             )
@@ -38,7 +37,7 @@ data class UserEntity(
 
         fun toDomain(entity: UserEntity): User {
             val userRanks = UserRanks(entity.overallRank, entity.languageRanks)
-            return User(entity.username, entity.name, entity.updatedAt, userRanks, entity.updatedAuthoredChallengesAt)
+            return User(entity.username, entity.name, entity.updatedAt, userRanks)
         }
     }
 }

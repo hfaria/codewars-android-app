@@ -72,5 +72,4 @@ data class User(
     var name: String?,
     var updatedAt: Int,
     var ranks: UserRanks?,
-    var updatedAuthoredChallengesAt: Int,
 )

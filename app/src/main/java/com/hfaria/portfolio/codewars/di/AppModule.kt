@@ -41,28 +41,4 @@ class AppModule {
     fun provideUserDao(db: AppDatabase): UserDao {
         return db.userDao()
     }
-
-    @Singleton
-    @Provides
-    fun provideAuthoredChallengeDao(db: AppDatabase): AuthoredChallengeDao {
-        return db.authoredChallengeDao()
-    }
-
-    @Singleton
-    @Provides
-    fun provideChallengeProfileDao(db: AppDatabase): ChallengeProfileDao {
-        return db.challengeProfileDao()
-    }
-
-    @Singleton
-    @Provides
-    fun provideCompletedChallengeDao(db: AppDatabase): CompletedChallengeDao {
-        return db.completedChallengeDao()
-    }
-
-    @Singleton
-    @Provides
-    fun provideRemoteKeyDao(db: AppDatabase): RemoteKeysDao {
-        return db.remoteKeyDao()
-    }
 }

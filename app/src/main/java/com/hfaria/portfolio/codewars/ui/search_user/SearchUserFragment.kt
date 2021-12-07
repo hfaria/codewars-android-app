@@ -1,7 +1,6 @@
 package com.hfaria.portfolio.codewars.ui.search_user
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +9,6 @@ import com.hfaria.portfolio.codewars.CodeWarsApp
 import com.hfaria.portfolio.codewars.databinding.SearchUserBinding
 import com.hfaria.portfolio.codewars.domain.User
 import com.hfaria.portfolio.codewars.ui.BaseFragment
-import com.hfaria.portfolio.codewars.ui.user_challenges.UserChallengesActivity
 import com.hfaria.portfolio.codewars.util.ToastUtil
 
 class SearchUserFragment : BaseFragment<SearchUserViewModel>() {
@@ -64,8 +62,8 @@ class SearchUserFragment : BaseFragment<SearchUserViewModel>() {
     }
 
     private fun handleSelectedUser(user: User) {
-        val it = Intent(requireActivity(), UserChallengesActivity::class.java)
-        it.putExtra("username", user.username)
-        startActivity(it)
+        //val it = Intent(requireActivity(), UserChallengesActivity::class.java)
+        //it.putExtra("username", user.username)
+        //startActivity(it)
     }
 }

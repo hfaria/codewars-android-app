@@ -1,6 +1,5 @@
 package com.hfaria.portfolio.codewars.acceptance.search_user
 
-import com.hfaria.portfolio.codewars.R
 import com.hfaria.portfolio.codewars.domain.User
 import com.hfaria.portfolio.codewars.persistence.DataWrapper
 import com.hfaria.portfolio.codewars.test_setup.*
@@ -27,7 +26,7 @@ class SearchUserAcceptanceTest : BaseAcceptanceTest() {
         val username = "g964"
 
         //Given
-        val user = User(username, null, 0, null, 0)
+        val user = User(username, null, 0, null)
         stubApi.getUserReponse = DataWrapper.success(user)
 
         // When
