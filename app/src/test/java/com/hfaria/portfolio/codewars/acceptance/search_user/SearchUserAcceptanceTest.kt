@@ -67,16 +67,6 @@ class SearchUserAcceptanceTest : BaseAcceptanceTest() {
         assertEquals(SearchUserScreenState.ERROR_BACKEND, viewModel.state.errorMessage.getSync())
     }
 
-
-    private fun <T> runFoo(call: () -> DataWrapper<T>) =
-        call.runCatching { invoke() }
-            .onFailure{ t -> DataWrapper.exception(t, null) }
-            .getOrThrow()
-
-    private fun foo(): DataWrapper<User> {
-        throw Exception("Foo")
-    }
-
     @Test
     fun `ERROR - Network Exception - Should show message explaining network exception`() = runBlocking {
         // Given
