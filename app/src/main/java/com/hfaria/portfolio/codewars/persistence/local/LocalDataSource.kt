@@ -13,6 +13,14 @@ class LocalDataSource @Inject constructor(
     private val userDao: UserDao,
 ) {
 
+    private fun <T> runCatching (call: () -> DataWrapper<T>): DataWrapper<T> {
+        return try {
+            call.invoke()
+        } catch (t: Throwable) {
+            DataWrapper.exception(t, null)
+        }
+    }
+
     private fun <T> run(call: () -> DataWrapper<T>) =
         call.runCatching { invoke() }
             .onFailure { t -> t.printStackTrace()}

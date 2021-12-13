@@ -7,6 +7,7 @@ import com.hfaria.portfolio.codewars.ui.search_user.NewSearchUserViewModel
 import com.hfaria.portfolio.codewars.ui.search_user.SearchUserScreenState
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.runBlocking
+import org.junit.Ignore
 import org.junit.Test
 import javax.inject.Inject
 
@@ -19,6 +20,9 @@ class SearchUserAcceptanceTest : BaseAcceptanceTest() {
 
     @Inject
     lateinit var stubApi: StubCodeWarsApi
+
+    @Inject
+    lateinit var stubUserDao: StubUserDao
 
     @Test
     fun `SUCCESS - Should Route to User Profile Screen`() = runBlocking {
@@ -55,12 +59,12 @@ class SearchUserAcceptanceTest : BaseAcceptanceTest() {
     fun `ERROR - Backend Error - Should show message explaining backend error`() = runBlocking {
         // Given
         val username = "abcd"
-        viewModel.state.username.postValue(username)
 
         //Given
         stubApi.getUserReponse = DataWrapper.error(SearchUserScreenState.ERROR_BACKEND)
 
         // When
+        viewModel.state.username.postValue(username)
         viewModel.handleUserSearch()
 
         // Then
@@ -77,9 +81,27 @@ class SearchUserAcceptanceTest : BaseAcceptanceTest() {
         stubApi.getUserException = Exception("NETWORK_EXCEPTION")
 
         // When
+        viewModel.state.username.postValue(username)
         viewModel.handleUserSearch()
 
         // Then
         assertEquals("NETWORK_EXCEPTION", viewModel.state.errorMessage.getSync())
+    }
+
+    @Test
+    @Ignore
+    fun `ERROR - Local DB Error - Should show message explaining local DB exception`() = runBlocking {
+        // Given
+        //val username = "abcd"
+
+        ////Given
+        //stubApi.getUserReponse = DataWrapper.error(SearchUserScreenState.ERROR_BACKEND)
+
+        //// When
+        //viewModel.state.username.postValue(username)
+        //viewModel.handleUserSearch()
+
+        //// Then
+        //assertEquals(SearchUserScreenState.ERROR_BACKEND, viewModel.state.errorMessage.getSync())
     }
 }
