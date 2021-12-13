@@ -9,11 +9,14 @@ class RemoteDataSource @Inject constructor(
     val api: CodeWarsApi
 ) {
 
-    private fun <T> run(call: () -> DataWrapper<T>) =
-        call.runCatching { invoke() }
-            .onFailure { t -> DataWrapper.exception(t, null) }
-            .getOrThrow()
+    private fun <T> runCatching (call: () -> DataWrapper<T>): DataWrapper<T> {
+        return try {
+            call.invoke()
+        } catch (t: Throwable) {
+            DataWrapper.exception(t, null)
+        }
+    }
 
     fun getUserByUsername(username: String): DataWrapper<User>
-        = run { api.getUsers(username) }
+        = runCatching { api.getUsers(username) }
 }

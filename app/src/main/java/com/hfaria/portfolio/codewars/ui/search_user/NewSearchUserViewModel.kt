@@ -26,6 +26,7 @@ class SearchUserScreenState {
     val errorMessage: LiveData<String>
         get() = _errorMessage
     val _errorMessage = MutableLiveData<String>()
+
 }
 
 class NewSearchUserViewModel @Inject constructor(

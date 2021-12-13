@@ -7,9 +7,7 @@ import com.hfaria.portfolio.codewars.ui.search_user.NewSearchUserViewModel
 import com.hfaria.portfolio.codewars.ui.search_user.SearchUserScreenState
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.runBlocking
-import org.junit.Ignore
 import org.junit.Test
-import java.lang.Exception
 import javax.inject.Inject
 
 class SearchUserAcceptanceTest : BaseAcceptanceTest() {
@@ -69,9 +67,17 @@ class SearchUserAcceptanceTest : BaseAcceptanceTest() {
         assertEquals(SearchUserScreenState.ERROR_BACKEND, viewModel.state.errorMessage.getSync())
     }
 
-    // TODO: fix this - mysterious error
+
+    private fun <T> runFoo(call: () -> DataWrapper<T>) =
+        call.runCatching { invoke() }
+            .onFailure{ t -> DataWrapper.exception(t, null) }
+            .getOrThrow()
+
+    private fun foo(): DataWrapper<User> {
+        throw Exception("Foo")
+    }
+
     @Test
-    @Ignore
     fun `ERROR - Network Exception - Should show message explaining network exception`() = runBlocking {
         // Given
         val username = "abcd"
