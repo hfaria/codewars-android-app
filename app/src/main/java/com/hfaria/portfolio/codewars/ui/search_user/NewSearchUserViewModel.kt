@@ -5,6 +5,7 @@ import com.hfaria.portfolio.codewars.domain.User
 import com.hfaria.portfolio.codewars.persistence.CodeWarsRepository
 import com.hfaria.portfolio.codewars.persistence.DataWrapper
 import com.hfaria.portfolio.codewars.persistence.Status
+import com.hfaria.portfolio.codewars.ui.search_user.interactor.SearchUserInteractor
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -30,26 +31,19 @@ class SearchUserScreenState {
 }
 
 class NewSearchUserViewModel @Inject constructor(
-    private val repository: CodeWarsRepository,
+    private val searchUserInteractor: SearchUserInteractor,
 ) : ViewModel() {
 
     val state = SearchUserScreenState()
     val routes = SearchUserRoutes()
 
     fun handleUserSearch() {
-        val username = state.username.value
-
-        if (username.isNullOrEmpty()) {
-            state._errorMessage.value = SearchUserScreenState.ERROR_EMPTY_USERNAME
-            return
-        }
-
-        searchUser(username)
+        searchUser(state.username.value)
     }
 
-    private fun searchUser(username: String) {
+    private fun searchUser(username: String?) {
         viewModelScope.launch {
-            val response = repository.getUser(username)
+            val response = searchUserInteractor.run(username)
             handleResponse(response)
         }
     }
