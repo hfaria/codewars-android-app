@@ -2,9 +2,7 @@ package com.hfaria.portfolio.codewars.ui.search_user
 
 import androidx.lifecycle.*
 import com.hfaria.portfolio.codewars.domain.User
-import com.hfaria.portfolio.codewars.persistence.CodeWarsRepository
-import com.hfaria.portfolio.codewars.persistence.DataWrapper
-import com.hfaria.portfolio.codewars.persistence.Status
+import com.hfaria.portfolio.codewars.ui.search_user.interactor.InteractorOutput
 import com.hfaria.portfolio.codewars.ui.search_user.interactor.SearchUserInteractor
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -38,21 +36,21 @@ class NewSearchUserViewModel @Inject constructor(
     val routes = SearchUserRoutes()
 
     fun handleUserSearch() {
-        searchUser(state.username.value)
-    }
-
-    private fun searchUser(username: String?) {
         viewModelScope.launch {
-            val response = searchUserInteractor.run(username)
-            handleResponse(response)
+            val output = searchUserInteractor.run(state.username.value)
+            handleOutput(output)
         }
     }
 
-    private fun handleResponse(response: DataWrapper<User>) {
-        if (response.status == Status.SUCCESS) {
-            routes._userProfileRoute.value = response.data!!
-        } else {
-            state._errorMessage.value = response.message
+    private fun handleOutput(output: InteractorOutput<User>) {
+        when (output.status ) {
+            InteractorOutput.Status.SUCCESS -> {
+                routes._userProfileRoute.value = output.data!!
+            }
+            InteractorOutput.Status.EXCEPTION,
+            InteractorOutput.Status.ERROR -> {
+                state._errorMessage.value = output.message
+            }
         }
     }
 }

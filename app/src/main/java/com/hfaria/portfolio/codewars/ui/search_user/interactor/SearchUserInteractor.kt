@@ -10,11 +10,17 @@ class SearchUserInteractor @Inject constructor(
     private val repository: CodeWarsRepository
 ) {
 
-    suspend fun run(username: String?) : DataWrapper<User> {
+    suspend fun run(username: String?) : InteractorOutput<User> {
         return if (username.isNullOrEmpty()) {
-            DataWrapper.error(SearchUserScreenState.ERROR_EMPTY_USERNAME)
+            InteractorOutput.error(SearchUserScreenState.ERROR_EMPTY_USERNAME)
         } else {
-            repository.getUser(username)
+            val response = repository.getUser(username)
+
+            if (response.hasData()) {
+                InteractorOutput.success(response.data)
+            } else {
+                InteractorOutput.error(response.message!!, null)
+            }
         }
     }
 }
