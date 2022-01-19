@@ -4,13 +4,19 @@ import androidx.lifecycle.*
 import com.hfaria.portfolio.codewars.domain.User
 import com.hfaria.portfolio.codewars.ui.search_user.interactor.InteractorOutput
 import com.hfaria.portfolio.codewars.ui.search_user.interactor.SearchUserInteractor
+import com.hfaria.portfolio.codewars.ui.search_user.interactor.SearchUserInteractor.InvalidInput
+import com.hfaria.portfolio.codewars.ui.search_user.interactor.SearchUserInteractor.InvalidInput.EMPTY_USERNAME
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class SearchUserRoutes {
     val userProfileRoute: LiveData<User>
         get() = _userProfileRoute
-    val _userProfileRoute = MutableLiveData<User>()
+    private val _userProfileRoute = MutableLiveData<User>()
+
+    fun routeToUserProfileScreen(user: User) {
+        _userProfileRoute.value = user
+    }
 }
 
 class SearchUserScreenState {
@@ -24,7 +30,37 @@ class SearchUserScreenState {
 
     val errorMessage: LiveData<String>
         get() = _errorMessage
-    val _errorMessage = MutableLiveData<String>()
+    private val _errorMessage = MutableLiveData<String>()
+
+    fun showErrorMessage(message: String) {
+        _errorMessage.value = message
+    }
+
+}
+
+class SearchUserOutput(
+    private val state: SearchUserScreenState,
+    private val routes: SearchUserRoutes): InteractorOutput<User, SearchUserInteractor.InvalidInput> {
+
+    override fun onSuccess(data: User) {
+        routes.routeToUserProfileScreen(data)
+    }
+
+    override fun onInvalidInput(reason: InvalidInput) {
+        when(reason) {
+            EMPTY_USERNAME -> {
+                state.showErrorMessage(SearchUserScreenState.ERROR_EMPTY_USERNAME)
+            }
+        }
+    }
+
+    override fun onRepositoryError(error: String) {
+        state.showErrorMessage(error)
+    }
+
+    override fun onException(throwable: Throwable) {
+        state.showErrorMessage(throwable.toString())
+    }
 
 }
 
@@ -34,23 +70,11 @@ class NewSearchUserViewModel @Inject constructor(
 
     val state = SearchUserScreenState()
     val routes = SearchUserRoutes()
+    private val searchUserOutput = SearchUserOutput(state, routes)
 
     fun handleUserSearch() {
         viewModelScope.launch {
-            val output = searchUserInteractor.run(state.username.value)
-            handleOutput(output)
-        }
-    }
-
-    private fun handleOutput(output: InteractorOutput<User>) {
-        when (output.status ) {
-            InteractorOutput.Status.SUCCESS -> {
-                routes._userProfileRoute.value = output.data!!
-            }
-            InteractorOutput.Status.EXCEPTION,
-            InteractorOutput.Status.ERROR -> {
-                state._errorMessage.value = output.message
-            }
+            searchUserInteractor.run(state.username.value, searchUserOutput)
         }
     }
 }
