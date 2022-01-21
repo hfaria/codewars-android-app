@@ -56,6 +56,19 @@ class SearchUserAcceptanceTest : BaseAcceptanceTest() {
     }
 
     @Test
+    fun `ERROR - Short Username - Should show error message`() = runBlocking {
+        // Given
+        val username = "ab"
+
+        // When
+        viewModel.state.username.postValue(username)
+        viewModel.handleUserSearch()
+
+        // Then
+        assertEquals(SearchUserScreenState.ERROR_SHORT_USERNAME, viewModel.state.errorMessage.getSync())
+    }
+
+    @Test
     fun `ERROR - Backend Error - Should show message explaining backend error`() = runBlocking {
         // Given
         val username = "abcd"

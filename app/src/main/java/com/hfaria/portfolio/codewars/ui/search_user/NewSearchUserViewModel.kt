@@ -6,6 +6,7 @@ import com.hfaria.portfolio.codewars.ui.search_user.interactor.InteractorOutput
 import com.hfaria.portfolio.codewars.ui.search_user.interactor.SearchUserInteractor
 import com.hfaria.portfolio.codewars.ui.search_user.interactor.SearchUserInteractor.InvalidInput
 import com.hfaria.portfolio.codewars.ui.search_user.interactor.SearchUserInteractor.InvalidInput.EMPTY_USERNAME
+import com.hfaria.portfolio.codewars.ui.search_user.interactor.SearchUserInteractor.InvalidInput.SHORT_USERNAME
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,6 +24,7 @@ class SearchUserScreenState {
 
     companion object {
         const val ERROR_EMPTY_USERNAME = "Please, enter an username"
+        const val ERROR_SHORT_USERNAME = "This username is too short"
         const val ERROR_BACKEND = "GENERIC_BACKEND_ERROR"
     }
 
@@ -50,6 +52,9 @@ class SearchUserOutput(
         when(reason) {
             EMPTY_USERNAME -> {
                 state.showErrorMessage(SearchUserScreenState.ERROR_EMPTY_USERNAME)
+            }
+            SHORT_USERNAME -> {
+                state.showErrorMessage(SearchUserScreenState.ERROR_SHORT_USERNAME)
             }
         }
     }
