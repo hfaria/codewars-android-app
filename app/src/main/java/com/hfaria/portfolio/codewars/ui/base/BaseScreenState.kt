@@ -21,6 +21,10 @@ abstract class BaseScreenState {
         _errorMessage.value = message
     }
 
+    fun showErrorMessage(errorId: Int) {
+        _errorId.value = errorId
+    }
+
     fun setLoadingState(state: Boolean) {
         _isLoading.value = state
     }

@@ -1,5 +1,6 @@
 package com.hfaria.portfolio.codewars.acceptance.search_user
 
+import com.hfaria.portfolio.codewars.R
 import com.hfaria.portfolio.codewars.domain.User
 import com.hfaria.portfolio.codewars.persistence.DataWrapper
 import com.hfaria.portfolio.codewars.test_setup.*
@@ -64,6 +65,10 @@ class SearchUserAcceptanceTest : BaseAcceptanceTest() {
         fun thenAppShouldShowError(error: String) {
             assertEquals(error, viewModel.state.errorMessage.getSync())
         }
+
+        fun thenAppShouldShowError(errorId: Int) {
+            assertEquals(errorId, viewModel.state.errorId.getSync())
+        }
     }
 
     @Test
@@ -80,7 +85,7 @@ class SearchUserAcceptanceTest : BaseAcceptanceTest() {
         val runner = TestRunner(viewModel, stubApi)
         val username = ""
         runner.whenUsernameIsSearched(username)
-        runner.thenAppShouldShowError(SearchUserOutput.ERROR_EMPTY_USERNAME)
+        runner.thenAppShouldShowError(R.string.error_empty_username)
     }
 
     @Test
@@ -88,7 +93,7 @@ class SearchUserAcceptanceTest : BaseAcceptanceTest() {
         val runner = TestRunner(viewModel, stubApi)
         val username = "ab"
         runner.whenUsernameIsSearched(username)
-        runner.thenAppShouldShowError(SearchUserOutput.ERROR_SHORT_USERNAME)
+        runner.thenAppShouldShowError(R.string.error_short_username)
     }
 
 

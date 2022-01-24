@@ -1,6 +1,7 @@
 package com.hfaria.portfolio.codewars.ui.search_user
 
 import androidx.lifecycle.*
+import com.hfaria.portfolio.codewars.R
 import com.hfaria.portfolio.codewars.domain.User
 import com.hfaria.portfolio.codewars.ui.base.BasePresenter
 import com.hfaria.portfolio.codewars.ui.base.BaseScreenState
@@ -29,11 +30,6 @@ class SearchUserOutput(
     state: SearchUserScreenState,
     private val routes: SearchUserRoutes): BasePresenter<User, UsernameValidation>(state) {
 
-    companion object {
-        const val ERROR_EMPTY_USERNAME = "Please, enter an username"
-        const val ERROR_SHORT_USERNAME = "This username is too short"
-    }
-
     override fun onSuccess(data: User) {
         routes.routeToUserProfileScreen(data)
     }
@@ -41,10 +37,10 @@ class SearchUserOutput(
     override fun onInvalidInput(reason: UsernameValidation) {
         when(reason) {
             EMPTY_USERNAME -> {
-                state.showErrorMessage(ERROR_EMPTY_USERNAME)
+                state.showErrorMessage(R.string.error_empty_username)
             }
             SHORT_USERNAME -> {
-                state.showErrorMessage(ERROR_SHORT_USERNAME)
+                state.showErrorMessage(R.string.error_short_username)
             }
         }
     }
