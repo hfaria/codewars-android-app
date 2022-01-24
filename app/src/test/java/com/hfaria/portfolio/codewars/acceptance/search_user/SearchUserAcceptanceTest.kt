@@ -4,8 +4,7 @@ import com.hfaria.portfolio.codewars.R
 import com.hfaria.portfolio.codewars.domain.User
 import com.hfaria.portfolio.codewars.persistence.DataWrapper
 import com.hfaria.portfolio.codewars.test_setup.*
-import com.hfaria.portfolio.codewars.ui.search_user.NewSearchUserViewModel
-import com.hfaria.portfolio.codewars.ui.search_user.SearchUserOutput
+import com.hfaria.portfolio.codewars.ui.search_user.SearchUserController
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.*
 import org.junit.Test
@@ -16,7 +15,7 @@ class SearchUserAcceptanceTest : BaseAcceptanceTest() {
     override fun injectTest(component: TestAppComponent) = component.inject(this)
 
     @Inject
-    lateinit var viewModel: NewSearchUserViewModel
+    lateinit var controller: SearchUserController
 
     @Inject
     lateinit var stubApi: StubCodeWarsApi
@@ -25,7 +24,7 @@ class SearchUserAcceptanceTest : BaseAcceptanceTest() {
     lateinit var stubUserDao: StubUserDao
 
     class TestRunner(
-        val viewModel: NewSearchUserViewModel,
+        val controller: SearchUserController,
         val stubApi: StubCodeWarsApi
         ) {
 
@@ -48,14 +47,14 @@ class SearchUserAcceptanceTest : BaseAcceptanceTest() {
 
         fun whenUsernameIsSearched(username: String) {
             searchUsername = username
-            loadingStates = viewModel.state.isLoading.collect({
-                viewModel.state.username.postValue(username)
-                viewModel.handleUserSearch()
+            loadingStates = controller.state.isLoading.collect({
+                controller.state.username.postValue(username)
+                controller.handleUserSearch()
             })
         }
 
         fun thenAppShouldOpenUserProfileScreen() {
-            val searchedUser = viewModel.routes.userProfileRoute.getSync()
+            val searchedUser = controller.routes.userProfileRoute.getSync()
             assertEquals(searchedUser.username, searchUsername)
             assertEquals(2, loadingStates.size)
             assertTrue(loadingStates[0])
@@ -63,17 +62,17 @@ class SearchUserAcceptanceTest : BaseAcceptanceTest() {
         }
 
         fun thenAppShouldShowError(error: String) {
-            assertEquals(error, viewModel.state.errorMessage.getSync())
+            assertEquals(error, controller.state.errorMessage.getSync())
         }
 
         fun thenAppShouldShowError(errorId: Int) {
-            assertEquals(errorId, viewModel.state.errorId.getSync())
+            assertEquals(errorId, controller.state.errorId.getSync())
         }
     }
 
     @Test
     fun `SUCCESS - Should Route to User Profile Screen`() = runBlocking {
-        val runner = TestRunner(viewModel, stubApi)
+        val runner = TestRunner(controller, stubApi)
         val username = "g964"
         runner.givenUserExists(username)
         runner.whenUsernameIsSearched(username)
@@ -82,7 +81,7 @@ class SearchUserAcceptanceTest : BaseAcceptanceTest() {
 
     @Test
     fun `ERROR - Empty Username - Should show message to enter an username`() = runBlocking {
-        val runner = TestRunner(viewModel, stubApi)
+        val runner = TestRunner(controller, stubApi)
         val username = ""
         runner.whenUsernameIsSearched(username)
         runner.thenAppShouldShowError(R.string.error_empty_username)
@@ -90,7 +89,7 @@ class SearchUserAcceptanceTest : BaseAcceptanceTest() {
 
     @Test
     fun `ERROR - Short Username - Should show error message`() = runBlocking {
-        val runner = TestRunner(viewModel, stubApi)
+        val runner = TestRunner(controller, stubApi)
         val username = "ab"
         runner.whenUsernameIsSearched(username)
         runner.thenAppShouldShowError(R.string.error_short_username)
@@ -99,7 +98,7 @@ class SearchUserAcceptanceTest : BaseAcceptanceTest() {
 
     @Test
     fun `ERROR - Repository Error - Should show message explaining repository error`() = runBlocking {
-        val runner = TestRunner(viewModel, stubApi)
+        val runner = TestRunner(controller, stubApi)
         val username = "abcd"
         val errorMessage = "AN_ERROR"
         runner.givenRepositoryWillFail(errorMessage)
@@ -109,7 +108,7 @@ class SearchUserAcceptanceTest : BaseAcceptanceTest() {
 
     @Test
     fun `EXCEPTION - Should show message explaining unexpected exception`() = runBlocking {
-        val runner = TestRunner(viewModel, stubApi)
+        val runner = TestRunner(controller, stubApi)
         val username = "abcd"
         val exceptionMessage = "A_EXCEPTION"
         runner.givenRepositoryWillThrowException(exceptionMessage)

@@ -13,7 +13,7 @@ abstract class BaseInteractor<in PARAM, out VR : ValidationResult, out RESPONSE>
 
     protected abstract fun invoke(param: PARAM): DataWrapper<RESPONSE>
 
-    open fun run(param: PARAM, output: InteractorOutput<RESPONSE, VR>) {
+    open fun run(param: PARAM, output: OutputPort<RESPONSE, VR>) {
         try {
             val validationResult = validate(param)
 

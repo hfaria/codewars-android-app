@@ -3,7 +3,7 @@ package com.hfaria.portfolio.codewars.domain.base
 /*
  *  Generic Interactor Use Case Output Port
  */
-interface InteractorOutput<in D, in R> {
+interface OutputPort<in D, in R> {
 
     fun onInvalidInput(reason: R)
     fun onStartLoading()

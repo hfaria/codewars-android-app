@@ -26,7 +26,7 @@ class SearchUserScreenState: BaseScreenState() {
     val username = MutableLiveData<String>()
 }
 
-class SearchUserOutput(
+class SearchUserPresenter(
     state: SearchUserScreenState,
     private val routes: SearchUserRoutes): BasePresenter<User, UsernameValidation>(state) {
 
@@ -46,13 +46,13 @@ class SearchUserOutput(
     }
 }
 
-class NewSearchUserViewModel @Inject constructor(
+class SearchUserController @Inject constructor(
     private val searchUserInteractor: SearchUserInteractor,
 ) : ViewModel() {
 
     val state = SearchUserScreenState()
     val routes = SearchUserRoutes()
-    private val searchUserOutput = SearchUserOutput(state, routes)
+    private val searchUserOutput = SearchUserPresenter(state, routes)
 
     fun handleUserSearch() {
         viewModelScope.launch {
