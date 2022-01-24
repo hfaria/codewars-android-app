@@ -1,7 +1,6 @@
-package com.hfaria.portfolio.codewars.ui
+package com.hfaria.portfolio.codewars.domain.base
 
 import com.hfaria.portfolio.codewars.persistence.DataWrapper
-import com.hfaria.portfolio.codewars.ui.search_user.interactor.InteractorOutput
 
 interface ValidationResult {
 

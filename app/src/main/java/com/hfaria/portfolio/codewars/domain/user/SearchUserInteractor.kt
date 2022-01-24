@@ -1,10 +1,10 @@
-package com.hfaria.portfolio.codewars.ui.search_user.interactor
+package com.hfaria.portfolio.codewars.domain.user
 
 import com.hfaria.portfolio.codewars.domain.User
+import com.hfaria.portfolio.codewars.domain.base.BaseInteractor
+import com.hfaria.portfolio.codewars.domain.base.ValidationResult
 import com.hfaria.portfolio.codewars.persistence.CodeWarsRepository
 import com.hfaria.portfolio.codewars.persistence.DataWrapper
-import com.hfaria.portfolio.codewars.ui.BaseInteractor
-import com.hfaria.portfolio.codewars.ui.ValidationResult
 import javax.inject.Inject
 
 const val MINIMUM_USERNAME_LENGTH = 3

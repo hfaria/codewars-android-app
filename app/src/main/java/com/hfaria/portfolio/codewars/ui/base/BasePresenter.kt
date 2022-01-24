@@ -1,6 +1,6 @@
 package com.hfaria.portfolio.codewars.ui.base
 
-import com.hfaria.portfolio.codewars.ui.search_user.interactor.InteractorOutput
+import com.hfaria.portfolio.codewars.domain.base.InteractorOutput
 
 abstract class BasePresenter<D, V>(
     protected val state: BaseScreenState

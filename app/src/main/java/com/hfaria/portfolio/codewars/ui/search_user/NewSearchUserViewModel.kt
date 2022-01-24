@@ -5,10 +5,10 @@ import com.hfaria.portfolio.codewars.R
 import com.hfaria.portfolio.codewars.domain.User
 import com.hfaria.portfolio.codewars.ui.base.BasePresenter
 import com.hfaria.portfolio.codewars.ui.base.BaseScreenState
-import com.hfaria.portfolio.codewars.ui.search_user.interactor.SearchUserInteractor
-import com.hfaria.portfolio.codewars.ui.search_user.interactor.SearchUserInteractor.UsernameValidation
-import com.hfaria.portfolio.codewars.ui.search_user.interactor.SearchUserInteractor.UsernameValidation.EMPTY_USERNAME
-import com.hfaria.portfolio.codewars.ui.search_user.interactor.SearchUserInteractor.UsernameValidation.SHORT_USERNAME
+import com.hfaria.portfolio.codewars.domain.user.SearchUserInteractor
+import com.hfaria.portfolio.codewars.domain.user.SearchUserInteractor.UsernameValidation
+import com.hfaria.portfolio.codewars.domain.user.SearchUserInteractor.UsernameValidation.EMPTY_USERNAME
+import com.hfaria.portfolio.codewars.domain.user.SearchUserInteractor.UsernameValidation.SHORT_USERNAME
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

@@ -1,4 +1,4 @@
-package com.hfaria.portfolio.codewars.ui.search_user.interactor
+package com.hfaria.portfolio.codewars.domain.base
 
 /*
  *  Generic Interactor Use Case Output Port
