@@ -6,7 +6,7 @@ import com.hfaria.portfolio.codewars.test_setup.*
 import com.hfaria.portfolio.codewars.ui.search_user.NewSearchUserViewModel
 import com.hfaria.portfolio.codewars.ui.search_user.SearchUserOutput
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert.assertEquals
+import org.junit.Assert.*
 import org.junit.Test
 import javax.inject.Inject
 
@@ -30,6 +30,7 @@ class SearchUserAcceptanceTest : BaseAcceptanceTest() {
 
         lateinit var searchUsername: String
         lateinit var user: User
+        lateinit var loadingStates: List<Boolean>
 
         fun givenUserExists(username: String) {
             val user = User(username, null, 0, null)
@@ -46,13 +47,18 @@ class SearchUserAcceptanceTest : BaseAcceptanceTest() {
 
         fun whenUsernameIsSearched(username: String) {
             searchUsername = username
-            viewModel.state.username.postValue(username)
-            viewModel.handleUserSearch()
+            loadingStates = viewModel.state.isLoading.collect({
+                viewModel.state.username.postValue(username)
+                viewModel.handleUserSearch()
+            })
         }
 
         fun thenAppShouldOpenUserProfileScreen() {
             val searchedUser = viewModel.routes.userProfileRoute.getSync()
             assertEquals(searchedUser.username, searchUsername)
+            assertEquals(2, loadingStates.size)
+            assertTrue(loadingStates[0])
+            assertFalse(loadingStates[1])
         }
 
         fun thenAppShouldShowError(error: String) {

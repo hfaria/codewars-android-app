@@ -28,8 +28,16 @@ class SearchUserScreenState {
         get() = _errorMessage
     private val _errorMessage = MutableLiveData<String>()
 
+    val isLoading: LiveData<Boolean>
+        get() = _isLoading
+    private val _isLoading = MutableLiveData<Boolean>()
+
     fun showErrorMessage(message: String) {
         _errorMessage.value = message
+    }
+
+    fun setLoadingState(state: Boolean) {
+        _isLoading.value = state
     }
 
 }
@@ -66,6 +74,13 @@ class SearchUserOutput(
         state.showErrorMessage(throwable.toString())
     }
 
+    override fun onStartLoading() {
+        state.setLoadingState(true)
+    }
+
+    override fun onStopLoading() {
+        state.setLoadingState(false)
+    }
 }
 
 class NewSearchUserViewModel @Inject constructor(

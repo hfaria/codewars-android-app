@@ -2,6 +2,7 @@ package com.hfaria.portfolio.codewars.test_setup
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import java.lang.Thread.sleep
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
@@ -31,4 +32,25 @@ fun <T> LiveData<T>.getSync(
 
     @Suppress("UNCHECKED_CAST")
     return data as T
+}
+
+fun <T> LiveData<T>.collect(
+    action: () -> Any,
+    time: Long = 300,
+    timeUnit: TimeUnit = TimeUnit.MILLISECONDS
+    ): List<T> {
+    val emittedValues = mutableListOf<T>()
+
+    val observer = Observer<T> { o ->
+        if (o != null) {
+            emittedValues.add(o)
+        }
+    }
+
+    this.observeForever(observer)
+    action.invoke()
+    sleep(time)
+    this.removeObserver(observer)
+
+    return emittedValues
 }

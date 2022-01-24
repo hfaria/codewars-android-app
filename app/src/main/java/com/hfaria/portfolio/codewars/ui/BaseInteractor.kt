@@ -23,7 +23,9 @@ abstract class BaseInteractor<in PARAM, out VR : ValidationResult, out RESPONSE>
                 return
             }
 
+            output.onStartLoading()
             val response = invoke(param)
+            output.onStopLoading()
 
             if (response.hasData()) {
                 output.onSuccess(response.data!!)
