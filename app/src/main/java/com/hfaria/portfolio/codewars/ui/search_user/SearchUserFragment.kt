@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.hfaria.portfolio.codewars.CodeWarsApp
 import com.hfaria.portfolio.codewars.databinding.SearchUserBinding
 import com.hfaria.portfolio.codewars.domain.User
-import com.hfaria.portfolio.codewars.ui.BaseFragment
+import com.hfaria.portfolio.codewars.ui.base.BaseFragment
 import com.hfaria.portfolio.codewars.util.ToastUtil
 
 class SearchUserFragment : BaseFragment<SearchUserViewModel>() {
