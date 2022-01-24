@@ -2,6 +2,7 @@ package com.hfaria.portfolio.codewars.ui.search_user
 
 import androidx.lifecycle.*
 import com.hfaria.portfolio.codewars.domain.User
+import com.hfaria.portfolio.codewars.ui.base.BaseScreenState
 import com.hfaria.portfolio.codewars.ui.search_user.interactor.InteractorOutput
 import com.hfaria.portfolio.codewars.ui.search_user.interactor.SearchUserInteractor
 import com.hfaria.portfolio.codewars.ui.search_user.interactor.SearchUserInteractor.UsernameValidation
@@ -20,26 +21,8 @@ class SearchUserRoutes {
     }
 }
 
-class SearchUserScreenState {
-
+class SearchUserScreenState: BaseScreenState() {
     val username = MutableLiveData<String>()
-
-    val errorMessage: LiveData<String>
-        get() = _errorMessage
-    private val _errorMessage = MutableLiveData<String>()
-
-    val isLoading: LiveData<Boolean>
-        get() = _isLoading
-    private val _isLoading = MutableLiveData<Boolean>()
-
-    fun showErrorMessage(message: String) {
-        _errorMessage.value = message
-    }
-
-    fun setLoadingState(state: Boolean) {
-        _isLoading.value = state
-    }
-
 }
 
 class SearchUserOutput(
