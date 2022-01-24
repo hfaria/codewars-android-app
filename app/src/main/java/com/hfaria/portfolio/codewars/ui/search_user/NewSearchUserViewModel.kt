@@ -2,8 +2,8 @@ package com.hfaria.portfolio.codewars.ui.search_user
 
 import androidx.lifecycle.*
 import com.hfaria.portfolio.codewars.domain.User
+import com.hfaria.portfolio.codewars.ui.base.BasePresenter
 import com.hfaria.portfolio.codewars.ui.base.BaseScreenState
-import com.hfaria.portfolio.codewars.ui.search_user.interactor.InteractorOutput
 import com.hfaria.portfolio.codewars.ui.search_user.interactor.SearchUserInteractor
 import com.hfaria.portfolio.codewars.ui.search_user.interactor.SearchUserInteractor.UsernameValidation
 import com.hfaria.portfolio.codewars.ui.search_user.interactor.SearchUserInteractor.UsernameValidation.EMPTY_USERNAME
@@ -26,8 +26,8 @@ class SearchUserScreenState: BaseScreenState() {
 }
 
 class SearchUserOutput(
-    private val state: SearchUserScreenState,
-    private val routes: SearchUserRoutes): InteractorOutput<User, SearchUserInteractor.UsernameValidation> {
+    state: SearchUserScreenState,
+    private val routes: SearchUserRoutes): BasePresenter<User, UsernameValidation>(state) {
 
     companion object {
         const val ERROR_EMPTY_USERNAME = "Please, enter an username"
@@ -47,22 +47,6 @@ class SearchUserOutput(
                 state.showErrorMessage(ERROR_SHORT_USERNAME)
             }
         }
-    }
-
-    override fun onRepositoryError(error: String) {
-        state.showErrorMessage(error)
-    }
-
-    override fun onException(throwable: Throwable) {
-        state.showErrorMessage(throwable.toString())
-    }
-
-    override fun onStartLoading() {
-        state.setLoadingState(true)
-    }
-
-    override fun onStopLoading() {
-        state.setLoadingState(false)
     }
 }
 
