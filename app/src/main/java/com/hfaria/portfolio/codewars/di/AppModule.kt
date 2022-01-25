@@ -7,7 +7,7 @@ import com.hfaria.portfolio.codewars.persistence.local.db.AppDatabase
 import com.hfaria.portfolio.codewars.persistence.local.db.DATABASE_NAME
 import com.hfaria.portfolio.codewars.persistence.remote.api.CODEWARS_ENDPOINT
 import com.hfaria.portfolio.codewars.persistence.remote.api.CodeWarsApi
-import com.hfaria.portfolio.codewars.persistence.remote.adapter.CodeWarsCallAdapterFactory
+import com.hfaria.portfolio.codewars.persistence.remote.adapter.ApiResponseCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -22,7 +22,7 @@ class AppModule {
         return Retrofit.Builder()
             .baseUrl(CODEWARS_ENDPOINT)
             .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(CodeWarsCallAdapterFactory())
+            .addCallAdapterFactory(ApiResponseCallAdapterFactory())
             .build()
             .create(CodeWarsApi::class.java)
     }

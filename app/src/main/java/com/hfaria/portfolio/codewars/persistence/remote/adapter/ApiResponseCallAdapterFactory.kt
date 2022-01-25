@@ -22,7 +22,7 @@ import retrofit2.Retrofit
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 
-class CodeWarsCallAdapterFactory : Factory() {
+class ApiResponseCallAdapterFactory : Factory() {
     override fun get(
         returnType: Type,
         annotations: Array<Annotation>,
@@ -32,6 +32,6 @@ class CodeWarsCallAdapterFactory : Factory() {
             return null
         }
         val bodyType = getParameterUpperBound(0, returnType as ParameterizedType)
-        return CodeWarsCallAdapter<Any>(bodyType)
+        return ApiResponseCallAdapter<Any>(bodyType)
     }
 }

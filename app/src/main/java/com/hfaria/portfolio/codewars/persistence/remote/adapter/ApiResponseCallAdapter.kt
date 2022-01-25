@@ -8,7 +8,7 @@ import java.lang.reflect.Type
 /**
  * A Retrofit adapter that converts the Call into an ApiResponse object
 */
-class CodeWarsCallAdapter<R>(private val responseType: Type) :
+class ApiResponseCallAdapter<R>(private val responseType: Type) :
     CallAdapter<R, ApiResponse<R>> {
 
     private fun executeCall(call: Call<R>): ApiResponse<R> {

@@ -4,6 +4,7 @@ import com.hfaria.portfolio.codewars.domain.User
 import com.hfaria.portfolio.codewars.integration.setup.DaggerNetworkTestComponent
 import com.hfaria.portfolio.codewars.integration.setup.NetworkTestComponent
 import com.hfaria.portfolio.codewars.persistence.remote.adapter.ApiErrorResponse
+import com.hfaria.portfolio.codewars.persistence.remote.adapter.ApiNotFoundResponse
 import com.hfaria.portfolio.codewars.persistence.remote.adapter.ApiSuccessResponse
 import com.hfaria.portfolio.codewars.persistence.remote.api.CodeWarsApi
 import com.hfaria.portfolio.codewars.test_setup.DaggerTestAppComponent
@@ -40,7 +41,6 @@ class UserNetworkTest {
     @Test
     fun test_get_unexisting_user() {
         val username = "unexisting_user"
-        val response = api.getUsers(username) as ApiErrorResponse<User>
-        print(response.errorMessage)
+        val response = api.getUsers(username) as ApiNotFoundResponse<User>
     }
 }

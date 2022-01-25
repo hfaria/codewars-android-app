@@ -5,6 +5,7 @@ import com.hfaria.portfolio.codewars.persistence.remote.api.CodeWarsApi
 import com.hfaria.portfolio.codewars.domain.User
 import com.hfaria.portfolio.codewars.persistence.remote.adapter.ApiEmptyResponse
 import com.hfaria.portfolio.codewars.persistence.remote.adapter.ApiErrorResponse
+import com.hfaria.portfolio.codewars.persistence.remote.adapter.ApiNotFoundResponse
 import com.hfaria.portfolio.codewars.persistence.remote.adapter.ApiSuccessResponse
 import javax.inject.Inject
 
@@ -27,6 +28,7 @@ class RemoteDataSource @Inject constructor(
             is ApiSuccessResponse -> DataWrapper.success(response.body)
             is ApiEmptyResponse -> DataWrapper.error("Empty Response", null)
             is ApiErrorResponse -> DataWrapper.error(response.errorMessage, null)
+            is ApiNotFoundResponse -> DataWrapper.error("Not Found", null)
         }
     }
 }
