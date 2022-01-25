@@ -16,23 +16,22 @@
 
 package com.hfaria.portfolio.codewars.persistence.remote.adapter
 
-import com.hfaria.portfolio.codewars.persistence.DataWrapper
 import retrofit2.CallAdapter
 import retrofit2.CallAdapter.Factory
 import retrofit2.Retrofit
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 
-class DataWrapperCallAdapterFactory : Factory() {
+class CodeWarsCallAdapterFactory : Factory() {
     override fun get(
         returnType: Type,
         annotations: Array<Annotation>,
         retrofit: Retrofit
     ): CallAdapter<*, *>? {
-        if (getRawType(returnType) != DataWrapper::class.java) {
+        if (getRawType(returnType) != ApiResponse::class.java) {
             return null
         }
         val bodyType = getParameterUpperBound(0, returnType as ParameterizedType)
-        return DataWrapperCallAdapter<Any>(bodyType)
+        return CodeWarsCallAdapter<Any>(bodyType)
     }
 }

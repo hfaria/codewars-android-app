@@ -3,6 +3,9 @@ package com.hfaria.portfolio.codewars.persistence.remote
 import com.hfaria.portfolio.codewars.persistence.DataWrapper
 import com.hfaria.portfolio.codewars.persistence.remote.api.CodeWarsApi
 import com.hfaria.portfolio.codewars.domain.User
+import com.hfaria.portfolio.codewars.persistence.remote.adapter.ApiEmptyResponse
+import com.hfaria.portfolio.codewars.persistence.remote.adapter.ApiErrorResponse
+import com.hfaria.portfolio.codewars.persistence.remote.adapter.ApiSuccessResponse
 import javax.inject.Inject
 
 class RemoteDataSource @Inject constructor(
@@ -18,5 +21,12 @@ class RemoteDataSource @Inject constructor(
     }
 
     fun getUserByUsername(username: String): DataWrapper<User>
-        = runCatching { api.getUsers(username) }
+            = runCatching {
+        val response = api.getUsers(username)
+        when(response) {
+            is ApiSuccessResponse -> DataWrapper.success(response.body)
+            is ApiEmptyResponse -> DataWrapper.error("Empty Response", null)
+            is ApiErrorResponse -> DataWrapper.error(response.errorMessage, null)
+        }
+    }
 }
