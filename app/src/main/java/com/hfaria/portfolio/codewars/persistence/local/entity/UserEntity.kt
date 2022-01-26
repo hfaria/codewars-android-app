@@ -1,12 +1,9 @@
 package com.hfaria.portfolio.codewars.persistence.remote.api
 
-import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.hfaria.portfolio.codewars.domain.LanguageRank
-import com.hfaria.portfolio.codewars.domain.Rank
+import com.hfaria.portfolio.codewars.domain.Ranks
 import com.hfaria.portfolio.codewars.domain.User
-import com.hfaria.portfolio.codewars.domain.UserRanks
 import com.hfaria.portfolio.codewars.util.TimeUtil
 
 @Entity(tableName = "user")
@@ -15,9 +12,9 @@ data class UserEntity(
     var username: String,
     var name: String,
     var updatedAt: Int,
-    @Embedded
-    var overallRank: Rank,
-    var languageRanks: List<LanguageRank>
+    //@Embedded
+    //var overallRank: Rank,
+    //var languageRanks: List<LanguageRank>
 ) {
     companion object {
         fun fromDomain(user: User): UserEntity {
@@ -28,16 +25,13 @@ data class UserEntity(
             val timeNow = TimeUtil.nowInSeconds()
             val userEntity = UserEntity(
                 user.username, user.name!!,
-                timeNow,
-                user.ranks!!.overall,
-                user.ranks!!.languages
+                timeNow
             )
             return userEntity
         }
 
         fun toDomain(entity: UserEntity): User {
-            val userRanks = UserRanks(entity.overallRank, entity.languageRanks)
-            return User(entity.username, entity.name, entity.updatedAt, userRanks)
+            return User(entity.username, entity.name, entity.updatedAt)
         }
     }
 }

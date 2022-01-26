@@ -47,7 +47,7 @@
                 android:id="@+id/tv_rank_title"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:text="@{user.ranks.overall.getDescription()}"
+                android:text=""
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tv_username"
@@ -68,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@{`Best Language: ` + user.ranks.getBestLanguageDescription()}"
+                android:text="@{`Best Language: Foo`}"
                 android:textSize="14sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/divider" />

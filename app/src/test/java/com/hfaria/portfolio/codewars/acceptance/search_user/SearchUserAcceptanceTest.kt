@@ -1,6 +1,7 @@
 package com.hfaria.portfolio.codewars.acceptance.search_user
 
 import com.hfaria.portfolio.codewars.R
+import com.hfaria.portfolio.codewars.domain.Ranks
 import com.hfaria.portfolio.codewars.domain.User
 import com.hfaria.portfolio.codewars.persistence.remote.adapter.ApiErrorResponse
 import com.hfaria.portfolio.codewars.persistence.remote.adapter.ApiSuccessResponse
@@ -34,7 +35,7 @@ class SearchUserAcceptanceTest : BaseAcceptanceTest() {
         lateinit var loadingStates: List<Boolean>
 
         fun givenUserExists(username: String) {
-            val user = User(username, null, 0, null)
+            val user = User(username, null, 0)
             stubApi.getUserReponse = ApiSuccessResponse(user)
         }
 
