@@ -1,7 +1,6 @@
 package com.hfaria.portfolio.codewars.acceptance.search_user
 
 import com.hfaria.portfolio.codewars.R
-import com.hfaria.portfolio.codewars.domain.Ranks
 import com.hfaria.portfolio.codewars.domain.User
 import com.hfaria.portfolio.codewars.persistence.remote.adapter.ApiErrorResponse
 import com.hfaria.portfolio.codewars.persistence.remote.adapter.ApiSuccessResponse
