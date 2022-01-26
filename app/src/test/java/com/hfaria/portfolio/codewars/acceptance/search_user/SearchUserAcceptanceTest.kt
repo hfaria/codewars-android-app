@@ -25,25 +25,30 @@ class SearchUserAcceptanceTest : BaseAcceptanceTest() {
     lateinit var stubUserDao: StubUserDao
 
     class TestRunner(
-        val controller: SearchUserController,
-        val stubApi: StubCodeWarsApi
+        private val controller: SearchUserController,
+        private val stubApi: StubCodeWarsApi
         ) {
 
-        lateinit var searchUsername: String
-        lateinit var user: User
-        lateinit var loadingStates: List<Boolean>
+        private val repositoryFailure = "A_FAILURE"
+        private val repositoryException = "A_EXCEPTION"
+        private lateinit var searchUsername: String
+        private lateinit var user: User
+        private lateinit var loadingStates: List<Boolean>
+        private lateinit var expectedErrorMessage: String
 
         fun givenUserExists(username: String) {
             val user = User(username, null, 0)
             stubApi.getUserReponse = ApiSuccessResponse(user)
         }
 
-        fun givenRepositoryWillFail(errorMessage: String) {
-            stubApi.getUserReponse = ApiErrorResponse(errorMessage)
+        fun givenRepositoryWillFail() {
+            expectedErrorMessage = repositoryFailure
+            stubApi.getUserReponse = ApiErrorResponse(expectedErrorMessage)
         }
 
-        fun givenRepositoryWillThrowException(exceptionMessage: String) {
-            stubApi.getUserException = Exception(exceptionMessage)
+        fun givenRepositoryWillThrowException() {
+            expectedErrorMessage = repositoryException
+            stubApi.getUserException = Exception(expectedErrorMessage)
         }
 
         fun whenUsernameIsSearched(username: String) {
@@ -62,12 +67,12 @@ class SearchUserAcceptanceTest : BaseAcceptanceTest() {
             assertFalse(loadingStates[1])
         }
 
-        fun thenAppShouldShowError(error: String) {
-            assertEquals(error, controller.state.errorMessage.getSync())
-        }
-
         fun thenAppShouldShowError(errorId: Int) {
             assertEquals(errorId, controller.state.errorId.getSync())
+        }
+
+        fun thenAppShouldShowError() {
+            assertEquals(expectedErrorMessage, controller.state.errorMessage.getSync())
         }
     }
 
@@ -101,20 +106,18 @@ class SearchUserAcceptanceTest : BaseAcceptanceTest() {
     fun `ERROR - Repository Error - Should show message explaining repository error`() = runBlocking {
         val runner = TestRunner(controller, stubApi)
         val username = "abcd"
-        val errorMessage = "AN_ERROR"
-        runner.givenRepositoryWillFail(errorMessage)
+        runner.givenRepositoryWillFail()
         runner.whenUsernameIsSearched(username)
-        runner.thenAppShouldShowError(errorMessage)
+        runner.thenAppShouldShowError()
     }
 
     @Test
     fun `EXCEPTION - Should show message explaining unexpected exception`() = runBlocking {
         val runner = TestRunner(controller, stubApi)
         val username = "abcd"
-        val exceptionMessage = "A_EXCEPTION"
-        runner.givenRepositoryWillThrowException(exceptionMessage)
+        runner.givenRepositoryWillThrowException()
         runner.whenUsernameIsSearched(username)
-        runner.thenAppShouldShowError(exceptionMessage)
+        runner.thenAppShouldShowError()
     }
 
 }
