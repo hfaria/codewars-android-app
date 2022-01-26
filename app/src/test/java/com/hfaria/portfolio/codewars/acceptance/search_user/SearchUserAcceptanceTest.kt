@@ -8,6 +8,7 @@ import com.hfaria.portfolio.codewars.test_setup.*
 import com.hfaria.portfolio.codewars.ui.search_user.SearchUserController
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.*
+import org.junit.Before
 import org.junit.Test
 import javax.inject.Inject
 
@@ -23,6 +24,13 @@ class SearchUserAcceptanceTest : BaseAcceptanceTest() {
 
     @Inject
     lateinit var stubUserDao: StubUserDao
+
+    lateinit var runner: TestRunner
+
+    @Before
+    fun setup() {
+        runner = TestRunner(controller, stubApi)
+    }
 
     class TestRunner(
         private val controller: SearchUserController,
@@ -78,7 +86,6 @@ class SearchUserAcceptanceTest : BaseAcceptanceTest() {
 
     @Test
     fun `SUCCESS - Should Route to User Profile Screen`() = runBlocking {
-        val runner = TestRunner(controller, stubApi)
         val username = "g964"
         runner.givenUserExists(username)
         runner.whenUsernameIsSearched(username)
@@ -87,7 +94,6 @@ class SearchUserAcceptanceTest : BaseAcceptanceTest() {
 
     @Test
     fun `ERROR - Empty Username - Should show message to enter an username`() = runBlocking {
-        val runner = TestRunner(controller, stubApi)
         val username = ""
         runner.whenUsernameIsSearched(username)
         runner.thenAppShouldShowError(R.string.error_empty_username)
@@ -95,7 +101,6 @@ class SearchUserAcceptanceTest : BaseAcceptanceTest() {
 
     @Test
     fun `ERROR - Short Username - Should show error message`() = runBlocking {
-        val runner = TestRunner(controller, stubApi)
         val username = "ab"
         runner.whenUsernameIsSearched(username)
         runner.thenAppShouldShowError(R.string.error_short_username)
@@ -104,7 +109,6 @@ class SearchUserAcceptanceTest : BaseAcceptanceTest() {
 
     @Test
     fun `ERROR - Repository Error - Should show message explaining repository error`() = runBlocking {
-        val runner = TestRunner(controller, stubApi)
         val username = "abcd"
         runner.givenRepositoryWillFail()
         runner.whenUsernameIsSearched(username)
@@ -113,7 +117,6 @@ class SearchUserAcceptanceTest : BaseAcceptanceTest() {
 
     @Test
     fun `EXCEPTION - Should show message explaining unexpected exception`() = runBlocking {
-        val runner = TestRunner(controller, stubApi)
         val username = "abcd"
         runner.givenRepositoryWillThrowException()
         runner.whenUsernameIsSearched(username)
