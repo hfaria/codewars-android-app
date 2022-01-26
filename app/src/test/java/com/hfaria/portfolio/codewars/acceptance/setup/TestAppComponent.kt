@@ -1,10 +1,8 @@
-package com.hfaria.portfolio.codewars.test_setup
+package com.hfaria.portfolio.codewars.acceptance.setup
 
 import android.app.Application
-import android.content.Context
 import com.hfaria.portfolio.codewars.acceptance.search_user.SearchUserAcceptanceTest
 import com.hfaria.portfolio.codewars.di.AppComponent
-import com.hfaria.portfolio.codewars.di.AppModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule

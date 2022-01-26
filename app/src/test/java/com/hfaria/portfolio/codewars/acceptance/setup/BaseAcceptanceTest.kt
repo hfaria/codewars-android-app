@@ -1,4 +1,4 @@
-package com.hfaria.portfolio.codewars.test_setup
+package com.hfaria.portfolio.codewars.acceptance.setup
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import kotlinx.coroutines.Dispatchers
@@ -36,8 +36,7 @@ abstract class BaseAcceptanceTest {
     @Before
     fun setupDI() {
         val application = TestCodeWarsApp()
-        val component: TestAppComponent = DaggerTestAppComponent
-            .builder()
+        val component: TestAppComponent = DaggerTestAppComponent.builder()
             .application(application)
             .build()
         injectTest(component)

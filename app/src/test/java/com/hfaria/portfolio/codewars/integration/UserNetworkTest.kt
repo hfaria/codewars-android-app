@@ -3,13 +3,10 @@ package com.hfaria.portfolio.codewars.integration
 import com.hfaria.portfolio.codewars.domain.User
 import com.hfaria.portfolio.codewars.integration.setup.DaggerNetworkTestComponent
 import com.hfaria.portfolio.codewars.integration.setup.NetworkTestComponent
-import com.hfaria.portfolio.codewars.persistence.remote.adapter.ApiErrorResponse
 import com.hfaria.portfolio.codewars.persistence.remote.adapter.ApiNotFoundResponse
 import com.hfaria.portfolio.codewars.persistence.remote.adapter.ApiSuccessResponse
 import com.hfaria.portfolio.codewars.persistence.remote.api.CodeWarsApi
-import com.hfaria.portfolio.codewars.test_setup.DaggerTestAppComponent
-import com.hfaria.portfolio.codewars.test_setup.TestAppComponent
-import com.hfaria.portfolio.codewars.test_setup.TestCodeWarsApp
+import com.hfaria.portfolio.codewars.acceptance.setup.TestCodeWarsApp
 import junit.framework.Assert.*
 import org.junit.Before
 import org.junit.Test

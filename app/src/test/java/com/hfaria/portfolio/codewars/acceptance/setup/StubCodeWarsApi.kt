@@ -1,4 +1,4 @@
-package com.hfaria.portfolio.codewars.test_setup
+package com.hfaria.portfolio.codewars.acceptance.setup
 
 import com.hfaria.portfolio.codewars.persistence.DataWrapper
 import com.hfaria.portfolio.codewars.persistence.remote.api.CodeWarsApi

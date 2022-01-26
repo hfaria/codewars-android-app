@@ -1,4 +1,4 @@
-package com.hfaria.portfolio.codewars.test_setup
+package com.hfaria.portfolio.codewars.acceptance.setup
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer

@@ -1,8 +1,7 @@
-package com.hfaria.portfolio.codewars.test_setup
+package com.hfaria.portfolio.codewars.acceptance.setup
 
 import com.hfaria.portfolio.codewars.di.ViewModelBuilderModule
 import com.hfaria.portfolio.codewars.persistence.local.dao.UserDao
-import com.hfaria.portfolio.codewars.persistence.local.db.AppDatabase
 import com.hfaria.portfolio.codewars.persistence.remote.api.CodeWarsApi
 import dagger.Module
 import dagger.Provides

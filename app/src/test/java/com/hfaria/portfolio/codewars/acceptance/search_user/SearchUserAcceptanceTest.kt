@@ -1,10 +1,10 @@
 package com.hfaria.portfolio.codewars.acceptance.search_user
 
 import com.hfaria.portfolio.codewars.R
+import com.hfaria.portfolio.codewars.acceptance.setup.*
 import com.hfaria.portfolio.codewars.domain.User
 import com.hfaria.portfolio.codewars.persistence.remote.adapter.ApiErrorResponse
 import com.hfaria.portfolio.codewars.persistence.remote.adapter.ApiSuccessResponse
-import com.hfaria.portfolio.codewars.test_setup.*
 import com.hfaria.portfolio.codewars.ui.search_user.SearchUserController
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.*
