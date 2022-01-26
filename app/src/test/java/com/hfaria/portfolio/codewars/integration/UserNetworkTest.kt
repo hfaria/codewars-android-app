@@ -1,29 +1,19 @@
 package com.hfaria.portfolio.codewars.integration
 
 import com.hfaria.portfolio.codewars.domain.User
-import com.hfaria.portfolio.codewars.integration.setup.DaggerNetworkTestComponent
 import com.hfaria.portfolio.codewars.integration.setup.NetworkTestComponent
 import com.hfaria.portfolio.codewars.persistence.remote.adapter.ApiNotFoundResponse
 import com.hfaria.portfolio.codewars.persistence.remote.adapter.ApiSuccessResponse
 import com.hfaria.portfolio.codewars.persistence.remote.api.CodeWarsApi
-import com.hfaria.portfolio.codewars.acceptance.setup.TestCodeWarsApp
+import com.hfaria.portfolio.codewars.integration.setup.BaseNetworkTest
 import junit.framework.Assert.*
-import org.junit.Before
 import org.junit.Test
 import javax.inject.Inject
 
-class UserNetworkTest {
-    @Before
-    fun setupDI() {
-        val application = TestCodeWarsApp()
-        val component = DaggerNetworkTestComponent
-            .builder()
-            .application(application)
-            .build()
-        injectTest(component)
-    }
+class UserNetworkTest: BaseNetworkTest() {
 
-    fun injectTest(component: NetworkTestComponent) = component.inject(this)
+    override fun injectTest(component: NetworkTestComponent)
+        = component.inject(this)
 
     @Inject
     lateinit var api: CodeWarsApi
