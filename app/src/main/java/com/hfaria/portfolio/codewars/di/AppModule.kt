@@ -5,9 +5,12 @@ import androidx.room.Room
 import com.hfaria.portfolio.codewars.persistence.local.dao.*
 import com.hfaria.portfolio.codewars.persistence.local.db.AppDatabase
 import com.hfaria.portfolio.codewars.persistence.local.db.DATABASE_NAME
+import com.hfaria.portfolio.codewars.persistence.remote.RemoteDataSource
+import com.hfaria.portfolio.codewars.persistence.remote.RemoteDataSourceImpl
 import com.hfaria.portfolio.codewars.persistence.remote.api.CODEWARS_ENDPOINT
 import com.hfaria.portfolio.codewars.persistence.remote.api.CodeWarsApi
 import com.hfaria.portfolio.codewars.persistence.remote.adapter.ApiResponseCallAdapterFactory
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -40,5 +43,11 @@ class AppModule {
     @Provides
     fun provideUserDao(db: AppDatabase): UserDao {
         return db.userDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideRemoteDataSource(api: CodeWarsApi): RemoteDataSource {
+        return RemoteDataSourceImpl(api)
     }
 }

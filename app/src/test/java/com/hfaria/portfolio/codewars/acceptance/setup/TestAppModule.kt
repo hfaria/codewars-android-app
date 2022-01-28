@@ -2,6 +2,8 @@ package com.hfaria.portfolio.codewars.acceptance.setup
 
 import com.hfaria.portfolio.codewars.di.ViewModelBuilderModule
 import com.hfaria.portfolio.codewars.persistence.local.dao.UserDao
+import com.hfaria.portfolio.codewars.persistence.remote.RemoteDataSource
+import com.hfaria.portfolio.codewars.persistence.remote.RemoteDataSourceImpl
 import com.hfaria.portfolio.codewars.persistence.remote.api.CodeWarsApi
 import dagger.Module
 import dagger.Provides
@@ -31,5 +33,11 @@ class TestAppModule {
     @Provides
     fun provideStubUserDao(dao: UserDao): StubUserDao {
         return dao as StubUserDao
+    }
+
+    @Singleton
+    @Provides
+    fun provideRemoteDataSource(api: CodeWarsApi): RemoteDataSource {
+        return RemoteDataSourceImpl(api)
     }
 }

@@ -45,7 +45,7 @@ class SearchUserAcceptanceTest : BaseAcceptanceTest() {
         private lateinit var expectedErrorMessage: String
 
         fun givenUserExists(username: String) {
-            val user = User(username, null, 0)
+            user = User(username, null, 0)
             stubApi.getUserReponse = ApiSuccessResponse(user)
         }
 

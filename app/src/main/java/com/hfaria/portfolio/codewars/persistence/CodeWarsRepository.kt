@@ -1,8 +1,8 @@
 package com.hfaria.portfolio.codewars.persistence
 
-import com.hfaria.portfolio.codewars.persistence.remote.RemoteDataSource
 import com.hfaria.portfolio.codewars.domain.User
 import com.hfaria.portfolio.codewars.persistence.local.LocalDataSource
+import com.hfaria.portfolio.codewars.persistence.remote.RemoteDataSource
 import javax.inject.Inject
 
 class CodeWarsRepository @Inject constructor(
