@@ -6,12 +6,12 @@ import com.hfaria.portfolio.codewars.persistence.remote.*
 import javax.inject.Inject
 
 class CodeWarsRepository @Inject constructor(
-    private val remoteDataSource: RemoteDataSource,
+    private val userRemote: RemoteDataSource,
     private val localDataSource: LocalDataSource,
 ) {
 
     fun getUser(username: String): DataWrapper<User> {
-        val response = remoteDataSource.getUserByUsername(username)
+        val response = userRemote.get(username)
         return when(response) {
             is RemoteSuccessResponse -> DataWrapper.success(response.body)
             is RemoteEmptyResponse -> DataWrapper.error("Empty Response", null)

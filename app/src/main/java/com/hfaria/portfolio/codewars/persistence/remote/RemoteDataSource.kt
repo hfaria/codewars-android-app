@@ -10,6 +10,9 @@ class RemoteNotFoundResponse<T> : RemoteResponse<T>()
 class RemoteErrorResponse<T>(val errorMessage: String) : RemoteResponse<T>()
 class RemoteSuccessResponse<T>(val body: T) : RemoteResponse<T>()
 
-interface RemoteDataSource {
-    fun getUserByUsername(username: String): RemoteResponse<User>
+interface GenericDataSource<K, V> {
+    fun get(key: K): RemoteResponse<V>
 }
+
+interface UserRemoteDS: GenericDataSource<String, User>
+interface RemoteDataSource: UserRemoteDS
