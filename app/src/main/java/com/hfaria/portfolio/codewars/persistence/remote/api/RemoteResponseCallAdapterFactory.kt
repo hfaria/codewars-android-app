@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.hfaria.portfolio.codewars.persistence.remote.adapter
+package com.hfaria.portfolio.codewars.persistence.remote.api
 
 import com.hfaria.portfolio.codewars.persistence.remote.RemoteResponse
 import retrofit2.CallAdapter
@@ -23,7 +23,7 @@ import retrofit2.Retrofit
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 
-class ApiResponseCallAdapterFactory : Factory() {
+class RemoteResponseCallAdapterFactory : Factory() {
     override fun get(
         returnType: Type,
         annotations: Array<Annotation>,
@@ -33,6 +33,6 @@ class ApiResponseCallAdapterFactory : Factory() {
             return null
         }
         val bodyType = getParameterUpperBound(0, returnType as ParameterizedType)
-        return ApiResponseCallAdapter<Any>(bodyType)
+        return RemoteResponseCallAdapter<Any>(bodyType)
     }
 }

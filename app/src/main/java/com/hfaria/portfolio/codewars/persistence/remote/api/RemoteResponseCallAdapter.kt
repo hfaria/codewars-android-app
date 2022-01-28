@@ -1,4 +1,4 @@
-package com.hfaria.portfolio.codewars.persistence.remote.adapter
+package com.hfaria.portfolio.codewars.persistence.remote.api
 
 import com.hfaria.portfolio.codewars.persistence.remote.*
 import retrofit2.*
@@ -7,7 +7,7 @@ import java.lang.reflect.Type
 /**
  * A Retrofit adapter that converts the Call into an ApiResponse object
  */
-class ApiResponseCallAdapter<R>(private val responseType: Type) :
+class RemoteResponseCallAdapter<R>(private val responseType: Type) :
     CallAdapter<R, RemoteResponse<R>> {
 
     private fun <R> create(error: Throwable): RemoteErrorResponse<R> {
