@@ -16,6 +16,7 @@
 
 package com.hfaria.portfolio.codewars.persistence.remote.adapter
 
+import com.hfaria.portfolio.codewars.persistence.remote.ApiResponse
 import retrofit2.CallAdapter
 import retrofit2.CallAdapter.Factory
 import retrofit2.Retrofit

@@ -2,10 +2,10 @@ package com.hfaria.portfolio.codewars.integration
 
 import com.hfaria.portfolio.codewars.domain.User
 import com.hfaria.portfolio.codewars.integration.setup.NetworkTestComponent
-import com.hfaria.portfolio.codewars.persistence.remote.adapter.ApiNotFoundResponse
-import com.hfaria.portfolio.codewars.persistence.remote.adapter.ApiSuccessResponse
 import com.hfaria.portfolio.codewars.persistence.remote.api.CodeWarsApi
 import com.hfaria.portfolio.codewars.integration.setup.BaseNetworkTest
+import com.hfaria.portfolio.codewars.persistence.remote.ApiNotFoundResponse
+import com.hfaria.portfolio.codewars.persistence.remote.ApiSuccessResponse
 import junit.framework.Assert.*
 import org.junit.Test
 import javax.inject.Inject

@@ -2,7 +2,6 @@ package com.hfaria.portfolio.codewars.persistence.remote
 
 import com.hfaria.portfolio.codewars.persistence.remote.api.CodeWarsApi
 import com.hfaria.portfolio.codewars.domain.User
-import com.hfaria.portfolio.codewars.persistence.remote.adapter.*
 import javax.inject.Inject
 
 class RemoteDataSourceImpl @Inject constructor(
