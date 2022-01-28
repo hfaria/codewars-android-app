@@ -8,6 +8,6 @@ class RemoteDataSourceImpl @Inject constructor(
     val api: CodeWarsApi
 ) : RemoteDataSource {
 
-    override fun getUserByUsername(username: String): ApiResponse<User>
+    override fun getUserByUsername(username: String): RemoteResponse<User>
         = api.getUsers(username)
 }

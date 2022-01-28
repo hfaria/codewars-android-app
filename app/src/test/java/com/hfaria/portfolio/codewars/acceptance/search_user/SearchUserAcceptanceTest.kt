@@ -3,8 +3,8 @@ package com.hfaria.portfolio.codewars.acceptance.search_user
 import com.hfaria.portfolio.codewars.R
 import com.hfaria.portfolio.codewars.acceptance.setup.*
 import com.hfaria.portfolio.codewars.domain.User
-import com.hfaria.portfolio.codewars.persistence.remote.ApiErrorResponse
-import com.hfaria.portfolio.codewars.persistence.remote.ApiSuccessResponse
+import com.hfaria.portfolio.codewars.persistence.remote.RemoteErrorResponse
+import com.hfaria.portfolio.codewars.persistence.remote.RemoteSuccessResponse
 import com.hfaria.portfolio.codewars.ui.search_user.SearchUserController
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.*
@@ -46,12 +46,12 @@ class SearchUserAcceptanceTest : BaseAcceptanceTest() {
 
         fun givenUserExists(username: String) {
             user = User(username, null, 0)
-            stubApi.getUserReponse = ApiSuccessResponse(user)
+            stubApi.getUserReponse = RemoteSuccessResponse(user)
         }
 
         fun givenRepositoryWillFail() {
             expectedErrorMessage = repositoryFailure
-            stubApi.getUserReponse = ApiErrorResponse(expectedErrorMessage)
+            stubApi.getUserReponse = RemoteErrorResponse(expectedErrorMessage)
         }
 
         fun givenRepositoryWillThrowException() {

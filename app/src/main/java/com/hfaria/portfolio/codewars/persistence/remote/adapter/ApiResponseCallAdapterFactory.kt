@@ -16,7 +16,7 @@
 
 package com.hfaria.portfolio.codewars.persistence.remote.adapter
 
-import com.hfaria.portfolio.codewars.persistence.remote.ApiResponse
+import com.hfaria.portfolio.codewars.persistence.remote.RemoteResponse
 import retrofit2.CallAdapter
 import retrofit2.CallAdapter.Factory
 import retrofit2.Retrofit
@@ -29,7 +29,7 @@ class ApiResponseCallAdapterFactory : Factory() {
         annotations: Array<Annotation>,
         retrofit: Retrofit
     ): CallAdapter<*, *>? {
-        if (getRawType(returnType) != ApiResponse::class.java) {
+        if (getRawType(returnType) != RemoteResponse::class.java) {
             return null
         }
         val bodyType = getParameterUpperBound(0, returnType as ParameterizedType)

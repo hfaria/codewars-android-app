@@ -8,23 +8,23 @@ import java.lang.reflect.Type
  * A Retrofit adapter that converts the Call into an ApiResponse object
  */
 class ApiResponseCallAdapter<R>(private val responseType: Type) :
-    CallAdapter<R, ApiResponse<R>> {
+    CallAdapter<R, RemoteResponse<R>> {
 
-    private fun <R> create(error: Throwable): ApiErrorResponse<R> {
-        return ApiErrorResponse(error.message ?: "UNKNOWN_EXCEPTION")
+    private fun <R> create(error: Throwable): RemoteErrorResponse<R> {
+        return RemoteErrorResponse(error.message ?: "UNKNOWN_EXCEPTION")
     }
 
-    private fun <R> create(response: Response<R>): ApiResponse<R> {
+    private fun <R> create(response: Response<R>): RemoteResponse<R> {
         return if (response.isSuccessful) {
             val body = response.body()
             if (body == null || response.code() == 204) {
-                ApiEmptyResponse()
+                RemoteEmptyResponse()
             } else {
-                ApiSuccessResponse(body)
+                RemoteSuccessResponse(body)
             }
         } else {
             return if (response.code() == 404) {
-                ApiNotFoundResponse()
+                RemoteNotFoundResponse()
             } else {
                 val msg = response.errorBody()?.string()
                 val errorMsg = if (msg.isNullOrEmpty()) {
@@ -32,12 +32,12 @@ class ApiResponseCallAdapter<R>(private val responseType: Type) :
                 } else {
                     msg
                 }
-                ApiErrorResponse(errorMsg ?: "UNKNOWN_ERROR")
+                RemoteErrorResponse(errorMsg ?: "UNKNOWN_ERROR")
             }
         }
     }
 
-    private fun executeCall(call: Call<R>): ApiResponse<R> {
+    private fun executeCall(call: Call<R>): RemoteResponse<R> {
         return try {
             val retrofitResponse = call.execute()
             create<R>(retrofitResponse)
@@ -48,6 +48,6 @@ class ApiResponseCallAdapter<R>(private val responseType: Type) :
 
     override fun responseType() = responseType
 
-    override fun adapt(call: Call<R>): ApiResponse<R>
+    override fun adapt(call: Call<R>): RemoteResponse<R>
             = executeCall(call)
 }

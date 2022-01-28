@@ -13,10 +13,10 @@ class CodeWarsRepository @Inject constructor(
     fun getUser(username: String): DataWrapper<User> {
         val response = remoteDataSource.getUserByUsername(username)
         return when(response) {
-            is ApiSuccessResponse -> DataWrapper.success(response.body)
-            is ApiEmptyResponse -> DataWrapper.error("Empty Response", null)
-            is ApiErrorResponse -> DataWrapper.error(response.errorMessage, null)
-            is ApiNotFoundResponse -> DataWrapper.error("Not Found", null)
+            is RemoteSuccessResponse -> DataWrapper.success(response.body)
+            is RemoteEmptyResponse -> DataWrapper.error("Empty Response", null)
+            is RemoteErrorResponse -> DataWrapper.error(response.errorMessage, null)
+            is RemoteNotFoundResponse -> DataWrapper.error("Not Found", null)
         }
     }
 
