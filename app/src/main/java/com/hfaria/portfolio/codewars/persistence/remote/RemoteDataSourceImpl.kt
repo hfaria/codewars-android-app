@@ -13,18 +13,9 @@ class RemoteDataSourceImpl @Inject constructor(
     val api: CodeWarsApi
 ) : RemoteDataSource {
 
-    private fun <T> runCatching (call: () -> DataWrapper<T>): DataWrapper<T> {
-        return try {
-            call.invoke()
-        } catch (t: Throwable) {
-            DataWrapper.exception(t, null)
-        }
-    }
-
-    override fun getUserByUsername(username: String): DataWrapper<User>
-            = runCatching {
+    override fun getUserByUsername(username: String): DataWrapper<User> {
         val response = api.getUsers(username)
-        when(response) {
+        return when(response) {
             is ApiSuccessResponse -> DataWrapper.success(response.body)
             is ApiEmptyResponse -> DataWrapper.error("Empty Response", null)
             is ApiErrorResponse -> DataWrapper.error(response.errorMessage, null)

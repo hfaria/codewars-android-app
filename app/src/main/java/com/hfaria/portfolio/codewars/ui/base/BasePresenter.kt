@@ -11,7 +11,7 @@ abstract class BasePresenter<D, V>(
     }
 
     override fun onException(throwable: Throwable) {
-        state.showErrorMessage(throwable.toString())
+        state.showErrorMessage(throwable.message.orEmpty())
     }
 
     override fun onStartLoading() {
