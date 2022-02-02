@@ -5,6 +5,7 @@ import com.hfaria.portfolio.codewars.acceptance.setup.*
 import com.hfaria.portfolio.codewars.domain.User
 import com.hfaria.portfolio.codewars.persistence.remote.RemoteErrorResponse
 import com.hfaria.portfolio.codewars.persistence.remote.RemoteSuccessResponse
+import com.hfaria.portfolio.codewars.persistence.remote.api.UserNetwork
 import com.hfaria.portfolio.codewars.ui.search_user.SearchUserController
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.*
@@ -40,12 +41,12 @@ class SearchUserAcceptanceTest : BaseAcceptanceTest() {
         private val repositoryFailure = "A_FAILURE"
         private val repositoryException = "A_EXCEPTION"
         private lateinit var searchUsername: String
-        private lateinit var user: User
+        private lateinit var user: UserNetwork
         private lateinit var loadingStates: List<Boolean>
         private lateinit var expectedErrorMessage: String
 
         fun givenUserExists(username: String) {
-            user = User(username, null, 0)
+            user = UserNetwork(username, "")
             stubApi.getUserReponse = RemoteSuccessResponse(user)
         }
 

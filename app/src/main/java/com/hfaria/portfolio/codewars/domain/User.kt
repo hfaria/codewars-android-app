@@ -23,7 +23,7 @@ class Ranks: HashMap<String, LanguageRank>()
 
 data class User(
     var username: String,
-    var name: String?,
+    var name: String,
     var updatedAt: Int,
     // TODO fix this
     //var ranks: Ranks,
